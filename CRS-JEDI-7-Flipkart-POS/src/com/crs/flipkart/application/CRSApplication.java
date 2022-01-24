@@ -121,14 +121,23 @@ public class CRSApplication {
 
     private static void updatePassword() {
         Scanner sc = new Scanner(System.in);
-        String email, new_password;
+        String email, password;
         System.out.println("Email:");
         email = sc.nextLine();
-        System.out.println("New Password:");
-        new_password = sc.nextLine();
-        int profId = GetInstance.professorDAO.updateCredentials(email, new_password);
-
+        System.out.println("Password:");
+        password = sc.nextLine();
+        int profId = GetInstance.professorDAO.checkCredentials(email, password);
+        if(profId != -1){
+            System.out.println("Enter new password:");
+            String new_password = sc.nextLine();
+            GetInstance.professorDAO.updateCredentials(email, new_password);
+            System.out.println("Password Updated Successfully!!!");
+        }
+        else{
+            System.out.println("Invalid!!");
+        }
     }
+
 
 
 }
