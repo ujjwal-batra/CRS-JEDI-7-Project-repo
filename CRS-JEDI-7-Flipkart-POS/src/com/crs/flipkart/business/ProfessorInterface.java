@@ -17,5 +17,5 @@ public interface ProfessorInterface {
 	public void selectCourseToTeach(int courseId, int professorId);
 	public List<Student> getStudentList(int courseId);
 	public List<Course> getCourseList();
-	public List<Student> viewStudentsForAllCourse(int professorId);
+	public List<Student> viewStudentsForAllCourses(int professorId);
 }

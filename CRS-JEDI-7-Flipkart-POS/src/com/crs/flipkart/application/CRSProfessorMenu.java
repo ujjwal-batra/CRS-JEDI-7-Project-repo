@@ -3,8 +3,6 @@ package com.crs.flipkart.application;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
-import com.crs.flipkart.business.ProfessorService;
-import com.crs.flipkart.dao.ProfessorDAO;
 import com.crs.flipkart.utils.GetInstance;
 
 import java.util.List;
@@ -81,31 +79,34 @@ public class CRSProfessorMenu {
 
     private void showMyCourses(int professorId) {
         Professor professor = GetInstance.professorDAO.getProfessorById(professorId);
+        if (professor.getCourseList().isEmpty()) System.out.println("Not yet registered for any course");
+        else System.out.println("Course details: ");
         for (Course course : professor.getCourseList()) {
             System.out.println("CourseId: " + course.getCourseId() +
-                    " CourseName: " + course.getCourseName() +
-                    " Professor: " + course.getProfessor().getName());
+                    ", CourseName: " + course.getCourseName() +
+                    ", Professor: " + course.getProfessor().getName());
         }
     }
 
     private void showCourseCatalogue() {
-
         for (Course course : GetInstance.professorService.getCourseList()) {
             System.out.println("CourseId: " + course.getCourseId() +
-                    " CourseName: " + course.getCourseName() +
-                    " Professor: " + course.getProfessor());
+                    ", CourseName: " + course.getCourseName() +
+                    ", Professor: " + (course.getProfessor() == null ? "Not yet assigned" : course.getProfessor().getName()));
         }
     }
 
     private void viewStudents(int professorId) {
 
-        List<Student> studentList = GetInstance.professorService.viewStudentsForAllCourse(professorId);
+        List<Student> studentList = GetInstance.professorService.viewStudentsForAllCourses(professorId);
+        if (studentList.isEmpty()) System.out.println("No Students enrolled");
+        else System.out.println("Student details: ");
 
         for (Student student : studentList) {
             System.out.println(
                     "Name: " + student.getName() +
-                            " contactNo: " + student.getContactNo() +
-                            " branch: " + student.getBranch()
+                            ", contactNo: " + student.getContactNo() +
+                            ", branch: " + student.getBranch()
             );
         }
     }

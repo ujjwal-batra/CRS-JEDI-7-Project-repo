@@ -12,7 +12,8 @@ public class CourseCatalogueDAO {
     private final CourseCatalogue courseCatalogue;
     private final List<Course> courseList = new ArrayList<>(Arrays.asList(
             new Course(1, "DSA", null, new ArrayList<>()),
-            new Course(2, "TOC", null, new ArrayList<>())
+            new Course(2, "TOC", null, new ArrayList<>()),
+            new Course(3, "ML", null, new ArrayList<>())
 
     ));
 
