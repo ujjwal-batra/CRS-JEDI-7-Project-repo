@@ -6,6 +6,7 @@ package com.crs.flipkart.application;
 import com.crs.flipkart.dao.CourseCatalogueDAO;
 import com.crs.flipkart.dao.ProfessorDAO;
 import com.crs.flipkart.dao.StudentDao;
+import com.crs.flipkart.utils.GetInstance;
 
 import java.util.Scanner;
 
@@ -72,18 +73,18 @@ public class CRSApplication {
 
     private static void login() {
         Scanner sc = new Scanner(System.in);
-        String userId, password;
+        String email, password;
         System.out.println("Email:");
-        userId = sc.next();
+        email = sc.nextLine();
         System.out.println("Password:");
-        password = sc.next();
+        password = sc.nextLine();
 
         Boolean loggedIn = true;  //Authentication
 
         if (loggedIn) {
             int role = 2; //after authorization
 
-            System.out.println(" Login Successful!");
+//            System.out.println(" Login Successful!");
 
             switch (role) {
                 case 1 :
@@ -98,8 +99,15 @@ public class CRSApplication {
                     }
                     break;
                 case 2:
-                    CRSProfessorMenu professorMenu =new CRSProfessorMenu();
-                    professorMenu.professorMenu(1);
+                    int profId = GetInstance.professorDAO.checkCredentials(email, password);
+                    System.out.println(profId);
+                    if(profId != -1){
+                        CRSProfessorMenu professorMenu =new CRSProfessorMenu();
+                        professorMenu.professorMenu(profId);
+                    }
+                    else{
+                        System.out.println("Invalid!!");
+                    }
                     break;
                 case 3:
                     //Admin

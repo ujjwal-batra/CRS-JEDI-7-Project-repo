@@ -5,6 +5,7 @@ import com.crs.flipkart.bean.Professor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 
 public class ProfessorDAO {
@@ -33,4 +34,12 @@ public class ProfessorDAO {
         return null;
     }
 
+    public int checkCredentials(String email, String password){
+        for(Professor professor: professorList){
+            if(Objects.equals(professor.getEmailId(), email) && Objects.equals(professor.getPassword(), password))
+                return professor.getProfessorId();
+        }
+        return -1;
+
+    }
 }
