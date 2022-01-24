@@ -42,4 +42,15 @@ public class ProfessorDAO {
         return -1;
 
     }
+
+    public int updateCredentials(String email, String password){
+        for(Professor professor: professorList){
+            if(Objects.equals(professor.getEmailId(), email))
+                professor.setPassword(password);
+
+        }
+        return -1;
+
+    }
+
 }

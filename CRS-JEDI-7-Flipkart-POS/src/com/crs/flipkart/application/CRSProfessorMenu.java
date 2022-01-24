@@ -27,12 +27,11 @@ public class CRSProfessorMenu {
             System.out.println("5. Select Course to teach");
             System.out.println("6. Logout");
 
-            System.out.println("------------------------------------------");
+            System.out.println("---------------------------------------------------------------------------");
             System.out.print("ENTER YOUR CHOICE--->:\t");
             System.out.println();
 
             in = sc.nextInt();
-            //input user
 
             switch (in) {
                 case 1:

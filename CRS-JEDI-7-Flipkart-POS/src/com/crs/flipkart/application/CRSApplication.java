@@ -53,7 +53,7 @@ public class CRSApplication {
 
     public static void printMenu() {
         System.out.println("\n\n----------------------------------------------------------------------------------------");
-        System.out.println("----------------------------------------------MAIN MENU-----------------------------------");
+        System.out.println("------------------------------------MAIN MENU-----------------------------------");
         System.out.println("-----------------------------------------------------------------------------------------\n");
 
         System.out.println("1. Student Signup");
@@ -83,13 +83,11 @@ public class CRSApplication {
         if (loggedIn) {
             int role = 2; //after authorization
 
-//            System.out.println(" Login Successful!");
-
             switch (role) {
                 case 1 :
                     int isApproved = 1; //check approval
                     if (isApproved == 1) {
-                        System.out.println(" Login Successful!");
+                        System.out.println("Login Successful!");
                         CRSStudentMenu studentMenu = new CRSStudentMenu();
 
                     } else {
@@ -109,7 +107,9 @@ public class CRSApplication {
                     }
                     break;
                 case 3:
-                    //Admin
+                    System.out.println("Login Successful!");
+                    CRSAdminMenu studentMenu = new CRSAdminMenu();
+
                     break;
 
             }
@@ -120,7 +120,13 @@ public class CRSApplication {
 
 
     private static void updatePassword() {
-
+        Scanner sc = new Scanner(System.in);
+        String email, new_password;
+        System.out.println("Email:");
+        email = sc.nextLine();
+        System.out.println("New Password:");
+        new_password = sc.nextLine();
+        int profId = GetInstance.professorDAO.updateCredentials(email, new_password);
 
     }
 
