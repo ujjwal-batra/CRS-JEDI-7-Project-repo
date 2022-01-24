@@ -5,7 +5,7 @@ import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.utils.GetInstance;
 
-public class GenerateGradeCardService {
+public class GenerateGradeCardService implements GenerateGradeCardInterface {
 
     public void generateGradeCard(int studentId) {
         Student student = GetInstance.studentDao.getStudentById(studentId);

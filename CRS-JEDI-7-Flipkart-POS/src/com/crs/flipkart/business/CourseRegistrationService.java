@@ -5,7 +5,7 @@ import com.crs.flipkart.dao.CourseCatalogueDAO;
 
 import java.util.List;
 
-public class CourseRegistrationService {
+public class CourseRegistrationService implements CourseRegistrationInterface {
 
     public boolean addCourse(int studentId, int courseId, int semesterId) {
         //Save data inside the db

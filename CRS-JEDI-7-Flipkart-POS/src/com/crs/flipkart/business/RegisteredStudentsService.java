@@ -6,7 +6,7 @@ import com.crs.flipkart.bean.Student;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RegisteredStudentsService {
+public class RegisteredStudentsService implements RegisteredStudentsInterface {
 
     public List<Student> getStudentListByCourseId(int courseId) {
         //retrieve list from db;

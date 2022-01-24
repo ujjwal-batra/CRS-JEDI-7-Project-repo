@@ -11,7 +11,7 @@ import com.crs.flipkart.utils.GetInstance;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProfessorService {
+public class ProfessorService implements  ProfessorInterface {
 
     public void addGrade(int courseId, int studentId, int semester, double marks) {
         Student student = GetInstance.studentDao.getStudentById(studentId);
