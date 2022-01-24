@@ -84,7 +84,7 @@ public class CRSApplication {
 		if (loggedIn) {
 			System.out.println(" Login Successful!");
 			CRSProfessorMenu professorMenu = new CRSProfessorMenu();
-			professorMenu.professorMenu();
+			professorMenu.professorMenu(1);
 		}
 		
 	}
