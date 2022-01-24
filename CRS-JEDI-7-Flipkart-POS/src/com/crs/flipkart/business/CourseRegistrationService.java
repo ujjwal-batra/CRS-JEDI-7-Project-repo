@@ -21,7 +21,7 @@ public class CourseRegistrationService implements CourseRegistrationInterface {
     }
 
     public List<Course> viewCourseList() {
-        return new CourseCatalogueDAO().getCourses();
+        return new CourseCatalogueDAO().getCourseCatalogue().getCourseList();
     }
 
     public boolean registerCourse() {

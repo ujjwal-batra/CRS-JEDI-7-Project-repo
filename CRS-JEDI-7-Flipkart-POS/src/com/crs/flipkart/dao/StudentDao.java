@@ -1,6 +1,7 @@
 package com.crs.flipkart.dao;
 
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.utils.GetInstance;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,8 +22,22 @@ public class StudentDao {
 
     );
 
+    public StudentDao() {
+        registerCourse();
+    }
+
     public void saveStudent(Student student) {
 
+    }
+
+    public void registerCourse() {
+        GetInstance.courseCatalogueDAO.getCourseById(1).getStudentList().add(studentList.get(0));
+        GetInstance.courseCatalogueDAO.getCourseById(1).getStudentList().add(studentList.get(1));
+        GetInstance.courseCatalogueDAO.getCourseById(1).getStudentList().add(studentList.get(2));
+
+        GetInstance.courseCatalogueDAO.getCourseById(1).getStudentList().add(studentList.get(3));
+        GetInstance.courseCatalogueDAO.getCourseById(1).getStudentList().add(studentList.get(4));
+        GetInstance.courseCatalogueDAO.getCourseById(1).getStudentList().add(studentList.get(5));
     }
 
 

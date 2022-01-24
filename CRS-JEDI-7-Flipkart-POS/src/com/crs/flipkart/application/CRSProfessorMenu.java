@@ -104,8 +104,8 @@ public class CRSProfessorMenu {
         for (Student student : studentList) {
             System.out.println(
                     "Name: " + student.getName() +
-                            "contactNo: " + student.getContactNo() +
-                            "branch: " + student.getBranch()
+                            " contactNo: " + student.getContactNo() +
+                            " branch: " + student.getBranch()
             );
         }
     }
