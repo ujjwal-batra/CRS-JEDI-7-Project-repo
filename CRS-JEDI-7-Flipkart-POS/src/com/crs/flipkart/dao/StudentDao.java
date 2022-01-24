@@ -21,4 +21,11 @@ public class StudentDao {
     	studentList.add(new Student("6", "stud6", "root", "stud6@gmail.com", 78945612, "Student", "Delhi", "male", 6, "CSE", true, 2));
     	studentList.add(new Student("7", "stud7", "root", "stud7@gmail.com", 78945612, "Student", "Delhi", "male", 7, "CSE", true, 2));
     }
+    public Student getStudentById(int studentId) {
+        for (Student student : studentList) {
+            if (student.getStudentId() == studentId) return student;
+        }
+        return null;
+    }
+
 }

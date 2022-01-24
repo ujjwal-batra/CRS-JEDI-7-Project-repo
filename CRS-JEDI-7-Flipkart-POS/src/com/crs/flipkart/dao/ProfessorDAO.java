@@ -25,10 +25,11 @@ public class ProfessorDAO {
         professorList.add(new Professor("7", "prof7", "root", "p7@gm.com", 78945612, "Professor", "indore", "male", 7, "CSE", new ArrayList<>()));
     }
 
-    public void getProfessorById(int professorId) {
-
-
+    public Professor getProfessorById(int professorId) {
+        for (Professor professor : professorList) {
+            if (professor.getProfessorId() == professorId) return professor;
+        }
+        return null;
     }
-
 
 }

@@ -3,6 +3,8 @@
  */
 package com.crs.flipkart.bean;
 
+import java.util.ArrayList;
+
 /**
  * @author JEDI-8
  *
@@ -13,6 +15,7 @@ public class Student extends User {
     private String branch;
     private boolean isApproved;
     private int semester;
+    private GradeCard gradeCard;
 
     public Student() {
     }
@@ -23,6 +26,7 @@ public class Student extends User {
         this.branch = branch;
         this.isApproved = isApproved;
         this.semester = semester;
+        this.gradeCard = new GradeCard(studentId, new ArrayList<>(), 0.0);
     }
 
     public int getStudentId() {
@@ -55,5 +59,13 @@ public class Student extends User {
 
     public void setSemester(int semester) {
         this.semester = semester;
+    }
+
+    public GradeCard getGradeCard() {
+        return gradeCard;
+    }
+
+    public void setGradeCard(GradeCard gradeCard) {
+        this.gradeCard = gradeCard;
     }
 }
