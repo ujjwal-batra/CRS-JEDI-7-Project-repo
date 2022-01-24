@@ -27,7 +27,7 @@ public class CRSApplication {
         printMenu();
         int Input = sc.nextInt();
 
-        while (Input != 5) {
+        while (Input != 4) {
             switch (Input) {
                 case 1:
                     registerStudent();
@@ -35,7 +35,6 @@ public class CRSApplication {
                 case 2:
                     login();
                     break;
-
                 case 3:
                     updatePassword();
                     break;
