@@ -35,9 +35,9 @@ public class StudentDao {
         GetInstance.courseCatalogueDAO.getCourseById(1).getStudentList().add(studentList.get(1));
         GetInstance.courseCatalogueDAO.getCourseById(1).getStudentList().add(studentList.get(2));
 
-        GetInstance.courseCatalogueDAO.getCourseById(1).getStudentList().add(studentList.get(3));
-        GetInstance.courseCatalogueDAO.getCourseById(1).getStudentList().add(studentList.get(4));
-        GetInstance.courseCatalogueDAO.getCourseById(1).getStudentList().add(studentList.get(5));
+        GetInstance.courseCatalogueDAO.getCourseById(2).getStudentList().add(studentList.get(3));
+        GetInstance.courseCatalogueDAO.getCourseById(2).getStudentList().add(studentList.get(4));
+        GetInstance.courseCatalogueDAO.getCourseById(2).getStudentList().add(studentList.get(5));
     }
 
 

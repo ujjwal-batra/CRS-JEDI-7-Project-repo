@@ -37,7 +37,8 @@ public class ProfessorService implements ProfessorInterface {
         List<Student> studentList = new ArrayList<>();
 
         for (Course course : getCourseList()) {
-            studentList.addAll(getStudentList(course.getCourseId()));
+            if (course.getProfessor() != null && course.getProfessor().getProfessorId() == professorId)
+                studentList.addAll(getStudentList(course.getCourseId()));
         }
 
         return studentList;
