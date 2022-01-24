@@ -33,15 +33,13 @@ public class CRSApplication {
                     registerStudent();
                     break;
                 case 2:
-                    loginStudent();
+                    login();
                     break;
+
                 case 3:
-                    loginProf();
-                    break;
-                case 4:
                     updatePassword();
                     break;
-                case 5:
+                case 4:
                     break;
                 default:
                     System.out.println("Enter a valid input");
@@ -59,10 +57,9 @@ public class CRSApplication {
         System.out.println("-----------------------------------------------------------------------------------------\n");
 
         System.out.println("1. Student Signup");
-        System.out.println("2. Student Login ");
-        System.out.println("3. Professor Login ");
-        System.out.println("4. UpdatePassword");
-        System.out.println("5. Exit");
+        System.out.println("2. Login ");
+        System.out.println("3. UpdatePassword");
+        System.out.println("4. Exit");
         System.out.println("------------------------------------------");
         System.out.print("ENTER YOUR CHOICE----->:\t");
 
@@ -73,7 +70,7 @@ public class CRSApplication {
 
     }
 
-    private static void loginProf() {
+    private static void login() {
         Scanner sc = new Scanner(System.in);
         String userId, password;
         System.out.println("Email:");
@@ -84,36 +81,35 @@ public class CRSApplication {
         Boolean loggedIn = true;  //Authentication
 
         if (loggedIn) {
+            int role = 2; //after authorization
+
             System.out.println(" Login Successful!");
-            CRSProfessorMenu professorMenu = new CRSProfessorMenu();
-            professorMenu.professorMenu(1);
-        }
 
-    }
+            switch (role) {
+                case 1 :
+                    int isApproved = 1; //check approval
+                    if (isApproved == 1) {
+                        System.out.println(" Login Successful!");
+                        CRSStudentMenu studentMenu = new CRSStudentMenu();
 
-    private static void loginStudent() {
-        Scanner sc = new Scanner(System.in);
-        String userId, password;
-        System.out.println("Email:");
-        userId = sc.next();
-        System.out.println("Password:");
-        password = sc.next();
+                    } else {
+                        System.out.println("You have not been approved by the admin!");
+                        loggedIn = false;
+                    }
+                    break;
+                case 2:
+                    CRSProfessorMenu professorMenu =new CRSProfessorMenu();
+                    professorMenu.professorMenu(1);
+                    break;
+                case 3:
+                    //Admin
+                    break;
 
-        Boolean loggedIn = true;  //Authentication
-
-        if (loggedIn) {
-            int isApproved = 1; //check approval
-            if (isApproved == 1) {
-                System.out.println(" Login Successful!");
-                CRSStudentMenu studentMenu = new CRSStudentMenu();
-
-            } else {
-                System.out.println("You have not been approved by the admin!");
-                loggedIn = false;
             }
         }
 
     }
+
 
 
     private static void updatePassword() {
