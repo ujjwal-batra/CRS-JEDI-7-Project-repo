@@ -6,12 +6,15 @@ import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.dao.CourseCatalogueDAO;
 import com.crs.flipkart.dao.ProfessorDAO;
+import com.crs.flipkart.dao.StudentDao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProfessorService {
 
-    public void addGrade(int courseId, Student student, int semester, double marks) {
+    public void addGrade(int courseId, int studentId, int semester, double marks) {
+        Student student = new StudentDao().getStudentById(studentId);
         Grade gradeObj = new Grade(courseId, student.getStudentId(), semester, marks);
         List<Grade> gradeList = student.getGradeCard().getGrades();
         gradeList.add(gradeObj);
@@ -24,11 +27,21 @@ public class ProfessorService {
         professor.getCourseList().add(course);
     }
 
-    public List<Student> viewStudentList(int courseId) {
+    public List<Student> getStudentList(int courseId) {
         return new RegisteredStudentsService().getStudentListByCourseId(courseId);
     }
 
-    public List<Course> viewCourseList() {
+    public List<Course> getCourseList() {
         return new CourseCatalogueDAO().getCourses();
+    }
+
+    public List<Student> viewStudentsForAllCourse(int professorId) {
+        List<Student> studentList = new ArrayList<>();
+
+        for (Course course : getCourseList()) {
+            studentList.addAll(getStudentList(course.getCourseId()));
+        }
+
+        return studentList;
     }
 }

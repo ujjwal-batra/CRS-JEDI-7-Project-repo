@@ -1,73 +1,129 @@
 package com.crs.flipkart.application;
 
+import com.crs.flipkart.bean.Course;
+import com.crs.flipkart.bean.Professor;
+import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.business.ProfessorService;
+import com.crs.flipkart.dao.ProfessorDAO;
+
+import java.util.List;
 import java.util.Scanner;
 
 public class CRSProfessorMenu {
-	public void professorMenu()
-	{
-		Scanner sc=new Scanner(System.in);
-		
-		int in=1;
-		while(in!=4)
-		{
-			System.out.println("\n\n----------------------------------------------------------------------------------------");
-			System.out.println("----------------------------------------PROFESSOR MENU---------------------------------------");
-			System.out.println("---------------------------------------------------------------------------------------------\n");
 
-			System.out.println("1. View Courses");
-			System.out.println("2. View Enrolled Students");
-			System.out.println("3. Add grade");
-			System.out.println("4. Logout");
 
-			System.out.println("------------------------------------------");
-			System.out.print("ENTER YOUR CHOICE--->:\t");
-			System.out.println();
+    public void professorMenu(int professorId) {
+        Scanner sc = new Scanner(System.in);
 
-			in=sc.nextInt();
-			//input user
-			
-			switch(in)
-			{
-				case 1:
-					//view all the courses taught by the professor
-					getCourses();
-					break;
-				case 2:
-					//view all the enrolled students for the course
-					viewStudents();
-					break;
-					
-				case 3:
-					//add grade for a student
-					addGrade();
-					break;
-				case 4:
-					//logout from the system
-					return;
-				default:
-					System.out.println("Select right option.");
-			}
-			
-		}
-		sc.close();
-		
-		
-	}
-	
-	private void getCourses()
-	{
-		
-	}
-	
-	private void viewStudents()
-	{
-		
-	}
-	
-	private void addGrade()
-	{
-		
-	}
-	
+        int in = 1;
+        while (in != 6) {
+            System.out.println("\n\n----------------------------------------------------------------------------------------");
+            System.out.println("----------------------------------------PROFESSOR MENU---------------------------------------");
+            System.out.println("---------------------------------------------------------------------------------------------\n");
+
+            System.out.println("1. View Course Catalogue");
+            System.out.println("2. Show my courses");
+            System.out.println("3. View Enrolled Students");
+            System.out.println("4. Add grade");
+            System.out.println("5. Select Course to teach");
+            System.out.println("6. Logout");
+
+            System.out.println("------------------------------------------");
+            System.out.print("ENTER YOUR CHOICE--->:\t");
+            System.out.println();
+
+            in = sc.nextInt();
+            //input user
+
+            switch (in) {
+                case 1:
+                    //show course catalogue
+                    showCourseCatalogue();
+                    break;
+                case 2:
+                    //view all the courses taught by the professor
+                    showMyCourses(professorId);
+                    break;
+                case 3:
+                    //view all the enrolled students for the course
+                    viewStudents(professorId);
+                    break;
+
+                case 4:
+                    //add grade for a student
+                    addGrade();
+                    break;
+                case 5:
+                    //select course to teach
+                    selectCourseToTeach(professorId);
+                    break;
+                case 6:
+                    //logout from the system
+                    return;
+                default:
+                    System.out.println("Select right option.");
+            }
+
+        }
+        sc.close();
+
+
+    }
+
+    private void selectCourseToTeach(int professorId) {
+        showCourseCatalogue();
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter course id: ");
+        int courseId = sc.nextInt();
+        new ProfessorService().selectCourseToTeach(courseId, professorId);
+    }
+
+    private void showMyCourses(int professorId) {
+        Professor professor = new ProfessorDAO().getProfessorById(professorId);
+        for (Course course : professor.getCourseList()) {
+            System.out.println("CourseId: " + course.getCourseId() +
+                    " CourseName: " + course.getCourseName() +
+                    " Professor" + course.getProfessor());
+        }
+    }
+
+    private void showCourseCatalogue() {
+        ProfessorService professorService = new ProfessorService();
+        for (Course course : professorService.getCourseList()) {
+            System.out.println("CourseId: " + course.getCourseId() +
+                    " CourseName: " + course.getCourseName() +
+                    " Professor" + course.getProfessor());
+        }
+    }
+
+    private void viewStudents(int professorId) {
+        ProfessorService professorService = new ProfessorService();
+        List<Student> studentList = professorService.viewStudentsForAllCourse(professorId);
+
+        for (Student student : studentList) {
+            System.out.println(
+                    "Name: " + student.getName() +
+                            "contactNo: " + student.getContactNo() +
+                            "branch: " + student.getBranch()
+            );
+        }
+    }
+
+    private void addGrade() {
+        Scanner scanner = new Scanner(System.in);
+        int courseId, studentId, semester;
+        double marks;
+
+        System.out.print("Enter courseId: ");
+        courseId = scanner.nextInt();
+        System.out.print("Enter studentId: ");
+        studentId = scanner.nextInt();
+        System.out.print("Enter semester: ");
+        semester = scanner.nextInt();
+        System.out.print("Enter marks: ");
+        marks = scanner.nextDouble();
+        new ProfessorService().addGrade(courseId, studentId, semester, marks);
+    }
+
 
 }

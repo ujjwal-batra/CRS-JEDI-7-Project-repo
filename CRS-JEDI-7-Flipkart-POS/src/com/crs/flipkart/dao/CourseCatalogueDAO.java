@@ -1,15 +1,37 @@
 package com.crs.flipkart.dao;
 
 import com.crs.flipkart.bean.Course;
+import com.crs.flipkart.bean.CourseCatalogue;
 
 import java.util.List;
 
 public class CourseCatalogueDAO {
 
+    private CourseCatalogue courseCatalogue;
     private List<Course> courseList;
+
+    public void createDummy() {
+        courseCatalogue = new CourseCatalogue(1, "catalogue", courseList);
+    }
 
     public List<Course> getCourses() {
         return courseList;
+    }
+
+    public CourseCatalogue getCourseCatalogue() {
+        return courseCatalogue;
+    }
+
+    public void setCourseCatalogue(CourseCatalogue courseCatalogue) {
+        this.courseCatalogue = courseCatalogue;
+    }
+
+    public List<Course> getCourseList() {
+        return courseList;
+    }
+
+    public void setCourseList(List<Course> courseList) {
+        this.courseList = courseList;
     }
 
     public void createDummyData() {
