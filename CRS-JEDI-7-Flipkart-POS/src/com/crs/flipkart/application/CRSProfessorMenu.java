@@ -76,21 +76,21 @@ public class CRSProfessorMenu {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter course id: ");
         int courseId = sc.nextInt();
-        new GetInstance().getProfessorService().selectCourseToTeach(courseId, professorId);
+        GetInstance.professorService.selectCourseToTeach(courseId, professorId);
     }
 
     private void showMyCourses(int professorId) {
-        Professor professor = new GetInstance().getProfessorDAO().getProfessorById(professorId);
+        Professor professor = GetInstance.professorDAO.getProfessorById(professorId);
         for (Course course : professor.getCourseList()) {
             System.out.println("CourseId: " + course.getCourseId() +
                     " CourseName: " + course.getCourseName() +
-                    " Professor" + course.getProfessor());
+                    " Professor: " + course.getProfessor().getName());
         }
     }
 
     private void showCourseCatalogue() {
 
-        for (Course course : new GetInstance().getProfessorService().getCourseList()) {
+        for (Course course : GetInstance.professorService.getCourseList()) {
             System.out.println("CourseId: " + course.getCourseId() +
                     " CourseName: " + course.getCourseName() +
                     " Professor: " + course.getProfessor());
@@ -99,7 +99,7 @@ public class CRSProfessorMenu {
 
     private void viewStudents(int professorId) {
 
-        List<Student> studentList = new GetInstance().getProfessorService().viewStudentsForAllCourse(professorId);
+        List<Student> studentList = GetInstance.professorService.viewStudentsForAllCourse(professorId);
 
         for (Student student : studentList) {
             System.out.println(
@@ -123,7 +123,7 @@ public class CRSProfessorMenu {
         semester = scanner.nextInt();
         System.out.print("Enter marks: ");
         marks = scanner.nextDouble();
-        new GetInstance().getProfessorService().addGrade(courseId, studentId, semester, marks);
+        GetInstance.professorService.addGrade(courseId, studentId, semester, marks);
     }
 
 
