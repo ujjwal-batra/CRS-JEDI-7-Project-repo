@@ -3,16 +3,18 @@ package com.crs.flipkart.dao;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.CourseCatalogue;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CourseCatalogueDAO {
 
     private CourseCatalogue courseCatalogue;
-    private List<Course> courseList;
+    private List<Course> courseList = new ArrayList<>(Arrays.asList(
+            new Course(1, "DSA", null, null),
+            new Course(2, "TOC", null, null)
 
-    public void createDummy() {
-        courseCatalogue = new CourseCatalogue(1, "catalogue", courseList);
-    }
+    ));
 
     public List<Course> getCourses() {
         return courseList;

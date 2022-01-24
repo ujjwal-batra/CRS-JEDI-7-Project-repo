@@ -7,6 +7,7 @@ import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.dao.CourseCatalogueDAO;
 import com.crs.flipkart.dao.ProfessorDAO;
 import com.crs.flipkart.dao.StudentDao;
+import com.crs.flipkart.utils.GetInstance;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +22,8 @@ public class ProfessorService {
     }
 
     public void selectCourseToTeach(int courseId, int professorId) {
-        Professor professor = new ProfessorDAO().getProfessorById(professorId);
-        Course course = new CourseCatalogueDAO().getCourseById(courseId);
+        Professor professor = new GetInstance().getProfessorDAO().getProfessorById(professorId);
+        Course course = new GetInstance().getCourseCatalogueDAO().getCourseById(courseId);
         course.setProfessor(professor);
         professor.getCourseList().add(course);
     }

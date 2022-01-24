@@ -5,6 +5,7 @@ import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.business.ProfessorService;
 import com.crs.flipkart.dao.ProfessorDAO;
+import com.crs.flipkart.utils.GetInstance;
 
 import java.util.List;
 import java.util.Scanner;
@@ -75,11 +76,11 @@ public class CRSProfessorMenu {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter course id: ");
         int courseId = sc.nextInt();
-        new ProfessorService().selectCourseToTeach(courseId, professorId);
+        new GetInstance().getProfessorService().selectCourseToTeach(courseId, professorId);
     }
 
     private void showMyCourses(int professorId) {
-        Professor professor = new ProfessorDAO().getProfessorById(professorId);
+        Professor professor = new GetInstance().getProfessorDAO().getProfessorById(professorId);
         for (Course course : professor.getCourseList()) {
             System.out.println("CourseId: " + course.getCourseId() +
                     " CourseName: " + course.getCourseName() +
@@ -88,17 +89,17 @@ public class CRSProfessorMenu {
     }
 
     private void showCourseCatalogue() {
-        ProfessorService professorService = new ProfessorService();
-        for (Course course : professorService.getCourseList()) {
+
+        for (Course course : new GetInstance().getProfessorService().getCourseList()) {
             System.out.println("CourseId: " + course.getCourseId() +
                     " CourseName: " + course.getCourseName() +
-                    " Professor" + course.getProfessor());
+                    " Professor: " + course.getProfessor());
         }
     }
 
     private void viewStudents(int professorId) {
-        ProfessorService professorService = new ProfessorService();
-        List<Student> studentList = professorService.viewStudentsForAllCourse(professorId);
+
+        List<Student> studentList = new GetInstance().getProfessorService().viewStudentsForAllCourse(professorId);
 
         for (Student student : studentList) {
             System.out.println(
@@ -122,7 +123,7 @@ public class CRSProfessorMenu {
         semester = scanner.nextInt();
         System.out.print("Enter marks: ");
         marks = scanner.nextDouble();
-        new ProfessorService().addGrade(courseId, studentId, semester, marks);
+        new GetInstance().getProfessorService().addGrade(courseId, studentId, semester, marks);
     }
 
 
