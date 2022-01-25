@@ -41,7 +41,7 @@ CREATE TABLE `professor` (
 
 LOCK TABLES `professor` WRITE;
 /*!40000 ALTER TABLE `professor` DISABLE KEYS */;
-INSERT INTO `professor` VALUES (-1,'-1','-1','-1',-1,'-1','-1','-1'),(1,'p1','p1@gm.com','root',1234,'add1','male','CSE'),(2,'p2','p2@gm.com','root',1234,'add2','female','CSE'),(3,'p3','p3@gm.com','root',1234,'add3','male','CSE'),(4,'p4','p4@gm.com','root',1234,'add4','female','CSE'),(5,'p5','p5@gm.com','root',1234,'add5','male','CSE'),(6,'p6','p6@gm.com','root',1234,'add6','male','CSE');
+INSERT INTO `professor` VALUES (1,'Aditya','1@gm.com','password',98765873,'Ahmedabad','MALE','CSE'),(2,'Kalyan','2@gm.com','password',98765873,'Mumbai','MALE','CSE'),(3,'Bhaskar','3@gm.com','password',98763873,'Ahmedabad','MALE','CSE'),(4,'Jaydeep','4@gm.com','password',98763873,'Banglore','MALE','CSE'),(5,'Yash','5@gm.com','password',98765133,'Kolkata','MALE','CSE');
 /*!40000 ALTER TABLE `professor` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-25 16:33:19
+-- Dump completed on 2022-01-25 16:48:03
