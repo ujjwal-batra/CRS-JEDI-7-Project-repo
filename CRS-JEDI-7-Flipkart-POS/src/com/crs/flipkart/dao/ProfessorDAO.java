@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 
 public class ProfessorDAO implements ProfessorDaoInterface {
@@ -95,22 +94,63 @@ public class ProfessorDAO implements ProfessorDaoInterface {
     }
 
     public int checkCredentials(String email, String password) {
-        for (Professor professor : professorList) {
-            if (Objects.equals(professor.getEmailId(), email) && Objects.equals(professor.getPassword(), password))
-                return professor.getProfessorId();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DBUtils.getConnection();
+            System.out.println("Checking Credentials");
+            String sqlQuery = "select * from professor where email = " + email + " and password = " + password;
+            statement = connection.prepareStatement(sqlQuery);
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            if(!resultSet.next()){
+                return -1;
+            }
+            else
+                return resultSet.getInt("professor_id");
+        } catch (Exception ex) {
+            System.out.println(ex.getLocalizedMessage());
+        } finally {
+            try {
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (Exception ex) {
+                System.out.println(ex.getLocalizedMessage());
+            }
         }
         return -1;
-
     }
 
-    public int updateCredentials(String email, String password) {
-        for (Professor professor : professorList) {
-            if (Objects.equals(professor.getEmailId(), email))
-                professor.setPassword(password);
-
+    public boolean updateCredentials(String email, String password) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DBUtils.getConnection();
+            System.out.println("Checking Credentials");
+            String sqlQuery = "select * from professor where email = " + email;
+            statement = connection.prepareStatement(sqlQuery);
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            if(!resultSet.next()){
+                return false;
+            }
+            sqlQuery = "update professor set password = "+ password +" where email = " + email;
+            ResultSet resultSet1 = statement.executeQuery(sqlQuery);
+            if(!resultSet.next())
+                return false;
+            return true;
+        } catch (Exception ex) {
+            System.out.println(ex.getLocalizedMessage());
+        } finally {
+            try {
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (Exception ex) {
+                System.out.println(ex.getLocalizedMessage());
+            }
         }
-        return -1;
-
+        return true;
     }
 
 }
