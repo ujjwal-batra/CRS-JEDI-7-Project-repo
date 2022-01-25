@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class StudentDao {
+public class StudentDao implements  StudentDaoInterface{
 
     private List<Student> studentList = new ArrayList<>(
             Arrays.asList(

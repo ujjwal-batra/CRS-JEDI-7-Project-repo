@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 
-public class ProfessorDAO {
+public class ProfessorDAO implements  ProfessorDaoInterface{
 
     public List<Professor> professorList = new ArrayList<>(
             Arrays.asList(
