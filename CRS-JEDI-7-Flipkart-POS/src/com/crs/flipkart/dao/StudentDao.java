@@ -1,8 +1,13 @@
 package com.crs.flipkart.dao;
 
+import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.utils.DBUtils;
 import com.crs.flipkart.utils.GetInstance;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,8 +47,39 @@ public class StudentDao implements  StudentDaoInterface{
 
 
     public Student getStudentById(int studentId) {
-        for (Student student : studentList) {
-            if (student.getStudentId() == studentId) return student;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DBUtils.getConnection();
+            System.out.println("Persisting Student details");
+            String sqlQuery = "select * from student where student_id = " + studentId;
+            statement = connection.prepareStatement(sqlQuery);
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            Student student = new Student(
+                    resultSet.getInt("student_id"),
+                    resultSet.getString("name"),
+                    resultSet.getString("password"),
+                    resultSet.getString("email"),
+                    resultSet.getLong("contact_number"),
+                    "Student",
+                    resultSet.getString("address"),
+                    resultSet.getString("gender"),
+                    resultSet.getString("branch"),
+                    resultSet.getBoolean("is_approved"),
+                    resultSet.getInt("semester")
+
+            );
+
+        } catch (Exception ex) {
+            System.out.println(ex.getLocalizedMessage());
+        } finally {
+            try {
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (Exception ex) {
+                System.out.println(ex.getLocalizedMessage());
+            }
         }
         return null;
     }
