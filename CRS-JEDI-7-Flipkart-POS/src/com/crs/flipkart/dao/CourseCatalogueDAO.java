@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CourseCatalogueDAO {
+public class CourseCatalogueDAO implements CourseCatalogueDaoInterface {
 
     private final CourseCatalogue courseCatalogue;
     private final List<Course> courseList = new ArrayList<>(Arrays.asList(

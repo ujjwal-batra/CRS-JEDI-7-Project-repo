@@ -77,6 +77,7 @@ public class CRSProfessorMenu {
     }
 
     private void showMyCourses(int professorId) {
+
         Professor professor = GetInstance.professorDAO.getProfessorById(professorId);
         if (professor.getCourseList().isEmpty()) System.out.println("Not yet registered for any course");
         else System.out.println("Course details: ");

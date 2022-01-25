@@ -9,7 +9,6 @@ package com.crs.flipkart.bean;
  */
 public class User {
 
-    private String userId;
     private String name;
     private String password;
     private String emailId;
@@ -21,8 +20,7 @@ public class User {
     public User() {
     }
 
-    public User(String userId, String name, String password, String emailId, long contactNo, String userType, String address, String gender) {
-        this.userId = userId;
+    public User(String name, String password, String emailId, long contactNo, String userType, String address, String gender) {
         this.name = name;
         this.password = password;
         this.emailId = emailId;
@@ -30,14 +28,6 @@ public class User {
         this.userType = userType;
         this.address = address;
         this.gender = gender;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public String getName() {
