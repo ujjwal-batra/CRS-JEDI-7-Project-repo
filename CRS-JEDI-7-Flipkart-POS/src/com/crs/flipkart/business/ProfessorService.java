@@ -4,6 +4,7 @@ import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Grade;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.dao.CourseCatalogueDAO;
 import com.crs.flipkart.utils.GetInstance;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class ProfessorService implements ProfessorInterface {
         Professor professor = GetInstance.professorDAO.getProfessorById(professorId);
         Course course = GetInstance.courseCatalogueDAO.getCourseById(courseId);
         course.setProfessor(professor);
-        professor.getCourseList().add(course);
+        new CourseCatalogueDAO().updateCourse(course);
     }
 
     public List<Student> getStudentList(int courseId) {

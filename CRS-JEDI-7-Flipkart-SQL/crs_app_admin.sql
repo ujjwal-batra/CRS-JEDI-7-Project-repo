@@ -16,33 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `professor`
+-- Table structure for table `admin`
 --
 
-DROP TABLE IF EXISTS `professor`;
+DROP TABLE IF EXISTS `admin`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `professor` (
-  `professor_id` int NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `contact_number` int DEFAULT NULL,
-  `address` varchar(255) DEFAULT NULL,
-  `gender` varchar(45) DEFAULT NULL,
-  `department` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`professor_id`)
+CREATE TABLE `admin` (
+  `admin_id` int NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `contact_number` varchar(45) NOT NULL,
+  `address` varchar(45) NOT NULL,
+  `gender` varchar(45) NOT NULL,
+  PRIMARY KEY (`admin_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `professor`
+-- Dumping data for table `admin`
 --
 
-LOCK TABLES `professor` WRITE;
-/*!40000 ALTER TABLE `professor` DISABLE KEYS */;
-INSERT INTO `professor` VALUES (-1,'-1','-1','-1',-1,'-1','-1','-1'),(1,'p1','p1@gm.com','root',1234,'add1','male','CSE'),(2,'p2','p2@gm.com','root',1234,'add2','female','CSE'),(3,'p3','p3@gm.com','root',1234,'add3','male','CSE'),(4,'p4','p4@gm.com','root',1234,'add4','female','CSE'),(5,'p5','p5@gm.com','root',1234,'add5','male','CSE'),(6,'p6','p6@gm.com','root',1234,'add6','male','CSE');
-/*!40000 ALTER TABLE `professor` ENABLE KEYS */;
+LOCK TABLES `admin` WRITE;
+/*!40000 ALTER TABLE `admin` DISABLE KEYS */;
+INSERT INTO `admin` VALUES (1,'root','root','ad@gm.com','1234','address','male');
+/*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-25 16:33:19
+-- Dump completed on 2022-01-25 16:38:26
