@@ -1,5 +1,6 @@
 package com.crs.flipkart.dao;
 
+import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.utils.DBUtils;
 
@@ -45,13 +46,13 @@ public class ProfessorDAO implements ProfessorDaoInterface {
             statement.executeUpdate();
 
         } catch (Exception ex) {
-            System.out.println(ex.getLocalizedMessage());
+            System.out.println(ex);
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex.getLocalizedMessage());
+                System.out.println(ex);
             }
         }
     }
@@ -65,30 +66,43 @@ public class ProfessorDAO implements ProfessorDaoInterface {
             String sqlQuery = "select * from professor where professor_id = " + professorId;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
-            Professor professor = new Professor(
-                    resultSet.getInt("professor_id"),
-                    resultSet.getString("name"),
-                    resultSet.getString("password"),
-                    resultSet.getString("email"),
-                    resultSet.getLong("contact_number"),
-                    "Professor",
-                    resultSet.getString("address"),
-                    resultSet.getString("gender"),
-                    resultSet.getString("department"),
-                    new ArrayList<>()
-            );
+            Professor professor = null;
+            while (resultSet.next()) {
+                professor = new Professor(
+                        resultSet.getInt("professor_id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("password"),
+                        resultSet.getString("email"),
+                        resultSet.getLong("contact_number"),
+                        "Professor",
+                        resultSet.getString("address"),
+                        resultSet.getString("gender"),
+                        resultSet.getString("department"),
+                        new ArrayList<>()
+                );
+            }
+            if (professor != null) populateCourses(professor);
             return professor;
         } catch (Exception ex) {
-            System.out.println(ex.getLocalizedMessage());
+            System.out.println(ex);
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex.getLocalizedMessage());
+                System.out.println(ex);
             }
         }
         return null;
+    }
+
+    private void populateCourses(Professor professor) {
+        List<Course> courseList = new CourseCatalogueDAO().getAllCourses();
+        for (Course course : courseList) {
+            if (course.getProfessorId() == professor.getProfessorId())
+                professor.getCourseList().add(course);
+        }
+        return;
     }
 
     public int checkCredentials(String email, String password) {
@@ -102,19 +116,18 @@ public class ProfessorDAO implements ProfessorDaoInterface {
             String sqlQuery = "select * from professor where email = '" + email + "' and password = '" + password + "'";
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
-            if(!resultSet.next()){
+            if (!resultSet.next()) {
                 return -1;
-            }
-            else
+            } else
                 return resultSet.getInt("professor_id");
         } catch (Exception ex) {
-            System.out.println(ex.getLocalizedMessage());
+            System.out.println(ex);
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex.getLocalizedMessage());
+                System.out.println(ex);
             }
         }
         return -1;
@@ -130,22 +143,22 @@ public class ProfessorDAO implements ProfessorDaoInterface {
             String sqlQuery = "select * from professor where email = " + email;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
-            if(!resultSet.next()){
+            if (!resultSet.next()) {
                 return false;
             }
-            sqlQuery = "update professor set password = "+ password +" where email = " + email;
+            sqlQuery = "update professor set password = " + password + " where email = " + email;
             ResultSet resultSet1 = statement.executeQuery(sqlQuery);
-            if(!resultSet.next())
+            if (!resultSet.next())
                 return false;
             return true;
         } catch (Exception ex) {
-            System.out.println(ex.getLocalizedMessage());
+            System.out.println(ex);
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex.getLocalizedMessage());
+                System.out.println(ex);
             }
         }
         return true;

@@ -21,9 +21,8 @@ public class ProfessorService implements ProfessorInterface {
     }
 
     public void selectCourseToTeach(int courseId, int professorId) {
-        Professor professor = new ProfessorDAO().getProfessorById(professorId);
         Course course = new CourseCatalogueDAO().getCourseById(courseId);
-        course.setProfessor(professor);
+        course.setProfessorId(professorId);
         new CourseCatalogueDAO().updateCourse(course);
     }
 
@@ -39,7 +38,7 @@ public class ProfessorService implements ProfessorInterface {
         List<Student> studentList = new ArrayList<>();
 
         for (Course course : getCourseList()) {
-            if (course.getProfessor() != null && course.getProfessor().getProfessorId() == professorId)
+            if (course.getProfessorId() != -1 && course.getProfessorId() == professorId)
                 studentList.addAll(getStudentList(course.getCourseId()));
         }
 

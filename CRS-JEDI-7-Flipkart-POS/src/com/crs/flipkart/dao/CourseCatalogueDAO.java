@@ -2,7 +2,6 @@ package com.crs.flipkart.dao;
 
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.CourseCatalogue;
-import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.utils.DBUtils;
 
 import java.sql.Connection;
@@ -26,29 +25,26 @@ public class CourseCatalogueDAO implements CourseCatalogueDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            System.out.println("Checking Credentials");
             String sqlQuery = "select * from course";
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             while (resultSet.next()) {
-                Professor professor = new ProfessorDAO().getProfessorById(resultSet.getInt("professor_id"));
-
                 Course course = new Course(
                         resultSet.getInt("course_id"),
                         resultSet.getString("course_name"),
-                        professor,
+                        resultSet.getInt("professor_id"),
                         new ArrayList<>()
                 );
                 courseList.add(course);
             }
         } catch (Exception ex) {
-            System.out.println(ex.getLocalizedMessage());
+            System.out.println(ex);
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex.getLocalizedMessage());
+                System.out.println(ex);
             }
         }
         return courseList;
@@ -64,21 +60,24 @@ public class CourseCatalogueDAO implements CourseCatalogueDaoInterface {
             String sqlQuery = "select * from course where course_id = " + courseId;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
-            Course course = new Course(
-                    resultSet.getInt("courseId"),
-                    resultSet.getString("course_name"),
-                    new ProfessorDAO().getProfessorById(resultSet.getInt("professor_id")),
-                    new ArrayList<>()
-            );
+            Course course = null;
+            while (resultSet.next()) {
+                course = new Course(
+                        resultSet.getInt("course_id"),
+                        resultSet.getString("course_name"),
+                        resultSet.getInt("professor_id"),
+                        new ArrayList<>()
+                );
+            }
             return course;
         } catch (Exception ex) {
-            System.out.println(ex.getLocalizedMessage());
+            System.out.println(ex);
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex.getLocalizedMessage());
+                System.out.println(ex);
             }
         }
         return null;
@@ -92,18 +91,18 @@ public class CourseCatalogueDAO implements CourseCatalogueDaoInterface {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
             String sqlQuery = "update course set professor_id = " +
-                    course.getProfessor().getProfessorId() + " where course_id = " + course.getCourseId();
+                    course.getProfessorId() + " where course_id = " + course.getCourseId();
             statement = connection.prepareStatement(sqlQuery);
             statement.executeUpdate();
 
         } catch (Exception ex) {
-            System.out.println(ex.getLocalizedMessage());
+            System.out.println(ex);
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex.getLocalizedMessage());
+                System.out.println(ex);
             }
         }
     }

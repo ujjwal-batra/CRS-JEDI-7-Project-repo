@@ -70,13 +70,13 @@ public class StudentDao implements  StudentDaoInterface{
             );
 
         } catch (Exception ex) {
-            System.out.println(ex.getLocalizedMessage());
+            System.out.println(ex);
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex.getLocalizedMessage());
+                System.out.println(ex);
             }
         }
         return null;

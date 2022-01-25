@@ -82,11 +82,11 @@ public class CRSProfessorMenu {
 
         Professor professor = new ProfessorDAO().getProfessorById(professorId);
         if (professor.getCourseList().isEmpty()) System.out.println("Not yet registered for any course");
-        else System.out.println("Course details: ");
+        else System.out.println("My Course details: ");
         for (Course course : professor.getCourseList()) {
             System.out.println("CourseId: " + course.getCourseId() +
                     ", CourseName: " + course.getCourseName() +
-                    ", Professor: " + course.getProfessor().getName());
+                    ", ProfessorId: " + course.getProfessorId());
         }
     }
 
@@ -94,7 +94,7 @@ public class CRSProfessorMenu {
         for (Course course : new CourseCatalogueDAO().getCourseCatalogue().getCourseList()) {
             System.out.println("CourseId: " + course.getCourseId() +
                     ", CourseName: " + course.getCourseName() +
-                    ", Professor: " + (course.getProfessor() == null ? "Not yet assigned" : course.getProfessor().getName()));
+                    ", Professor: " + (course.getProfessorId() == -1 ? "Not yet assigned" : course.getProfessorId()));
         }
     }
 

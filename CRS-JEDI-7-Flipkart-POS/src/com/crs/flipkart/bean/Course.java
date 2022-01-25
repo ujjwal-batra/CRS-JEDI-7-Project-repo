@@ -13,16 +13,16 @@ public class Course {
 
     private int courseId;
     private String courseName;
-    private Professor professor;
+    private int professorId;
     private List<Student> studentList;
 
     public Course() {
     }
 
-    public Course(int courseId, String courseName, Professor professor, List<Student> studentList) {
+    public Course(int courseId, String courseName, int professorId, List<Student> studentList) {
         this.courseId = courseId;
         this.courseName = courseName;
-        this.professor = professor;
+        this.professorId = professorId;
         this.studentList = studentList;
     }
 
@@ -42,12 +42,12 @@ public class Course {
         this.courseName = courseName;
     }
 
-    public Professor getProfessor() {
-        return professor;
+    public int getProfessorId() {
+        return professorId;
     }
 
-    public void setProfessor(Professor professor) {
-        this.professor = professor;
+    public void setProfessorId(int professorId) {
+        this.professorId = professorId;
     }
 
     public List<Student> getStudentList() {
