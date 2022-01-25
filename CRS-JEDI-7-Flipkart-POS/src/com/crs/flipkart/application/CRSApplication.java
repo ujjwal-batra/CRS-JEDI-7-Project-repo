@@ -6,7 +6,9 @@ package com.crs.flipkart.application;
 import com.crs.flipkart.dao.CourseCatalogueDAO;
 import com.crs.flipkart.dao.ProfessorDAO;
 import com.crs.flipkart.dao.StudentDao;
+import com.crs.flipkart.utils.DBUtils;
 import com.crs.flipkart.utils.GetInstance;
+import com.mysql.jdbc.Connection;
 
 import java.util.Scanner;
 
@@ -20,6 +22,7 @@ public class CRSApplication {
      * @param args
      */
     public static void main(String[] args) {
+        Connection connection = (Connection) DBUtils.getConnection();
         Scanner sc = new Scanner(System.in);
         System.out.println("================================================================================");
         System.out.println("********************WELCOME to Course Registration System!!!********************");
