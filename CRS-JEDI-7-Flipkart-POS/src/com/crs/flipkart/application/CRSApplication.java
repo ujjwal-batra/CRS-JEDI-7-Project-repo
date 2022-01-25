@@ -3,11 +3,8 @@
  */
 package com.crs.flipkart.application;
 
-import com.crs.flipkart.dao.CourseCatalogueDAO;
 import com.crs.flipkart.dao.ProfessorDAO;
-import com.crs.flipkart.dao.StudentDao;
 import com.crs.flipkart.utils.DBUtils;
-import com.crs.flipkart.utils.GetInstance;
 import com.mysql.jdbc.Connection;
 
 import java.util.Scanner;
@@ -87,7 +84,7 @@ public class CRSApplication {
             int role = 2; //after authorization
 
             switch (role) {
-                case 1 :
+                case 1:
                     int isApproved = 1; //check approval
                     if (isApproved == 1) {
                         System.out.println("Login Successful!");
@@ -99,13 +96,12 @@ public class CRSApplication {
                     }
                     break;
                 case 2:
-                    int profId = GetInstance.professorDAO.checkCredentials(email, password);
+                    int profId = new ProfessorDAO().checkCredentials(email, password);
                     System.out.println(profId);
-                    if(profId != -1){
-                        CRSProfessorMenu professorMenu =new CRSProfessorMenu();
+                    if (profId != -1) {
+                        CRSProfessorMenu professorMenu = new CRSProfessorMenu();
                         professorMenu.professorMenu(profId);
-                    }
-                    else{
+                    } else {
                         System.out.println("Invalid!!");
                     }
                     break;
@@ -121,7 +117,6 @@ public class CRSApplication {
     }
 
 
-
     private static void updatePassword() {
         Scanner sc = new Scanner(System.in);
         String email, password;
@@ -129,18 +124,16 @@ public class CRSApplication {
         email = sc.nextLine();
         System.out.println("Password:");
         password = sc.nextLine();
-        int profId = GetInstance.professorDAO.checkCredentials(email, password);
-        if(profId != -1){
+        int profId = new ProfessorDAO().checkCredentials(email, password);
+        if (profId != -1) {
             System.out.println("Enter new password:");
             String new_password = sc.nextLine();
-            GetInstance.professorDAO.updateCredentials(email, new_password);
+            new ProfessorDAO().updateCredentials(email, new_password);
             System.out.println("Password Updated Successfully!!!");
-        }
-        else{
+        } else {
             System.out.println("Invalid!!");
         }
     }
-
 
 
 }

@@ -1,9 +1,7 @@
 package com.crs.flipkart.dao;
 
-import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.utils.DBUtils;
-import com.crs.flipkart.utils.GetInstance;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,13 +34,13 @@ public class StudentDao implements  StudentDaoInterface{
     }
 
     public void registerCourse() {
-        GetInstance.courseCatalogueDAO.getCourseById(1).getStudentList().add(studentList.get(0));
-        GetInstance.courseCatalogueDAO.getCourseById(1).getStudentList().add(studentList.get(1));
-        GetInstance.courseCatalogueDAO.getCourseById(1).getStudentList().add(studentList.get(2));
+        new CourseCatalogueDAO().getCourseById(1).getStudentList().add(studentList.get(0));
+        new CourseCatalogueDAO().getCourseById(1).getStudentList().add(studentList.get(1));
+        new CourseCatalogueDAO().getCourseById(1).getStudentList().add(studentList.get(2));
 
-        GetInstance.courseCatalogueDAO.getCourseById(2).getStudentList().add(studentList.get(3));
-        GetInstance.courseCatalogueDAO.getCourseById(2).getStudentList().add(studentList.get(4));
-        GetInstance.courseCatalogueDAO.getCourseById(2).getStudentList().add(studentList.get(5));
+        new CourseCatalogueDAO().getCourseById(2).getStudentList().add(studentList.get(3));
+        new CourseCatalogueDAO().getCourseById(2).getStudentList().add(studentList.get(4));
+        new CourseCatalogueDAO().getCourseById(2).getStudentList().add(studentList.get(5));
     }
 
 
