@@ -2,6 +2,8 @@
  * 
  */
 package com.crs.flipkart.application;
+import com.crs.flipkart.bean.Admin;
+import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.dao.AdminDao;
 import com.crs.flipkart.dao.AdminDaoInterface;
@@ -83,7 +85,6 @@ public class CRSAdminMenu {
         System.out.println("Enter Course Name:");
         String courseName = scanner.nextLine();
 
-        //TODO : Implement course addtion
         boolean isAdded = new AdminDao().addCourse(courseCode, courseName);
         if(isAdded)
             System.out.println("Course added successfully");
@@ -104,10 +105,13 @@ public class CRSAdminMenu {
         System.out.println("---------------------------------------------------------------------------------------------\n");
 
         System.out.println("Enter Course Code:");
-        String courseCode = scanner.next();
+        int courseCode = scanner.nextInt();
 
-        //TODO : Implement Course Deletion
-
+        boolean isDeleted = new AdminDao().deleteCourse(courseCode);
+        if(isDeleted)
+            System.out.println("Course Removed from catalog");
+        else
+            System.out.println("Error while removing course from catalog");
         System.out.println("---------------------------------------------------------------------------------------------\n");
 
     }
@@ -153,26 +157,66 @@ public class CRSAdminMenu {
         System.out.println("---------------------------------------ADD PROFESOR----------------------------------------");
         System.out.println("---------------------------------------------------------------------------------------------\n");
 
+        Professor professor = new Professor();
+
         System.out.println("Enter Professor Id:");
-        String professorId = scanner.next();
+        int professorId = scanner.nextInt();
+        professor.setProfessorId(professorId);
+        scanner.nextLine();
 
         System.out.println("Enter Professor Name:");
-        String professorName = scanner.next();
+        String professorName = scanner.nextLine();
+        professor.setName(professorName);
 
         System.out.println("Enter Email Id:");
-        String emailId = scanner.next();
+        String emailId = scanner.nextLine();
+        professor.setEmailId(emailId);
 
         System.out.println("Enter Password:");
-        String password = scanner.next();
+        String password = scanner.nextLine();
+        professor.setPassword(password);
 
         System.out.println("Enter Phone:");
-        String phoneNo = scanner.next();
+        long phoneNo = scanner.nextInt();
+        professor.setContactNo(phoneNo);
+        scanner.nextLine();
 
         System.out.println("Enter Address:");
-        String address = scanner.next();
+        String address = scanner.nextLine();
+        professor.setAddress(address);
 
-        //TODO : Implement Professor addition
+        System.out.println("Please select your Gender:\n1)Male\n2)Female");
+        int gen = Integer.valueOf(scanner.nextLine());
+        switch (gen){
+            case 1:
+                professor.setGender("MALE");
+                break;
+            case 2:
+                professor.setGender("FEMALE");
+                break;
+            default:
+                professor.setGender("None");
+                break;
+        }
 
+        System.out.println("Please select your Branch:\n1)CSE\n2)ICT\n3)Mechanical");
+        int br = Integer.valueOf(scanner.nextLine());
+        switch (br){
+            case 1:
+                professor.setDepartment("CSE");
+                break;
+            case 2:
+                professor.setDepartment("ICT");
+                break;
+            case 3:
+                professor.setDepartment("Mechanical");
+                break;
+            default:
+                professor.setDepartment("None");
+                break;
+        }
+
+        boolean isAdded = new AdminDao().addProfessor(professor);
         System.out.println("---------------------------------------------------------------------------------------------\n");
 
     }

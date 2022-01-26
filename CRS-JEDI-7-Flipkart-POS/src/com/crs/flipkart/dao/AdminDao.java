@@ -1,5 +1,6 @@
 package com.crs.flipkart.dao;
 
+import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.utils.DBUtils;
 
@@ -72,7 +73,66 @@ public class AdminDao implements  AdminDaoInterface{
             statement.setInt(1, courseId);
             statement.setString(2, courseName);
             statement.setNull(3, nullObject);
+
+            statement.executeUpdate();
+            return true;
+        } catch (Exception ex) {
+            System.out.println(ex);
+        } finally {
+            try {
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        }
+        return false;
+    }
+
+    public boolean deleteCourse(int courseId){
+        Connection connection = null;
+        Statement statement = null;
+        try {
+            Integer nullObject = null;
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DBUtils.getConnection();
+            System.out.println("removing course...");
+            String sqlQuery = "delete from course where course_id =" + courseId;
+            statement = connection.createStatement();
             statement.executeUpdate(sqlQuery);
+            return true;
+        } catch (Exception ex) {
+            System.out.println(ex);
+        } finally {
+            try {
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        }
+        return false;
+    }
+
+    public boolean addProfessor(Professor professor){
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DBUtils.getConnection();
+            System.out.println("Adding professor...");
+            String sqlQuery = "insert into professor values(?, ?, ?, ?, ?, ?, ?, ?)";
+            statement = connection.prepareStatement(sqlQuery);
+            statement.setInt(1, professor.getProfessorId());
+            statement.setString(2, professor.getName());
+            statement.setString(3, professor.getEmailId());
+            statement.setString(4, professor.getPassword());
+            statement.setLong(5, professor.getContactNo());
+            statement.setString(6, professor.getAddress());
+            statement.setString(7, professor.getGender());
+            statement.setString(8, professor.getDepartment());
+
+            statement.executeUpdate();
             return true;
         } catch (Exception ex) {
             System.out.println(ex);
