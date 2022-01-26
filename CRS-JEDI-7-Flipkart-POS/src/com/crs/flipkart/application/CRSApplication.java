@@ -9,7 +9,6 @@ import com.crs.flipkart.dao.ProfessorDAO;
 import com.crs.flipkart.dao.StudentDao;
 import com.crs.flipkart.utils.DBUtils;
 import com.mysql.jdbc.Connection;
-//import sun.security.jca.GetInstance;
 
 import java.util.Scanner;
 
@@ -79,7 +78,7 @@ public class CRSApplication {
         student.setPassword(sc.nextLine());
         System.out.println("Please select your Branch:\n1)CSE\n2)ICT\n3)Mechanical");
         int br = Integer.valueOf(sc.nextLine());
-        switch (br){
+        switch (br) {
             case 1:
                 student.setBranch("CSE");
                 break;
@@ -93,13 +92,13 @@ public class CRSApplication {
                 student.setBranch("None");
                 break;
         }
-        student.setSemester(1);
+        student.setSemester(-1);
         student.setApproved(false);
         System.out.println("Enter your Address:");
         student.setAddress(sc.nextLine());
         System.out.println("Please select your Gender:\n1)Male\n2)Female");
         int gen = Integer.valueOf(sc.nextLine());
-        switch (gen){
+        switch (gen) {
             case 1:
                 student.setGender("MALE");
                 break;
@@ -136,18 +135,13 @@ public class CRSApplication {
         int profId = new ProfessorDAO().checkCredentials(email, password);
         int studentId = new StudentDao().checkCredentials(email, password);
         int adminId = new AdminDao().checkCredentials(email, password);
-        if(studentId!=-1)
-        {
+        if (studentId != -1) {
             loggedIn = true;
             role = 1;
-        }
-        else if(profId!=-1)
-        {
+        } else if (profId != -1) {
             loggedIn = true;
             role = 2;
-        }
-        else if(adminId!=-1)
-        {
+        } else if (adminId != -1) {
             loggedIn = true;
             role = 3;
         }
@@ -169,9 +163,9 @@ public class CRSApplication {
                     }
                     break;
                 case 2:
-                        System.out.println("Login Successful!");
-                        CRSProfessorMenu professorMenu = new CRSProfessorMenu();
-                        professorMenu.professorMenu(profId);
+                    System.out.println("Login Successful!");
+                    CRSProfessorMenu professorMenu = new CRSProfessorMenu();
+                    professorMenu.professorMenu(profId);
                     break;
                 case 3:
                     System.out.println("Login Successful!");

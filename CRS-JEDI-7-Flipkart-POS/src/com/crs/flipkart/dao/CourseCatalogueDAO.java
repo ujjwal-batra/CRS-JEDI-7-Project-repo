@@ -106,4 +106,31 @@ public class CourseCatalogueDAO implements CourseCatalogueDaoInterface {
             }
         }
     }
+
+    public int getStudentCount(int courseId) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DBUtils.getConnection();
+            String sqlQuery = "select count(*) from enrolled_course where course_id = " + courseId;
+            statement = connection.prepareStatement(sqlQuery);
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            int studentCount = 0;
+            while (resultSet.next()) {
+                studentCount++;
+            }
+            return studentCount;
+        } catch (Exception ex) {
+            System.out.println(ex);
+        } finally {
+            try {
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        }
+        return 0;
+    }
 }

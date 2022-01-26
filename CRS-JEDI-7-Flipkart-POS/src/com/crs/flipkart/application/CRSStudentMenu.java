@@ -1,8 +1,14 @@
 /**
- * 
+ *
  */
 package com.crs.flipkart.application;
 
+import com.crs.flipkart.bean.Course;
+import com.crs.flipkart.business.StudentService;
+import com.crs.flipkart.dao.CourseCatalogueDAO;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -14,7 +20,7 @@ public class CRSStudentMenu {
 
     private int semester = 1;
 
-    private boolean is_registered=true;
+    private boolean is_registered = true;
 
 
     /**
@@ -31,9 +37,9 @@ public class CRSStudentMenu {
             System.out.println("-----------------------------------------------------------------------------------------\n");
 
             System.out.println("1. Semester Registration");
-            System.out.println("2. Add Course");
-            System.out.println("3. Drop Course");
-            System.out.println("4. View Course");
+            System.out.println("2. Show Course Catalogue");
+            System.out.println("3. Course Registration");
+            System.out.println("4. Add or Drop Course");
             System.out.println("5. View Registered Courses");
             System.out.println("6. View grade card");
             System.out.println("7. Make Payment");
@@ -47,19 +53,26 @@ public class CRSStudentMenu {
                 case 1:
                     semesterRegistraion(studentId);
                     break;
-
                 case 2:
-                    addCourse(studentId);
+                    showCourseCatalogue();
                     break;
-
                 case 3:
-
-                    dropCourse(studentId);
+                    courseRegistration(studentId);
                     break;
-
-                case 4:
-                    viewCourse(studentId);
+                case 4: {
+                    System.out.println("1. Add a new course");
+                    System.out.println("2. Drop existing course");
+                    int option = sc.nextInt();
+                    switch (option) {
+                        case 1:
+                            addCourse(studentId);
+                            break;
+                        case 2:
+                            dropCourse(studentId);
+                            break;
+                    }
                     break;
+                }
 
                 case 5:
                     viewRegisteredCourse(studentId);
@@ -96,13 +109,15 @@ public class CRSStudentMenu {
         semester = sc.nextInt();
         sc.nextLine();
 
-        //TODO : Implement Semester Registration
+        boolean status = new StudentService().semesterRegistration(studentId, semester);
 
-
-        System.out.println("Registration Successful");
+        if (status) {
+            System.out.println("Registration Successful");
+            is_registered = true;
+        } else {
+            System.out.println("Registration Failure");
+        }
         System.out.println("-----------------------------------------------------------------------------------------\n\n");
-        is_registered = true;
-
     }
 
 
@@ -112,43 +127,89 @@ public class CRSStudentMenu {
      * @param studentId
 
      */
-    private void addCourse(int studentId) {
+    private void courseRegistration(int studentId) {
         if (is_registered) {
+            showCourseCatalogue();
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Enter 1st primary course");
+            int pc1 = Integer.parseInt(sc.nextLine());
+            System.out.println("Enter 2nd primary course");
+            int pc2 = Integer.parseInt(sc.nextLine());
+            System.out.println("Enter 3rd primary course");
+            int pc3 = Integer.parseInt(sc.nextLine());
+            System.out.println("Enter 4th primary course");
+            int pc4 = Integer.parseInt(sc.nextLine());
 
-            //TODO : Implement Course Addition
+            System.out.println("Enter 1st secondary course");
+            int sc1 = Integer.parseInt(sc.nextLine());
+            System.out.println("Enter 2nd secondary course");
+            int sc2 = Integer.parseInt(sc.nextLine());
 
+            ArrayList<Integer> registeredCourse = new StudentService().courseRegistration(studentId,
+                    new int[]{pc1, pc2, pc3, pc4},
+                    new int[]{sc1, sc2}
+            );
+            if (registeredCourse.size() == 4) {
+                System.out.println("Registration Successful ::: Assigned courses = " + registeredCourse);
+            } else {
+                System.out.println("Registration Failure");
+            }
+            System.out.println("-----------------------------------------------------------------------------------------\n\n");
         } else {
             System.out.println("Please complete registration");
         }
-
     }
 
+    private void showCourseCatalogue() {
+        for (Course course : new CourseCatalogueDAO().getCourseCatalogue().getCourseList()) {
+            System.out.println("CourseId: " + course.getCourseId() +
+                    ", CourseName: " + course.getCourseName() +
+                    ", Professor: " + (course.getProfessorId() == -1 ? "Not yet assigned" : course.getProfessorId()));
+        }
+    }
+
+    private void addCourse(int studentId) {
+        if (is_registered) {
+            viewRegisteredCourse(studentId);
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Enter course you want to add");
+            int courseId = Integer.parseInt(sc.nextLine());
+
+            boolean status = new StudentService().addCourse(studentId, courseId);
+            if (status) {
+                System.out.println("Add Successful");
+            } else {
+                System.out.println("Add Failure");
+            }
+            System.out.println("-----------------------------------------------------------------------------------------\n\n");
+        } else {
+            System.out.println("Please complete registration");
+        }
+    }
 
     private void dropCourse(int studentId) {
         if (is_registered) {
+            viewRegisteredCourse(studentId);
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Enter course you want to drop");
+            int courseId = Integer.parseInt(sc.nextLine());
 
-            //TODO : Implement Course Dropping
-
+            boolean status = new StudentService().dropCourse(studentId, courseId);
+            if (status) {
+                System.out.println("Drop Successful");
+            } else {
+                System.out.println("Drop Failure");
+            }
+            System.out.println("-----------------------------------------------------------------------------------------\n\n");
         } else {
             System.out.println("Please complete registration");
         }
-
     }
-
-    private void viewCourse(int studentId) {
-
-
-            //TODO : Implement View Course
-
-
-    }
-
 
     private void viewRegisteredCourse(int studentId) {
         if (is_registered) {
-
-            //TODO : Implement View Registered Course
-
+            List<String> courseNames = new StudentService().viewRegisteredCourse(studentId);
+            System.out.println("Registered course: " + courseNames);
         } else {
             System.out.println("Please complete registration");
         }
@@ -173,12 +234,6 @@ public class CRSStudentMenu {
         }
 
     }
-
-
-
-
-
-
 
 
 }

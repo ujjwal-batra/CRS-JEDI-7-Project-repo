@@ -1,17 +1,17 @@
 package com.crs.flipkart.dao;
 
-import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.utils.DBUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class StudentDao implements  StudentDaoInterface{
+public class StudentDao implements StudentDaoInterface {
 
     private List<Student> studentList = new ArrayList<>(
             Arrays.asList(
@@ -30,7 +30,7 @@ public class StudentDao implements  StudentDaoInterface{
         //registerCourse();
     }
 
-    public void getLastId(Student student){
+    public void getLastId(Student student) {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -39,7 +39,7 @@ public class StudentDao implements  StudentDaoInterface{
             String sqlQuery = "select * from student";
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 student.setStudentId(resultSet.getInt("student_id"));
             }
 
@@ -73,7 +73,7 @@ public class StudentDao implements  StudentDaoInterface{
             statement.setBoolean(7, student.isApproved());
             statement.setString(8, student.getAddress());
             statement.setString(9, student.getGender());
-            statement.setLong(10,student.getContactNo());
+            statement.setLong(10, student.getContactNo());
 
             statement.executeUpdate();
 
@@ -100,7 +100,6 @@ public class StudentDao implements  StudentDaoInterface{
         new CourseCatalogueDAO().getCourseById(2).getStudentList().add(studentList.get(5));
     }
 
-
     public Student getStudentById(int studentId) {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -112,7 +111,7 @@ public class StudentDao implements  StudentDaoInterface{
             String sqlQuery = "select * from student where student_id =" + studentId;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 student.setStudentId(resultSet.getInt("student_id"));
                 student.setGender(resultSet.getString("gender"));
                 student.setAddress(resultSet.getString("address"));
@@ -167,4 +166,109 @@ public class StudentDao implements  StudentDaoInterface{
         return -1;
     }
 
+    public boolean semesterRegistration(int studentId, int semester) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DBUtils.getConnection();
+            String sqlQuery = "select * from student where studentId = " + studentId;
+            statement = connection.prepareStatement(sqlQuery);
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            if (!resultSet.next()) {
+                return false;
+            }
+            sqlQuery = "update student set semester = " + semester + " where studentId = " + studentId;
+            ResultSet resultSet1 = statement.executeQuery(sqlQuery);
+            if (!resultSet1.next())
+                return false;
+            return true;
+        } catch (Exception ex) {
+            System.out.println(ex);
+        } finally {
+            try {
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        }
+        return true;
+    }
+
+    public boolean addCourse(int studentId, int courseId) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DBUtils.getConnection();
+            String sqlQuery = "insert into enrolled_course values(?, ?, ?)";
+            statement = connection.prepareStatement(sqlQuery);
+            statement.setInt(1, courseId);
+            statement.setInt(2, studentId);
+            statement.executeUpdate();
+            return true;
+        } catch (Exception ex) {
+            System.out.println(ex);
+        } finally {
+            try {
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        }
+        return false;
+    }
+
+    public boolean dropCourse(int studentId, int courseId) {
+        Connection connection = null;
+        Statement statement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DBUtils.getConnection();
+            statement = connection.createStatement();
+            String sqlQuery = "delete from enrolled_course where student_id = " + studentId
+                    + " and course_id = " + courseId;
+            statement.executeQuery(sqlQuery);
+            return true;
+        } catch (Exception ex) {
+            System.out.println(ex);
+        } finally {
+            try {
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        }
+        return false;
+    }
+
+    public List<Integer> viewEnrolledCourse(int studentId) {
+        List<Integer> res = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DBUtils.getConnection();
+            String sqlQuery = "select * from enrolled_course where student_id = " + studentId;
+            statement = connection.prepareStatement(sqlQuery);
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            while (resultSet.next()) {
+                res.add(resultSet.getInt("course_id"));
+            }
+            return res;
+        } catch (Exception ex) {
+            System.out.println(ex);
+        } finally {
+            try {
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        }
+        return res;
+    }
 }
