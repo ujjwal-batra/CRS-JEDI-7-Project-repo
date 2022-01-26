@@ -4,6 +4,7 @@
 package com.crs.flipkart.application;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.dao.AdminDao;
+import com.crs.flipkart.dao.AdminDaoInterface;
 import com.crs.flipkart.dao.StudentDao;
 
 import java.util.Scanner;
@@ -77,13 +78,17 @@ public class CRSAdminMenu {
         System.out.println("---------------------------------------------------------------------------------------------\n");
 
         System.out.println("Enter Course Code:");
-        String courseCode = scanner.nextLine();
-
+        int courseCode = scanner.nextInt();
+        scanner.nextLine();
         System.out.println("Enter Course Name:");
         String courseName = scanner.nextLine();
 
         //TODO : Implement course addtion
-
+        boolean isAdded = new AdminDao().addCourse(courseCode, courseName);
+        if(isAdded)
+            System.out.println("Course added successfully");
+        else
+            System.out.println("Error while adding course");
         System.out.println("---------------------------------------------------------------------------------------------\n");
 
     }
