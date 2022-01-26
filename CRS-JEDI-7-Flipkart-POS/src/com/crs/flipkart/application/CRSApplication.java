@@ -8,7 +8,7 @@ import com.crs.flipkart.dao.ProfessorDAO;
 import com.crs.flipkart.dao.StudentDao;
 import com.crs.flipkart.utils.DBUtils;
 import com.mysql.jdbc.Connection;
-import sun.security.jca.GetInstance;
+//import sun.security.jca.GetInstance;
 
 import java.util.Scanner;
 
@@ -96,7 +96,7 @@ public class CRSApplication {
         student.setApproved(false);
         System.out.println("Enter your Address:");
         student.setAddress(sc.nextLine());
-        System.out.println("Please select your Branch:\n1)Male\n2)Female");
+        System.out.println("Please select your Gender:\n1)Male\n2)Female");
         int gen = Integer.valueOf(sc.nextLine());
         switch (gen){
             case 1:
