@@ -3,10 +3,7 @@ package com.crs.flipkart.dao;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.utils.DBUtils;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -88,16 +85,6 @@ public class StudentDao implements StudentDaoInterface {
             }
         }
         return student;
-    }
-
-    public void registerCourse() {
-        new CourseCatalogueDAO().getCourseById(1).getStudentList().add(studentList.get(0));
-        new CourseCatalogueDAO().getCourseById(1).getStudentList().add(studentList.get(1));
-        new CourseCatalogueDAO().getCourseById(1).getStudentList().add(studentList.get(2));
-
-        new CourseCatalogueDAO().getCourseById(2).getStudentList().add(studentList.get(3));
-        new CourseCatalogueDAO().getCourseById(2).getStudentList().add(studentList.get(4));
-        new CourseCatalogueDAO().getCourseById(2).getStudentList().add(studentList.get(5));
     }
 
     public Student getStudentById(int studentId) {
@@ -206,6 +193,7 @@ public class StudentDao implements StudentDaoInterface {
             statement = connection.prepareStatement(sqlQuery);
             statement.setInt(1, courseId);
             statement.setInt(2, studentId);
+            statement.setNull(3, Types.INTEGER);
             statement.executeUpdate();
             return true;
         } catch (Exception ex) {
