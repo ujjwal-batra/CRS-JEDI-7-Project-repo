@@ -218,7 +218,7 @@ public class StudentDao implements StudentDaoInterface {
             statement = connection.createStatement();
             String sqlQuery = "delete from enrolled_course where student_id = " + studentId
                     + " and course_id = " + courseId;
-            statement.executeQuery(sqlQuery);
+            statement.executeUpdate(sqlQuery);
             return true;
         } catch (Exception ex) {
             System.out.println(ex);
