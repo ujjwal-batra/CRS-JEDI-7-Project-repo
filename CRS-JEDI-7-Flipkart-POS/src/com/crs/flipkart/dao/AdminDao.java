@@ -4,10 +4,7 @@ import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.utils.DBUtils;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class AdminDao implements  AdminDaoInterface{
     public int checkCredentials(String email, String password) {
@@ -64,7 +61,6 @@ public class AdminDao implements  AdminDaoInterface{
         Connection connection = null;
         PreparedStatement statement = null;
         try {
-            Integer nullObject = null;
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
             System.out.println("Genetrating course");
@@ -72,7 +68,7 @@ public class AdminDao implements  AdminDaoInterface{
             statement = connection.prepareStatement(sqlQuery);
             statement.setInt(1, courseId);
             statement.setString(2, courseName);
-            statement.setNull(3, nullObject);
+            statement.setNull(3, Types.INTEGER);
 
             statement.executeUpdate();
             return true;
@@ -93,7 +89,6 @@ public class AdminDao implements  AdminDaoInterface{
         Connection connection = null;
         Statement statement = null;
         try {
-            Integer nullObject = null;
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
             System.out.println("removing course...");
