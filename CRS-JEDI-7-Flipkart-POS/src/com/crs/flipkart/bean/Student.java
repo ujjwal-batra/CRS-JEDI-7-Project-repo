@@ -20,6 +20,14 @@ public class Student extends User {
     public Student() {
     }
 
+    public Student(String name, String password, String emailId, long contactNo, String userType, String address, String gender, int studentId, String branch, boolean isApproved, int semester) {
+        super(name, password, emailId, contactNo, userType, address, gender);
+        this.studentId = studentId;
+        this.branch = branch;
+        this.isApproved = isApproved;
+        this.semester = semester;
+    }
+
     public Student(int studentId, String name, String password, String emailId, long contactNo, String userType, String address, String gender, String branch, boolean isApproved, int semester) {
         super(name, password, emailId, contactNo, userType, address, gender);
         this.studentId = studentId;

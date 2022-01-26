@@ -2,6 +2,10 @@
  * 
  */
 package com.crs.flipkart.application;
+import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.dao.AdminDao;
+import com.crs.flipkart.dao.StudentDao;
+
 import java.util.Scanner;
 /**
  * @author Tushar
@@ -114,9 +118,20 @@ public class CRSAdminMenu {
         System.out.println("---------------------------------------------------------------------------------------------\n");
 
         System.out.println("Enter Student's ID:");
-        String studentUserIdApproval = scanner.nextLine();
+        int studentUserIdApproval = scanner.nextInt();
 
-        //TODO : Implement Student Approval
+        Student student = new StudentDao().getStudentById(studentUserIdApproval);
+        System.out.println(student.getStudentId());
+        if(student == null){
+            System.out.println("Student doesn't exist");
+        }
+        else if (student.isApproved()){
+            System.out.println("Student already approved");
+        }
+        else {
+            new AdminDao().approveStudent(student);
+            System.out.println("Student Approved");
+        }
 
         System.out.println("---------------------------------------------------------------------------------------------\n");
 

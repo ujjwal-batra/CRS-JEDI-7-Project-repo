@@ -1,5 +1,6 @@
 package com.crs.flipkart.dao;
 
+import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.utils.DBUtils;
 
@@ -103,27 +104,27 @@ public class StudentDao implements  StudentDaoInterface{
     public Student getStudentById(int studentId) {
         Connection connection = null;
         PreparedStatement statement = null;
+        Student student = new Student();
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
             System.out.println("Persisting Student details");
-            String sqlQuery = "select * from student where student_id = " + studentId;
+            String sqlQuery = "select * from student where student_id =" + studentId;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
-            Student student = new Student(
-                    resultSet.getInt("student_id"),
-                    resultSet.getString("name"),
-                    resultSet.getString("password"),
-                    resultSet.getString("email"),
-                    resultSet.getLong("contact_number"),
-                    "Student",
-                    resultSet.getString("address"),
-                    resultSet.getString("gender"),
-                    resultSet.getString("branch"),
-                    resultSet.getBoolean("is_approved"),
-                    resultSet.getInt("semester")
-
-            );
+            while(resultSet.next()) {
+                student.setStudentId(resultSet.getInt("student_id"));
+                student.setGender(resultSet.getString("gender"));
+                student.setAddress(resultSet.getString("address"));
+                student.setContactNo(resultSet.getLong("contact_number"));
+                student.setApproved(resultSet.getBoolean("is_approved"));
+                student.setPassword(resultSet.getString("password"));
+                student.setName(resultSet.getString("name"));
+                student.setBranch(resultSet.getString("branch"));
+                student.setSemester(resultSet.getInt("semester"));
+                student.setEmailId(resultSet.getString("email"));
+            }
+            return student;
 
         } catch (Exception ex) {
             System.out.println(ex);
