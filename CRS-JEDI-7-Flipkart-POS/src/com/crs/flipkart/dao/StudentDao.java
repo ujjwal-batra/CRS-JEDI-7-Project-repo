@@ -10,19 +10,6 @@ import java.util.List;
 
 public class StudentDao implements StudentDaoInterface {
 
-    private List<Student> studentList = new ArrayList<>(
-            Arrays.asList(
-                    new Student(1, "stud1", "root", "stud1@gmail.com", 78945612, "Student", "Delhi", "male", "CSE", true, 2),
-                    new Student(2, "stud2", "root", "stud2@gmail.com", 78945612, "Student", "Delhi", "male", "CSE", true, 2),
-                    new Student(3, "stud3", "root", "stud3@gmail.com", 78945612, "Student", "Delhi", "male", "CSE", true, 2),
-                    new Student(4, "stud4", "root", "stud4@gmail.com", 78945612, "Student", "Delhi", "male", "CSE", true, 2),
-                    new Student(5, "stud5", "root", "stud5@gmail.com", 78945612, "Student", "Delhi", "male", "CSE", true, 2),
-                    new Student(6, "stud6", "root", "stud6@gmail.com", 78945612, "Student", "Delhi", "male", "CSE", true, 2),
-                    new Student(7, "stud7", "root", "stud7@gmail.com", 78945612, "Student", "Delhi", "male", "CSE", true, 2)
-            )
-
-    );
-
     public StudentDao() {
         //registerCourse();
     }
@@ -94,7 +81,6 @@ public class StudentDao implements StudentDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            System.out.println("Persisting Student details");
             String sqlQuery = "select * from student where student_id =" + studentId;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);

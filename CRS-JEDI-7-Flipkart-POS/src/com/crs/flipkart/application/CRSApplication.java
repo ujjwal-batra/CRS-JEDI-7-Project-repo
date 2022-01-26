@@ -4,6 +4,7 @@
 package com.crs.flipkart.application;
 
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.business.ProfessorService;
 import com.crs.flipkart.dao.AdminDao;
 import com.crs.flipkart.dao.ProfessorDAO;
 import com.crs.flipkart.dao.StudentDao;
@@ -190,7 +191,7 @@ public class CRSApplication {
         if (profId != -1) {
             System.out.println("Enter new password:");
             String new_password = sc.nextLine();
-            new ProfessorDAO().updateCredentials(email, new_password);
+            new ProfessorService().updateCredentials(email, new_password);
             System.out.println("Password Updated Successfully!!!");
         } else {
             System.out.println("Invalid!!");

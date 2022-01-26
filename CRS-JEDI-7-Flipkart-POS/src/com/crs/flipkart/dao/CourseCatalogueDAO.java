@@ -32,8 +32,7 @@ public class CourseCatalogueDAO implements CourseCatalogueDaoInterface {
                 Course course = new Course(
                         resultSet.getInt("course_id"),
                         resultSet.getString("course_name"),
-                        resultSet.getInt("professor_id"),
-                        new ArrayList<>()
+                        resultSet.getInt("professor_id")
                 );
                 courseList.add(course);
             }
@@ -65,8 +64,7 @@ public class CourseCatalogueDAO implements CourseCatalogueDaoInterface {
                 course = new Course(
                         resultSet.getInt("course_id"),
                         resultSet.getString("course_name"),
-                        resultSet.getInt("professor_id"),
-                        new ArrayList<>()
+                        resultSet.getInt("professor_id")
                 );
             }
             return course;
@@ -132,5 +130,32 @@ public class CourseCatalogueDAO implements CourseCatalogueDaoInterface {
             }
         }
         return 0;
+    }
+
+    public List<Integer> getStudentListByCourseId(int courseId) {
+        List<Integer> res = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DBUtils.getConnection();
+            String sqlQuery = "select * from enrolled_course where course_id = " + courseId;
+            statement = connection.prepareStatement(sqlQuery);
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            while (resultSet.next()) {
+                res.add(resultSet.getInt("student_id"));
+            }
+            return res;
+        } catch (Exception ex) {
+            System.out.println(ex);
+        } finally {
+            try {
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        }
+        return res;
     }
 }

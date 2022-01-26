@@ -1,9 +1,6 @@
 package com.crs.flipkart.business;
 
 import com.crs.flipkart.bean.Course;
-import com.crs.flipkart.bean.Grade;
-import com.crs.flipkart.bean.Professor;
-import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.dao.CourseCatalogueDAO;
 import com.crs.flipkart.dao.ProfessorDAO;
 import com.crs.flipkart.dao.StudentDao;
@@ -13,11 +10,8 @@ import java.util.List;
 
 public class ProfessorService implements ProfessorInterface {
 
-    public void addGrade(int courseId, int studentId, int semester, double marks) {
-        Student student = new StudentDao().getStudentById(studentId);
-        Grade gradeObj = new Grade(courseId, student.getStudentId(), semester, marks);
-        List<Grade> gradeList = student.getGradeCard().getGrades();
-        gradeList.add(gradeObj);
+    public boolean addGrade(int courseId, int studentId, double marks) {
+        return new ProfessorDAO().addGrade(studentId, courseId, marks);
     }
 
     public void selectCourseToTeach(int courseId, int professorId) {
@@ -26,7 +20,7 @@ public class ProfessorService implements ProfessorInterface {
         new CourseCatalogueDAO().updateCourse(course);
     }
 
-    public List<Student> getStudentList(int courseId) {
+    public List<Integer> getStudentList(int courseId) {
         return new RegisteredStudentsService().getStudentListByCourseId(courseId);
     }
 
@@ -34,14 +28,23 @@ public class ProfessorService implements ProfessorInterface {
         return new CourseCatalogueDAO().getCourseCatalogue().getCourseList();
     }
 
-    public List<Student> viewStudentsForAllCourses(int professorId) {
-        List<Student> studentList = new ArrayList<>();
+    public void updateCredentials(String email, String password) {
+        new ProfessorDAO().updateCredentials(email, password);
+    }
 
+    public List<String> viewStudentsForAllCourses(int professorId) {
+        List<String> studentList = new ArrayList<>();
+        StudentDao studentDao = new StudentDao();
         for (Course course : getCourseList()) {
-            if (course.getProfessorId() != -1 && course.getProfessorId() == professorId)
-                studentList.addAll(getStudentList(course.getCourseId()));
-        }
+            if (course.getProfessorId() != -1 && course.getProfessorId() == professorId) {
+                List<Integer> studentListForSingleCourse = getStudentList(course.getCourseId());
+                for (Integer studentId : studentListForSingleCourse) {
+                    studentList.add("\nStudentID: " + studentId + ", StudentName: " + studentDao.getStudentById(studentId).getName() +
+                            ", CourseID: " + course.getCourseId() + ", CourseName" + course.getCourseName());
+                }
 
+            }
+        }
         return studentList;
     }
 }

@@ -162,4 +162,29 @@ public class ProfessorDAO implements ProfessorDaoInterface {
         return true;
     }
 
+    public boolean addGrade(int studentId, int courseId, double marks) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DBUtils.getConnection();
+            String sqlQuery = "update enrolled_course set grade = " + ((int) marks)
+                    + " where student_id = " + studentId + " and course_id = " + courseId;
+            statement = connection.prepareStatement(sqlQuery);
+            statement.executeUpdate();
+            return true;
+        } catch (Exception ex) {
+            System.out.println(ex);
+        } finally {
+            try {
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        }
+
+        return false;
+    }
+
 }

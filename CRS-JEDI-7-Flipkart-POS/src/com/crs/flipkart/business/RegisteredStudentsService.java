@@ -9,9 +9,8 @@ import java.util.List;
 
 public class RegisteredStudentsService implements RegisteredStudentsInterface {
 
-    public List<Student> getStudentListByCourseId(int courseId) {
-        Course course = new CourseCatalogueDAO().getCourseById(courseId);
-        return course.getStudentList();
+    public List<Integer> getStudentListByCourseId(int courseId) {
+        return new CourseCatalogueDAO().getStudentListByCourseId(courseId);
     }
 
     public List<Course> getCourseListForStudentId(int studentId) {
