@@ -4,6 +4,7 @@
 package com.crs.flipkart.application;
 
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.dao.AdminDao;
 import com.crs.flipkart.dao.ProfessorDAO;
 import com.crs.flipkart.dao.StudentDao;
 import com.crs.flipkart.utils.DBUtils;
@@ -130,14 +131,34 @@ public class CRSApplication {
         System.out.println("Password:");
         password = sc.nextLine();
 
-        Boolean loggedIn = true;  //Authentication
+        Boolean loggedIn = false;
+        int role = -1;
+        int profId = new ProfessorDAO().checkCredentials(email, password);
+        int studentId = new StudentDao().checkCredentials(email, password);
+        int adminId = new AdminDao().checkCredentials(email, password);
+        if(studentId!=-1)
+        {
+            loggedIn = true;
+            role = 1;
+        }
+        else if(profId!=-1)
+        {
+            loggedIn = true;
+            role = 2;
+        }
+        else if(adminId!=-1)
+        {
+            loggedIn = true;
+            role = 3;
+        }
+
 
         if (loggedIn) {
-            int role = 2; //after authorization
+
 
             switch (role) {
                 case 1:
-                    int isApproved = 1; //check approval
+                    int isApproved = 1; //TODO: check approval
                     if (isApproved == 1) {
                         System.out.println("Login Successful!");
                         CRSStudentMenu studentMenu = new CRSStudentMenu();
@@ -148,19 +169,14 @@ public class CRSApplication {
                     }
                     break;
                 case 2:
-                    int profId = new ProfessorDAO().checkCredentials(email, password);
-                    System.out.println(profId);
-                    if (profId != -1) {
+                        System.out.println("Login Successful!");
                         CRSProfessorMenu professorMenu = new CRSProfessorMenu();
                         professorMenu.professorMenu(profId);
-                    } else {
-                        System.out.println("Invalid!!");
-                    }
                     break;
                 case 3:
                     System.out.println("Login Successful!");
-                    CRSAdminMenu studentMenu = new CRSAdminMenu();
-
+                    CRSAdminMenu adminMenu = new CRSAdminMenu();
+                    adminMenu.createMenu();
                     break;
 
             }
