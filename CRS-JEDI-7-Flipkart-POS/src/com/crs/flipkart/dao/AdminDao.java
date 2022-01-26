@@ -14,7 +14,6 @@ public class AdminDao implements  AdminDaoInterface{
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-           // System.out.println("Checking Credentials");
             String sqlQuery = "select * from admin where email = '" + email + "' and password = '" + password + "'";
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);

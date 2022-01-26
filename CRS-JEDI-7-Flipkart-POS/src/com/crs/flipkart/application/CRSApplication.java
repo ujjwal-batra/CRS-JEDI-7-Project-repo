@@ -162,6 +162,7 @@ public class CRSApplication {
                     if (isApproved == 1) {
                         System.out.println("Login Successful!");
                         CRSStudentMenu studentMenu = new CRSStudentMenu();
+                        studentMenu.create_menu(studentId);
 
                     } else {
                         System.out.println("You have not been approved by the admin!");
