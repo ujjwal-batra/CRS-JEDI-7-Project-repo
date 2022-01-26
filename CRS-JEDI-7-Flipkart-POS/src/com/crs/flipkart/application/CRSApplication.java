@@ -158,14 +158,13 @@ public class CRSApplication {
 
             switch (role) {
                 case 1:
-                    int isApproved = 1; //TODO: check approval
-                    if (isApproved == 1) {
+                    boolean isApproved = new StudentDao().getStudentById(studentId).isApproved();
+                    if (isApproved) {
                         System.out.println("Login Successful!");
                         CRSStudentMenu studentMenu = new CRSStudentMenu();
                         studentMenu.create_menu(studentId);
 
                     } else {
-                        System.out.println("You have not been approved by the admin!");
                         loggedIn = false;
                     }
                     break;
