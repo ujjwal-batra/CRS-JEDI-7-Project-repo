@@ -4,8 +4,8 @@
 package com.crs.flipkart.application;
 
 import com.crs.flipkart.bean.Course;
+import com.crs.flipkart.business.CourseOperationService;
 import com.crs.flipkart.business.StudentService;
-import com.crs.flipkart.dao.CourseOperationDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -174,10 +174,10 @@ public class CRSStudentMenu {
     }
 
     private void showCourseCatalogue() {
-        for (Course course : new CourseOperationDAO().getCourseCatalogue().getCourseList()) {
+        for (Course course : new CourseOperationService().getCourseCatalogue().getCourseList()) {
             System.out.println("CourseId: " + course.getCourseId() +
                     ", CourseName: " + course.getCourseName() +
-                    ", Professor: " + (course.getProfessorId() == -1 ? "Not yet assigned" : course.getProfessorId()));
+                    ", Professor: " + (course.getProfessorId() == -1 || course.getProfessorId() == 0 ? "Not yet assigned" : course.getProfessorId()));
         }
     }
 

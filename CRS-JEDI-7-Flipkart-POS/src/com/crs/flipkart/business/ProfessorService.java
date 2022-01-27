@@ -1,6 +1,7 @@
 package com.crs.flipkart.business;
 
 import com.crs.flipkart.bean.Course;
+import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.dao.CourseOperationDAO;
 import com.crs.flipkart.dao.ProfessorDAO;
 import com.crs.flipkart.dao.ProfessorDaoInterface;
@@ -82,5 +83,15 @@ public class ProfessorService implements ProfessorInterface {
             }
         }
         return studentList;
+    }
+
+    @Override
+    public int checkCredentials(String email, String password) {
+        return new ProfessorDAO().checkCredentials(email, password);
+    }
+
+    @Override
+    public Professor getProfessorById(int professorId) {
+        return new ProfessorDAO().getProfessorById(professorId);
     }
 }

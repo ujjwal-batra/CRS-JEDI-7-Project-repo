@@ -4,6 +4,7 @@
 package com.crs.flipkart.business;
 
 import com.crs.flipkart.bean.Course;
+import com.crs.flipkart.bean.Professor;
 
 import java.util.List;
 
@@ -49,4 +50,8 @@ public interface ProfessorInterface {
 	 * @return List of String.
 	 */
     public List<String> viewStudentsForAllCourses(int professorId);
+
+    int checkCredentials(String email, String password);
+
+    Professor getProfessorById(int professorId);
 }

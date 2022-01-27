@@ -5,9 +5,8 @@ package com.crs.flipkart.application;
 
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.business.ProfessorService;
-import com.crs.flipkart.dao.AdminDao;
-import com.crs.flipkart.dao.ProfessorDAO;
-import com.crs.flipkart.dao.StudentDao;
+import com.crs.flipkart.business.AdminService;
+import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.utils.DBUtils;
 import com.mysql.jdbc.Connection;
 
@@ -112,14 +111,14 @@ public class CRSApplication {
         }
         System.out.println("Enter your Contact No.:");
         student.setContactNo(Integer.valueOf(sc.nextLine()));
-        new StudentDao().getLastId(student);
+        new StudentService().getLastId(student);
         int sid = student.getStudentId();
         sid++;
         student.setStudentId(sid);
         String email = String.valueOf(sid) + "@gm.com";
         student.setStudentId(sid);
         student.setEmailId(email);
-        student = new StudentDao().saveStudent(student);
+        student = new StudentService().saveStudent(student);
         System.out.println("Your Student ID:" + student.getStudentId() + "\n Your email ID:" + student.getEmailId() + "\n Please wait for the admin to approve your profile.");
     }
 
@@ -133,9 +132,9 @@ public class CRSApplication {
 
         Boolean loggedIn = false;
         int role = -1;
-        int profId = new ProfessorDAO().checkCredentials(email, password);
-        int studentId = new StudentDao().checkCredentials(email, password);
-        int adminId = new AdminDao().checkCredentials(email, password);
+        int profId = new ProfessorService().checkCredentials(email, password);
+        int studentId = new StudentService().checkCredentials(email, password);
+        int adminId = new AdminService().checkCredentials(email, password);
         if (studentId != -1) {
             loggedIn = true;
             role = 1;
@@ -153,7 +152,7 @@ public class CRSApplication {
 
             switch (role) {
                 case 1:
-                    boolean isApproved = new StudentDao().getStudentById(studentId).isApproved();
+                    boolean isApproved = new StudentService().getStudentById(studentId).isApproved();
                     if (isApproved) {
                         System.out.println("Login Successful!");
                         CRSStudentMenu studentMenu = new CRSStudentMenu();
@@ -187,7 +186,7 @@ public class CRSApplication {
         email = sc.nextLine();
         System.out.println("Password:");
         password = sc.nextLine();
-        int profId = new ProfessorDAO().checkCredentials(email, password);
+        int profId = new ProfessorService().checkCredentials(email, password);
         if (profId != -1) {
             System.out.println("Enter new password:");
             String new_password = sc.nextLine();
