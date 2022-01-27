@@ -16,6 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `course`
+--
+
+DROP TABLE IF EXISTS `course`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `course` (
+  `course_id` int NOT NULL,
+  `course_name` varchar(255) DEFAULT NULL,
+  `professor_id` int DEFAULT NULL,
+  PRIMARY KEY (`course_id`),
+  KEY `professor_id_idx` (`professor_id`),
+  CONSTRAINT `professor_id` FOREIGN KEY (`professor_id`) REFERENCES `professor` (`professor_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `course`
+--
+
+LOCK TABLES `course` WRITE;
+/*!40000 ALTER TABLE `course` DISABLE KEYS */;
+INSERT INTO `course` VALUES (1,'DSA',-1),(2,'TOC',-1),(3,'M!',-1),(4,'CD',-1),(5,'DL',-1),(6,'CN',-1),(7,'OS',-1);
+/*!40000 ALTER TABLE `course` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `notification`
 --
 
@@ -24,13 +51,13 @@ DROP TABLE IF EXISTS `notification`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `notification` (
   `notification_id` int NOT NULL,
-  `student_id` int NOT NULL,
-  `message` varchar(225) NOT NULL,
-  `notification_type` varchar(45) NOT NULL,
+  `student_id` int DEFAULT NULL,
+  `message` varchar(255) DEFAULT NULL,
+  `notification_type` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`notification_id`),
-  KEY `noti_student_id_idx` (`student_id`),
-  CONSTRAINT `noti_student_id` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `student_id_2_idx` (`student_id`),
+  CONSTRAINT `student_id_2` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='			';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -51,4 +78,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-27 10:50:53
+-- Dump completed on 2022-01-27 11:01:39
