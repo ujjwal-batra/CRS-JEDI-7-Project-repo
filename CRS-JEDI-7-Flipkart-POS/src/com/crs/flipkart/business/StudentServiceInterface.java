@@ -24,4 +24,6 @@ public interface StudentServiceInterface {
     int checkCredentials(String email, String password);
 
     Student getStudentById(int studentId);
+
+    List<String> getGradeCard(int studentId);
 }

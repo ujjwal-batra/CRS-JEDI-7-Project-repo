@@ -47,4 +47,6 @@ public interface CourseOperationDaoInterface {
    	 * @return List of Integer
    	 */
     public List<Integer> getStudentListByCourseId(int courseId);
+
+    List<String> getGrades(int studentId);
 }

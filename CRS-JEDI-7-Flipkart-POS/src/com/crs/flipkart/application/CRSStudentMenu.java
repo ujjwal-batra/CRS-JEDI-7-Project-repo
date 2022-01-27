@@ -5,8 +5,8 @@ package com.crs.flipkart.application;
 
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.business.CourseOperationService;
+import com.crs.flipkart.business.PaymentService;
 import com.crs.flipkart.business.StudentService;
-import com.crs.flipkart.dao.PaymentDao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -236,9 +236,12 @@ public class CRSStudentMenu {
     }
 
     private void viewGradeCard(int studentId) {
-
-
-        //TODO : Implement View Grade Card Addition
+        if (is_registered) {
+            List<String> gradeCard = new StudentService().getGradeCard(studentId);
+            System.out.println("Grade Card: " + gradeCard);
+        } else {
+            System.out.println("Please complete registration");
+        }
 
     }
 
@@ -296,7 +299,7 @@ public class CRSStudentMenu {
 
             }
 
-            PaymentDao payment = new PaymentDao();
+            PaymentService payment = new PaymentService();
             payment.makePayment(payment_id, invoice, studentId, amount, status, mode);
 
         } else {

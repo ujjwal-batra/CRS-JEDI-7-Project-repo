@@ -13,11 +13,12 @@ public class StudentService implements StudentServiceInterface {
     CourseOperationDAO courseCatalogueDAO = new CourseOperationDAO();
 
     /**
-	 * Method to initiate semester registration for student
-	 * @param studentId
-	 * @param semester
-	 * @return List of Integer (courseId)
-	 */
+     * Method to initiate semester registration for student
+     *
+     * @param studentId
+     * @param semester
+     * @return List of Integer (courseId)
+     */
 
     @Override
     public boolean semesterRegistration(int studentId, int semester) {
@@ -25,12 +26,13 @@ public class StudentService implements StudentServiceInterface {
     }
 
     /**
-	 * Method to register for course
-	 * @param studentId
-	 * @param primary
-	 * @param secondary
-	 * @return List of Integer (courseId)
-	 */
+     * Method to register for course
+     *
+     * @param studentId
+     * @param primary
+     * @param secondary
+     * @return List of Integer (courseId)
+     */
 
     @Override
     public ArrayList<Integer> courseRegistration(int studentId, int[] primary, int[] secondary) {
@@ -49,11 +51,12 @@ public class StudentService implements StudentServiceInterface {
     }
 
     /**
-	 * Method remove course from database
-	 * @param studentId
-	 * @param courseId
-	 * @return List of Integer (courseId)
-	 */
+     * Method remove course from database
+     *
+     * @param studentId
+     * @param courseId
+     * @return List of Integer (courseId)
+     */
 
     @Override
     public boolean dropCourse(int studentId, int courseId) {
@@ -61,11 +64,12 @@ public class StudentService implements StudentServiceInterface {
     }
 
     /**
-	 * Method to add course to database
-	 * @param studentId
-	 * @param courseId
-	 * @return List of Integer (courseId)
-	 */
+     * Method to add course to database
+     *
+     * @param studentId
+     * @param courseId
+     * @return List of Integer (courseId)
+     */
 
     @Override
     public int addCourse(int studentId, int courseId) {
@@ -76,10 +80,11 @@ public class StudentService implements StudentServiceInterface {
     }
 
     /**
-	 * Method to view all the registered courses
-	 * @param studentId
-	 * @return List of Integer (courseId)
-	 */
+     * Method to view all the registered courses
+     *
+     * @param studentId
+     * @return List of Integer (courseId)
+     */
 
     @Override
     public List<String> viewRegisteredCourse(int studentId) {
@@ -111,5 +116,10 @@ public class StudentService implements StudentServiceInterface {
     @Override
     public Student getStudentById(int studentId) {
         return new StudentDao().getStudentById(studentId);
+    }
+
+    @Override
+    public List<String> getGradeCard(int studentId) {
+        return new CourseOperationDAO().getGrades(studentId);
     }
 }
