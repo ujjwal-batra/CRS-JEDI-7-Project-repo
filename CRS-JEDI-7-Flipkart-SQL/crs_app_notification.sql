@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
 --
 -- Host: localhost    Database: crs_app
 -- ------------------------------------------------------
--- Server version	8.0.27
+-- Server version	8.0.28
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,33 +16,57 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `payment_notification`
+-- Table structure for table `course`
 --
 
-DROP TABLE IF EXISTS `payment_notification`;
+DROP TABLE IF EXISTS `course`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `payment_notification` (
+CREATE TABLE `course` (
+  `course_id` int NOT NULL,
+  `course_name` varchar(255) DEFAULT NULL,
+  `professor_id` int DEFAULT NULL,
+  PRIMARY KEY (`course_id`),
+  KEY `professor_id_idx` (`professor_id`),
+  CONSTRAINT `professor_id` FOREIGN KEY (`professor_id`) REFERENCES `professor` (`professor_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `course`
+--
+
+LOCK TABLES `course` WRITE;
+/*!40000 ALTER TABLE `course` DISABLE KEYS */;
+INSERT INTO `course` VALUES (1,'DSA',-1),(2,'TOC',-1),(3,'M!',-1),(4,'CD',-1),(5,'DL',-1),(6,'CN',-1),(7,'OS',-1);
+/*!40000 ALTER TABLE `course` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `notification`
+--
+
+DROP TABLE IF EXISTS `notification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `notification` (
   `notification_id` int NOT NULL,
   `student_id` int DEFAULT NULL,
-  `payment_id` int DEFAULT NULL,
   `message` varchar(255) DEFAULT NULL,
   `notification_type` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`notification_id`),
   KEY `student_id_2_idx` (`student_id`),
-  KEY `payment_id_idx` (`payment_id`),
-  CONSTRAINT `payment_id` FOREIGN KEY (`payment_id`) REFERENCES `payment` (`payment_id`),
   CONSTRAINT `student_id_2` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='			';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `payment_notification`
+-- Dumping data for table `notification`
 --
 
-LOCK TABLES `payment_notification` WRITE;
-/*!40000 ALTER TABLE `payment_notification` DISABLE KEYS */;
-/*!40000 ALTER TABLE `payment_notification` ENABLE KEYS */;
+LOCK TABLES `notification` WRITE;
+/*!40000 ALTER TABLE `notification` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notification` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +78,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-25 12:37:36
+-- Dump completed on 2022-01-27 11:01:39

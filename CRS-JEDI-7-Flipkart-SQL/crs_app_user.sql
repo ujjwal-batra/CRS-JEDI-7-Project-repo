@@ -16,34 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `student`
+-- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `student`;
+DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `student` (
-  `student_id` int NOT NULL,
-  `gender` varchar(45) NOT NULL,
-  `address` varchar(225) NOT NULL,
-  `contact_number` int NOT NULL,
-  `is_approved` tinyint NOT NULL,
-  `name` varchar(225) NOT NULL,
-  `branch` varchar(45) NOT NULL,
-  `semester` int NOT NULL,
-  PRIMARY KEY (`student_id`),
-  CONSTRAINT `student_user_id` FOREIGN KEY (`student_id`) REFERENCES `user` (`user_id`)
+CREATE TABLE `user` (
+  `user_id` int NOT NULL,
+  `email` varchar(225) NOT NULL,
+  `password` varchar(225) NOT NULL,
+  `type` varchar(45) NOT NULL,
+  PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `student`
+-- Dumping data for table `user`
 --
 
-LOCK TABLES `student` WRITE;
-/*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (101,'MALE','Mumbai',987654321,0,'Jayant','CSE',1),(102,'MALE','Mumbai',987654321,1,'Jayant','CSE',1),(103,'MALE','Mumbai',987654321,1,'Jayant','CSE',1),(104,'MALE','Mumbai',987654321,0,'Jayant','CSE',1),(105,'MALE','Mumbai',987654321,1,'Jayant','CSE',1);
-/*!40000 ALTER TABLE `student` ENABLE KEYS */;
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'1a@gm.com','password','ADMIN'),(2,'2a@gm.com','password','ADMIN'),(11,'10p@gm.com','password','PROFESSOR'),(12,'12p@gm.com','password','PROFESSOR'),(101,'101@gm.com','password','STUDENT'),(102,'102@gm.com','password','STUDENT'),(103,'103@gm.com','password','STUDENT'),(104,'104@gm.com','password','STUDENT'),(105,'105@gm.com','password','STUDENT');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
