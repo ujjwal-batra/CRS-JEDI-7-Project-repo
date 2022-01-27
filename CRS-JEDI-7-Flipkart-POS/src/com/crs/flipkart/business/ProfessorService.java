@@ -3,6 +3,7 @@ package com.crs.flipkart.business;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.dao.CourseOperationDAO;
 import com.crs.flipkart.dao.ProfessorDAO;
+import com.crs.flipkart.dao.ProfessorDaoInterface;
 import com.crs.flipkart.dao.StudentDao;
 
 import java.util.ArrayList;
@@ -18,7 +19,8 @@ public class ProfessorService implements ProfessorInterface {
 	 * @return boolean
 	 */
     public boolean addGrade(int courseId, int studentId, double marks) {
-        return new ProfessorDAO().addGrade(studentId, courseId, marks);
+        ProfessorDaoInterface professorDaoInterface = new ProfessorDAO();
+        return professorDaoInterface.addGrade(studentId, courseId, marks);
     }
     
     /**

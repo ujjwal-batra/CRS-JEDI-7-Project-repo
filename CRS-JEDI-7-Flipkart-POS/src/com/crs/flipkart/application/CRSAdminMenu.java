@@ -5,6 +5,8 @@ package com.crs.flipkart.application;
 import com.crs.flipkart.bean.Admin;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.business.AdminService;
+import com.crs.flipkart.business.AdminServiceInterface;
 import com.crs.flipkart.dao.AdminDao;
 import com.crs.flipkart.dao.AdminDaoInterface;
 import com.crs.flipkart.dao.StudentDao;
@@ -85,7 +87,8 @@ public class CRSAdminMenu {
         System.out.println("Enter Course Name:");
         String courseName = scanner.nextLine();
 
-        boolean isAdded = new AdminDao().addCourse(courseCode, courseName);
+        AdminServiceInterface adminServiceInterface = new AdminService();
+        boolean isAdded = adminServiceInterface.addCourse(courseCode, courseName);
         if(isAdded)
             System.out.println("Course added successfully");
         else
@@ -107,7 +110,8 @@ public class CRSAdminMenu {
         System.out.println("Enter Course Code:");
         int courseCode = scanner.nextInt();
 
-        boolean isDeleted = new AdminDao().deleteCourse(courseCode);
+        AdminServiceInterface adminServiceInterface = new AdminService();
+        boolean isDeleted = adminServiceInterface.deleteCourse(courseCode);
         if(isDeleted)
             System.out.println("Course Removed from catalog");
         else
@@ -138,7 +142,8 @@ public class CRSAdminMenu {
             System.out.println("Student already approved");
         }
         else {
-            new AdminDao().approveStudent(student);
+            AdminServiceInterface adminServiceInterface = new AdminService();
+            adminServiceInterface.approveStudent(student);
             System.out.println("Student Approved");
         }
 
@@ -216,7 +221,12 @@ public class CRSAdminMenu {
                 break;
         }
 
-        boolean isAdded = new AdminDao().addProfessor(professor);
+        AdminServiceInterface adminServiceInterface = new AdminService();
+        boolean isAdded = adminServiceInterface.addProfessor(professor);
+        if(isAdded)
+            System.out.println("Professor added successfully");
+        else
+            System.out.println("error while adding. Try again");
         System.out.println("---------------------------------------------------------------------------------------------\n");
 
     }
