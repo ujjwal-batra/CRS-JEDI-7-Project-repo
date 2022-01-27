@@ -25,11 +25,11 @@ DROP TABLE IF EXISTS `enrolled_course`;
 CREATE TABLE `enrolled_course` (
   `course_id` int NOT NULL,
   `student_id` int NOT NULL,
-  `grade` int NOT NULL,
-  KEY `enrolled_course_id_idx` (`course_id`),
-  KEY `enrolled_student_id_idx` (`student_id`),
-  CONSTRAINT `enrolled_course_id` FOREIGN KEY (`course_id`) REFERENCES `courses` (`course_id`),
-  CONSTRAINT `enrolled_student_id` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`)
+  `grade` int DEFAULT NULL,
+  KEY `course_id_idx` (`course_id`),
+  KEY `student_id_idx` (`student_id`),
+  CONSTRAINT `course_id` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`),
+  CONSTRAINT `student_id` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-27 10:50:54
+-- Dump completed on 2022-01-27 11:21:22

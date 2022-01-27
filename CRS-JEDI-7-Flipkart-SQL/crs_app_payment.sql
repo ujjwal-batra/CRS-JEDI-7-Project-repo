@@ -24,14 +24,14 @@ DROP TABLE IF EXISTS `payment`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `payment` (
   `payment_id` int NOT NULL,
+  `invoice_no` int NOT NULL,
   `student_id` int NOT NULL,
+  `amount` int NOT NULL,
   `status` varchar(45) NOT NULL,
   `mode` varchar(45) NOT NULL,
-  `amount` int NOT NULL,
-  `invoice_no` int DEFAULT NULL,
   PRIMARY KEY (`payment_id`),
-  KEY `paymnet_student_id_idx` (`student_id`),
-  CONSTRAINT `paymnet_student_id` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`)
+  KEY `student_id_idx` (`student_id`),
+  CONSTRAINT `student_id_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-27 10:50:53
+-- Dump completed on 2022-01-27 11:21:21

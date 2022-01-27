@@ -24,13 +24,14 @@ DROP TABLE IF EXISTS `professor`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `professor` (
   `professor_id` int NOT NULL,
-  `name` varchar(225) NOT NULL,
-  `contact_number` varchar(225) NOT NULL,
-  `address` varchar(225) NOT NULL,
-  `gender` varchar(45) NOT NULL,
-  `department` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`professor_id`),
-  CONSTRAINT `professor_user_id` FOREIGN KEY (`professor_id`) REFERENCES `user` (`user_id`)
+  `name` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `contact_number` int DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `gender` varchar(45) DEFAULT NULL,
+  `department` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`professor_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -40,7 +41,7 @@ CREATE TABLE `professor` (
 
 LOCK TABLES `professor` WRITE;
 /*!40000 ALTER TABLE `professor` DISABLE KEYS */;
-INSERT INTO `professor` VALUES (11,'Jayant','987654321','Mumbai','MALE','CSE'),(12,'Jayant','987654321','Mumbai','MALE','CSE');
+INSERT INTO `professor` VALUES (1,'Aditya','1@gm.com','password',98765873,'Ahmedabad','MALE','CSE'),(2,'Kalyan','2@gm.com','password',98765873,'Mumbai','MALE','CSE'),(3,'Bhaskar','3@gm.com','password',98763873,'Ahmedabad','MALE','CSE'),(4,'Jaydeep','4@gm.com','password',98763873,'Banglore','MALE','CSE'),(5,'Yash','5@gm.com','password',98765133,'Kolkata','MALE','CSE');
 /*!40000 ALTER TABLE `professor` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-27 10:50:54
+-- Dump completed on 2022-01-27 11:21:22
