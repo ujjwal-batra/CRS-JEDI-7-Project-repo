@@ -152,10 +152,9 @@ public class StudentDao implements StudentDaoInterface {
             if (!resultSet.next()) {
                 return false;
             }
-            sqlQuery = Constants.SET_STUDENT_SEMESTER + semester + " where studentId = " + studentId;
-            ResultSet resultSet1 = statement.executeQuery(sqlQuery);
-            if (!resultSet1.next())
-                return false;
+            sqlQuery = Constants.SET_STUDENT_SEMESTER + semester + " where student_id = " + studentId;
+            statement = connection.prepareStatement(sqlQuery);
+            statement.executeUpdate();
             return true;
         } catch (Exception ex) {
             System.out.println(ex);
