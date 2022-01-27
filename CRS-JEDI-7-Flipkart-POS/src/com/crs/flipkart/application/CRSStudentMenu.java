@@ -4,10 +4,8 @@
 package com.crs.flipkart.application;
 
 import com.crs.flipkart.bean.Course;
-import com.crs.flipkart.bean.Payment;
 import com.crs.flipkart.business.CourseOperationService;
 import com.crs.flipkart.business.StudentService;
-import com.crs.flipkart.dao.CourseCatalogueDAO;
 import com.crs.flipkart.dao.PaymentDao;
 
 import java.util.ArrayList;
@@ -261,18 +259,18 @@ public class CRSStudentMenu {
             sc.nextLine();
 
 
-            int invoice ;
-          String BankName;
-          String ifsc;
+            int invoice;
+            String BankName;
+            String ifsc;
             int amount = 1000;
-            String status ="success";
+            String status = "success";
             System.out.print("Amount to be Paid :\t\tRs. " + amount);
             System.out.println("");
-            String mode="";
+            String mode = "";
             System.out.print("Enter Payment ID:\t");
             int payment_id = sc.nextInt();
             System.out.println("");
-            switch(choice) {
+            switch (choice) {
                 case 1:
 
 
@@ -292,19 +290,16 @@ public class CRSStudentMenu {
                     mode = "OFFLINE";
                     break;
 
-                default : System.out.println("Payment Denied\nTry Again!");
+                default:
+                    System.out.println("Payment Denied\nTry Again!");
                     return;
 
             }
 
             PaymentDao payment = new PaymentDao();
-            payment.makePayment(payment_id,invoice,studentId,amount,status,mode);
+            payment.makePayment(payment_id, invoice, studentId, amount, status, mode);
 
-        }
-
-
-
-        else {
+        } else {
             System.out.println("Please complete registration");
         }
 
