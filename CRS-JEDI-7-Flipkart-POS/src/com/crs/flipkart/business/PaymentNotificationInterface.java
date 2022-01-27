@@ -11,5 +11,11 @@ import com.crs.flipkart.bean.Student;
  *
  */
 public interface PaymentNotificationInterface {
+	/**
+	 * Method to send payment notifications after successful semester registration
+	 * @param Student
+	 * @param payment
+	 * @return 
+	 */
 	public void sendNotification(Student student, Payment payment);
 }
