@@ -236,9 +236,12 @@ public class CRSStudentMenu {
     }
 
     private void viewGradeCard(int studentId) {
-
-
-        //TODO : Implement View Grade Card Addition
+        if (is_registered) {
+            List<String> gradeCard = new StudentService().getGradeCard(studentId);
+            System.out.println("Grade Card: " + gradeCard);
+        } else {
+            System.out.println("Please complete registration");
+        }
 
     }
 

@@ -161,4 +161,37 @@ public class CourseOperationDAO implements CourseOperationDaoInterface {
         }
         return res;
     }
+
+    @Override
+    public List<String> getGrades(int studentId) {
+        List<String> res = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DBUtils.getConnection();
+            String sqlQuery = "select * from enrolled_course where student_id = " + studentId;
+            statement = connection.prepareStatement(sqlQuery);
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            while (resultSet.next()) {
+                int grade = resultSet.getInt("grade");
+                res.add("\nCourse id: " + resultSet.getInt("course_id") +
+                        ", Course Name: " + getCourseById(resultSet.getInt("course_id")).getCourseName() +
+                        ", Grade: " + (grade == 0 ? "Grade not given yet" : grade)
+                );
+
+            }
+            return res;
+        } catch (Exception ex) {
+            System.out.println(ex);
+        } finally {
+            try {
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        }
+        return res;
+    }
 }

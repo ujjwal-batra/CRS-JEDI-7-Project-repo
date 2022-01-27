@@ -17,4 +17,6 @@ public interface CourseOperationDaoInterface {
     public int getStudentCount(int courseId);
 
     public List<Integer> getStudentListByCourseId(int courseId);
+
+    List<String> getGrades(int studentId);
 }
