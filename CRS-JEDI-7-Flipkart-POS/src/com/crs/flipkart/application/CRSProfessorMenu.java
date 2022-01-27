@@ -3,7 +3,7 @@ package com.crs.flipkart.application;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.business.ProfessorService;
-import com.crs.flipkart.dao.CourseCatalogueDAO;
+import com.crs.flipkart.dao.CourseOperationDAO;
 import com.crs.flipkart.dao.ProfessorDAO;
 
 import java.util.List;
@@ -90,7 +90,7 @@ public class CRSProfessorMenu {
     }
 
     private void showCourseCatalogue() {
-        for (Course course : new CourseCatalogueDAO().getCourseCatalogue().getCourseList()) {
+        for (Course course : new CourseOperationDAO().getCourseCatalogue().getCourseList()) {
             System.out.println("CourseId: " + course.getCourseId() +
                     ", CourseName: " + course.getCourseName() +
                     ", Professor: " + (course.getProfessorId() == -1 ? "Not yet assigned" : course.getProfessorId()));

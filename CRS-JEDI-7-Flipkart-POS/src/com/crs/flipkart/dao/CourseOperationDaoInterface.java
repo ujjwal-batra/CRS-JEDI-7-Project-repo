@@ -5,7 +5,7 @@ import com.crs.flipkart.bean.CourseCatalogue;
 
 import java.util.List;
 
-public interface CourseCatalogueDaoInterface {
+public interface CourseOperationDaoInterface {
     public CourseCatalogue getCourseCatalogue();
 
     public Course getCourseById(int courseId);
