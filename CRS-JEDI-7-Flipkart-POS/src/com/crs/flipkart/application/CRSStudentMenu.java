@@ -4,8 +4,11 @@
 package com.crs.flipkart.application;
 
 import com.crs.flipkart.bean.Course;
+import com.crs.flipkart.bean.Payment;
 import com.crs.flipkart.business.CourseOperationService;
 import com.crs.flipkart.business.StudentService;
+import com.crs.flipkart.dao.CourseCatalogueDAO;
+import com.crs.flipkart.dao.PaymentDao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -245,9 +248,63 @@ public class CRSStudentMenu {
     private void make_payment(int studentId) {
         if (is_registered) {
 
-            //TODO : Implement Make Payment
 
-        } else {
+            System.out.println("------------------------------------------");
+            System.out.println("              Payment Option");
+            System.out.println("------------------------------------------");
+            System.out.println("1. Online");
+            System.out.println("2. Offline");
+
+            System.out.println("Choose any option from the above:\n");
+
+            int choice = sc.nextInt();
+            sc.nextLine();
+
+
+            int invoice ;
+          String BankName;
+          String ifsc;
+            int amount = 1000;
+            String status ="success";
+            System.out.print("Amount to be Paid :\t\tRs. " + amount);
+            System.out.println("");
+            String mode="";
+            System.out.print("Enter Payment ID:\t");
+            int payment_id = sc.nextInt();
+            System.out.println("");
+            switch(choice) {
+                case 1:
+
+
+                    System.out.print("Enter Invoice Number:\t");
+                    invoice = sc.nextInt();
+                    System.out.println("");
+                    mode = "ONLINE";
+                    System.out.println("Payment Successful");
+                    break;
+                case 2:
+                    System.out.print("Enter Depositor's Name:\t");
+                    BankName = sc.nextLine();
+                    System.out.println("");
+                    System.out.print("Enter Invoice Number:\t");
+                    invoice = sc.nextInt();
+                    System.out.println("Payment Successful");
+                    mode = "OFFLINE";
+                    break;
+
+                default : System.out.println("Payment Denied\nTry Again!");
+                    return;
+
+            }
+
+            PaymentDao payment = new PaymentDao();
+            payment.makePayment(payment_id,invoice,studentId,amount,status,mode);
+
+        }
+
+
+
+        else {
             System.out.println("Please complete registration");
         }
 
