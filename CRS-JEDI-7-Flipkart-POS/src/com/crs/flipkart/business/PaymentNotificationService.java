@@ -7,6 +7,8 @@ import com.crs.flipkart.bean.Notification;
 import com.crs.flipkart.bean.Payment;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.constants.Constants;
+import com.crs.flipkart.dao.NotificationDao;
+import com.crs.flipkart.dao.NotificationDaoInterface;
 import com.crs.flipkart.utils.DBUtils;
 
 import java.sql.Connection;
@@ -21,73 +23,31 @@ public class PaymentNotificationService implements PaymentNotificationInterface 
 	
 	/**
 	 * Method to send payment notifications after successful semester registration
-	 * @param Student
-	 * @param payment
+	 * @param student
+	 * @param payment_id
 	 * @return 
 	 */
-    public void sendNotification(Student student, Payment payment) {
+    public void sendNotification(Student student, int payment_id) {
         Notification notification = new Notification();
-        getLastID(notification);
+        int notification_id = getLastID(notification) + 1;
+        System.out.println(notification_id);
+        notification.setNotificationId(notification_id);
         notification.setStudentId(student.getStudentId());
         notification.setNotificationType("Payment notification");
-        notification.setMessage("Your payment is successful with PaymentID:" + String.valueOf(payment.getPaymentId()));
+        notification.setMessage("Your payment is successful with PaymentID:" + payment_id);
 
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DBUtils.getConnection();
-            String sqlQuery = Constants.ADD_NOTIFICATION;
-            statement = connection.prepareStatement(sqlQuery);
-            statement.setInt(1, notification.getNotificationId());
-            statement.setInt(2, notification.getStudentId());
-            statement.setString(3, notification.getMessage());
-            statement.setString(4, notification.getNotificationType());
-
-            statement.executeUpdate();
-
-        } catch (Exception ex) {
-            System.out.println(ex);
-        } finally {
-            try {
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
-            } catch (Exception ex) {
-                System.out.println(ex);
-            }
-        }
+        NotificationDaoInterface notificationDaoInterface = new NotificationDao();
+        notificationDaoInterface.sendNotification(notification);
     }
     
     /**
 	 * Method to get last payment ID
-	 * @param Student
-	 * @param payment
+     * notification
 	 * @return 
 	 */
-    public void getLastID(Notification notification){
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DBUtils.getConnection();
-            String sqlQuery = Constants.SELECT_ALL_NOTIFICATION;
-            statement = connection.prepareStatement(sqlQuery);
-            ResultSet resultSet = statement.executeQuery(sqlQuery);
-            while (resultSet.next()) {
-                notification.setNotificationId(resultSet.getInt("notification_id"));
-            }
-
-
-        } catch (Exception ex) {
-            System.out.println(ex.getLocalizedMessage());
-        } finally {
-            try {
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
-            } catch (Exception ex) {
-                System.out.println(ex.getLocalizedMessage());
-            }
-        }
+    public int getLastID(Notification notification){
+        NotificationDaoInterface notificationDaoInterface = new NotificationDao();
+        return notificationDaoInterface.getLastID(notification);
     }
 
 }

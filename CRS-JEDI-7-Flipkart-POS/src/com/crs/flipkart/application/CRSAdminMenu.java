@@ -249,8 +249,6 @@ public class CRSAdminMenu {
         System.out.println("Enter student Id:");
         String studentId = scanner.nextLine();
 
-        System.out.println("Enter student Semester:");
-        int studentSem = scanner.nextInt();
 
         //TODO : Generate Report Card
 

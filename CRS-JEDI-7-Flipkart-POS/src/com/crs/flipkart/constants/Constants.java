@@ -44,7 +44,7 @@ public class Constants {
     /**
      * Course Constants
      */
-    public static final String SELECT_ALL_NOTIFICATION = "select * from notification";
+    public static final String SELECT_ALL_NOTIFICATION = "select * from notification order by notification_id asc";
     public static final String ADD_NOTIFICATION = "insert into notification values(?, ?, ?, ?)";
 
 }

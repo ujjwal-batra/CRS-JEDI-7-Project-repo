@@ -11,5 +11,5 @@ public interface PaymentServiceInterface {
 	 * @param mode
 	 * @return 
 	 */
-    void makePayment(int payment_id, int invoice, int studentId, int amount, String status, String mode);
+    public int makePayment(int payment_id, int invoice, int studentId, int amount, String status, String mode);
 }

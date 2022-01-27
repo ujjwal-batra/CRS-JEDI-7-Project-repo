@@ -1,5 +1,6 @@
 package com.crs.flipkart.dao;
 
+import com.crs.flipkart.bean.Payment;
 import com.crs.flipkart.utils.DBUtils;
 
 import java.sql.Connection;
@@ -18,7 +19,7 @@ public class PaymentDao implements PaymentDaoInterface {
 	 * @return 
 	 */
     @Override
-    public void makePayment(int payment_id, int invoice, int studentId, int amount, String status, String mode) {
+    public int makePayment(int payment_id, int invoice, int studentId, int amount, String status, String mode) {
 
 
         Connection connection = null;
@@ -36,7 +37,7 @@ public class PaymentDao implements PaymentDaoInterface {
             statement.setString(6, mode);
 
             statement.executeUpdate();
-
+            return payment_id;
         } catch (Exception ex) {
             System.out.println(ex);
         } finally {
@@ -47,6 +48,7 @@ public class PaymentDao implements PaymentDaoInterface {
                 System.out.println(ex);
             }
         }
+        return -1;
     }
 
     /**

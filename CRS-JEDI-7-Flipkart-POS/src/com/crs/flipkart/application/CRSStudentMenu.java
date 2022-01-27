@@ -4,9 +4,8 @@
 package com.crs.flipkart.application;
 
 import com.crs.flipkart.bean.Course;
-import com.crs.flipkart.business.CourseOperationService;
-import com.crs.flipkart.business.PaymentService;
-import com.crs.flipkart.business.StudentService;
+import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.business.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -299,8 +298,14 @@ public class CRSStudentMenu {
 
             }
 
-            PaymentService payment = new PaymentService();
-            payment.makePayment(payment_id, invoice, studentId, amount, status, mode);
+            PaymentServiceInterface payment = new PaymentService();
+            int payment_id1 = payment.makePayment(payment_id, invoice, studentId, amount, status, mode);
+
+            StudentServiceInterface studentServiceInterface = new StudentService();
+            Student student = studentServiceInterface.getStudentById(studentId);
+
+            PaymentNotificationInterface paymentNotificationInterface = new PaymentNotificationService();
+            paymentNotificationInterface.sendNotification(student, payment_id1);
 
         } else {
             System.out.println("Please complete registration");

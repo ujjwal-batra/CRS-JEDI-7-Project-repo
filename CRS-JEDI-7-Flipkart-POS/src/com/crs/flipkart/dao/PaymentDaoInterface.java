@@ -12,7 +12,7 @@ public interface PaymentDaoInterface {
    	 * @return 
    	 */
     
-	public void makePayment(int payment_id,int invoice,int studentId,int amount,String status, String mode);
+	public int makePayment(int payment_id,int invoice,int studentId,int amount,String status, String mode);
     
 	/**
    	 * Method to send payment notifications to student
