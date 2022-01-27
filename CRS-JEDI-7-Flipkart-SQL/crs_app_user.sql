@@ -16,30 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `course`
+-- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `course`;
+DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `course` (
-  `course_id` int NOT NULL,
-  `course_name` varchar(255) DEFAULT NULL,
-  `professor_id` int DEFAULT NULL,
-  PRIMARY KEY (`course_id`),
-  KEY `professor_id_idx` (`professor_id`),
-  CONSTRAINT `professor_id` FOREIGN KEY (`professor_id`) REFERENCES `professor` (`professor_id`)
+CREATE TABLE `user` (
+  `user_id` int NOT NULL,
+  `email` varchar(225) NOT NULL,
+  `password` varchar(225) NOT NULL,
+  `type` varchar(45) NOT NULL,
+  PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `course`
+-- Dumping data for table `user`
 --
 
-LOCK TABLES `course` WRITE;
-/*!40000 ALTER TABLE `course` DISABLE KEYS */;
-INSERT INTO `course` VALUES (1,'DSA',-1),(2,'TOC',-1),(3,'M!',-1),(4,'CD',-1),(5,'DL',-1),(6,'CN',-1),(7,'OS',-1);
-/*!40000 ALTER TABLE `course` ENABLE KEYS */;
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'1a@gm.com','password','ADMIN'),(2,'2a@gm.com','password','ADMIN'),(11,'10p@gm.com','password','PROFESSOR'),(12,'12p@gm.com','password','PROFESSOR'),(101,'101@gm.com','password','STUDENT'),(102,'102@gm.com','password','STUDENT'),(103,'103@gm.com','password','STUDENT'),(104,'104@gm.com','password','STUDENT'),(105,'105@gm.com','password','STUDENT');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-25 16:33:19
+-- Dump completed on 2022-01-27 10:50:54
