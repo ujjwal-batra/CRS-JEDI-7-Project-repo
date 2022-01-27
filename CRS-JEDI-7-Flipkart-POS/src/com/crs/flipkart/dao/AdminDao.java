@@ -6,7 +6,9 @@ import com.crs.flipkart.utils.DBUtils;
 
 import java.sql.*;
 
-public class AdminDao implements  AdminDaoInterface{
+public class AdminDao implements AdminDaoInterface {
+
+    @Override
     public int checkCredentials(String email, String password) {
 
         Connection connection = null;
@@ -34,7 +36,8 @@ public class AdminDao implements  AdminDaoInterface{
         return -1;
     }
 
-    public void approveStudent(Student student){
+    @Override
+    public void approveStudent(Student student) {
         Connection connection = null;
         Statement statement = null;
         try {
@@ -57,7 +60,8 @@ public class AdminDao implements  AdminDaoInterface{
         }
     }
 
-    public boolean addCourse(int courseId, String courseName){
+    @Override
+    public boolean addCourse(int courseId, String courseName) {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -85,7 +89,8 @@ public class AdminDao implements  AdminDaoInterface{
         return false;
     }
 
-    public boolean deleteCourse(int courseId){
+    @Override
+    public boolean deleteCourse(int courseId) {
         Connection connection = null;
         Statement statement = null;
         try {
@@ -109,7 +114,8 @@ public class AdminDao implements  AdminDaoInterface{
         return false;
     }
 
-    public boolean addProfessor(Professor professor){
+    @Override
+    public boolean addProfessor(Professor professor) {
         Connection connection = null;
         PreparedStatement statement = null;
         try {

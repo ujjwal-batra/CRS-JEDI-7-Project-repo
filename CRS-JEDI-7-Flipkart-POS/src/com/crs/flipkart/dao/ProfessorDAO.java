@@ -8,24 +8,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
 public class ProfessorDAO implements ProfessorDaoInterface {
 
-    public List<Professor> professorList = new ArrayList<>(
-            Arrays.asList(
-                    new Professor(1, "prof1", "root", "p1@gm.com", 78945612, "Professor", "indore", "male", "CSE", new ArrayList<>()),
-                    new Professor(2, "prof2", "root", "p2@gm.com", 98765432, "Professor", "bhopal", "male", "CSE", new ArrayList<>()),
-                    new Professor(3, "prof3", "root", "p3@gm.com", 78945612, "Professor", "indore", "male", "CSE", new ArrayList<>()),
-                    new Professor(4, "prof4", "root", "p4@gm.com", 98765432, "Professor", "bhopal", "male", "CSE", new ArrayList<>()),
-                    new Professor(5, "prof5", "root", "p5@gm.com", 78945612, "Professor", "indore", "male", "CSE", new ArrayList<>()),
-                    new Professor(6, "prof6", "root", "p6@gm.com", 98765432, "Professor", "bhopal", "male", "CSE", new ArrayList<>()),
-                    new Professor(7, "prof7", "root", "p7@gm.com", 78945612, "Professor", "indore", "male", "CSE", new ArrayList<>())
-            )
-    );
-
+    @Override
     public void saveProfessor(Professor professor) {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -57,6 +45,7 @@ public class ProfessorDAO implements ProfessorDaoInterface {
         }
     }
 
+    @Override
     public Professor getProfessorById(int professorId) {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -96,7 +85,8 @@ public class ProfessorDAO implements ProfessorDaoInterface {
         return null;
     }
 
-    private void populateCourses(Professor professor) {
+    @Override
+    public void populateCourses(Professor professor) {
         List<Course> courseList = new CourseCatalogueDAO().getAllCourses();
         for (Course course : courseList) {
             if (course.getProfessorId() == professor.getProfessorId())
@@ -105,6 +95,7 @@ public class ProfessorDAO implements ProfessorDaoInterface {
         return;
     }
 
+    @Override
     public int checkCredentials(String email, String password) {
 
         Connection connection = null;
@@ -132,6 +123,7 @@ public class ProfessorDAO implements ProfessorDaoInterface {
         return -1;
     }
 
+    @Override
     public boolean updateCredentials(String email, String password) {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -162,6 +154,7 @@ public class ProfessorDAO implements ProfessorDaoInterface {
         return true;
     }
 
+    @Override
     public boolean addGrade(int studentId, int courseId, double marks) {
         Connection connection = null;
         PreparedStatement statement = null;

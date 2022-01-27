@@ -5,15 +5,11 @@ import com.crs.flipkart.utils.DBUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class StudentDao implements StudentDaoInterface {
 
-    public StudentDao() {
-        //registerCourse();
-    }
-
+    @Override
     public void getLastId(Student student) {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -40,6 +36,7 @@ public class StudentDao implements StudentDaoInterface {
         }
     }
 
+    @Override
     public Student saveStudent(Student student) {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -74,6 +71,7 @@ public class StudentDao implements StudentDaoInterface {
         return student;
     }
 
+    @Override
     public Student getStudentById(int studentId) {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -111,6 +109,7 @@ public class StudentDao implements StudentDaoInterface {
         return null;
     }
 
+    @Override
     public int checkCredentials(String email, String password) {
 
         Connection connection = null;
@@ -139,6 +138,7 @@ public class StudentDao implements StudentDaoInterface {
         return -1;
     }
 
+    @Override
     public boolean semesterRegistration(int studentId, int semester) {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -169,6 +169,7 @@ public class StudentDao implements StudentDaoInterface {
         return true;
     }
 
+    @Override
     public boolean addCourse(int studentId, int courseId) {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -195,6 +196,7 @@ public class StudentDao implements StudentDaoInterface {
         return false;
     }
 
+    @Override
     public boolean dropCourse(int studentId, int courseId) {
         Connection connection = null;
         Statement statement = null;
@@ -219,6 +221,7 @@ public class StudentDao implements StudentDaoInterface {
         return false;
     }
 
+    @Override
     public List<Integer> viewEnrolledCourse(int studentId) {
         List<Integer> res = new ArrayList<>();
         Connection connection = null;

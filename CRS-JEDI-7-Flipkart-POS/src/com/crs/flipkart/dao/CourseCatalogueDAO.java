@@ -105,6 +105,7 @@ public class CourseCatalogueDAO implements CourseCatalogueDaoInterface {
         }
     }
 
+    @Override
     public int getStudentCount(int courseId) {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -132,6 +133,7 @@ public class CourseCatalogueDAO implements CourseCatalogueDaoInterface {
         return 0;
     }
 
+    @Override
     public List<Integer> getStudentListByCourseId(int courseId) {
         List<Integer> res = new ArrayList<>();
         Connection connection = null;
