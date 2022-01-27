@@ -9,7 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentDao implements StudentDaoInterface {
-
+	
+	 /**
+   	 * Method to get lastId from the database
+   	 * @param student
+   	 * @return 
+   	 */
     @Override
     public void getLastId(Student student) {
         Connection connection = null;
@@ -36,7 +41,12 @@ public class StudentDao implements StudentDaoInterface {
             }
         }
     }
-
+    
+    /**
+   	 * Method to save student info to database
+   	 * @param student
+   	 * @return Student
+   	 */
     @Override
     public Student saveStudent(Student student) {
         Connection connection = null;
@@ -71,7 +81,12 @@ public class StudentDao implements StudentDaoInterface {
         }
         return student;
     }
-
+    
+    /**
+   	 * Method to retrieve student by their ID
+   	 * @param studentId
+   	 * @return Student
+   	 */
     @Override
     public Student getStudentById(int studentId) {
         Connection connection = null;
@@ -109,7 +124,13 @@ public class StudentDao implements StudentDaoInterface {
         }
         return null;
     }
-
+    
+    /**
+   	 * Method to check login credentials 
+   	 * @param email
+   	 * @param password
+   	 * @return int
+   	 */
     @Override
     public int checkCredentials(String email, String password) {
 
@@ -138,7 +159,13 @@ public class StudentDao implements StudentDaoInterface {
         }
         return -1;
     }
-
+    
+    /**
+   	 * Method to add semester registration info to the database
+   	 * @param studentId
+   	 * @param semester
+   	 * @return boolean
+   	 */
     @Override
     public boolean semesterRegistration(int studentId, int semester) {
         Connection connection = null;
@@ -169,7 +196,13 @@ public class StudentDao implements StudentDaoInterface {
         }
         return true;
     }
-
+    
+    /**
+   	 * Method to add course to the database
+   	 * @param studentId
+   	 * @param courseId
+   	 * @return boolean
+   	 */
     @Override
     public boolean addCourse(int studentId, int courseId) {
         Connection connection = null;
@@ -196,7 +229,13 @@ public class StudentDao implements StudentDaoInterface {
         }
         return false;
     }
-
+    
+    /**
+   	 * Method to remove course from the database
+   	 * @param studentId
+   	 * @param courseId
+   	 * @return boolean
+   	 */
     @Override
     public boolean dropCourse(int studentId, int courseId) {
         Connection connection = null;
@@ -221,7 +260,12 @@ public class StudentDao implements StudentDaoInterface {
         }
         return false;
     }
-
+    
+    /**
+   	 * Method to view all enrolled courses ofa student
+   	 * @param studentId
+   	 * @return  List of Integer
+   	 */
     @Override
     public List<Integer> viewEnrolledCourse(int studentId) {
         List<Integer> res = new ArrayList<>();

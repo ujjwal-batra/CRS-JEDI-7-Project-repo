@@ -13,7 +13,12 @@ import java.util.List;
 
 
 public class ProfessorDAO implements ProfessorDaoInterface {
-
+	
+	/**
+   	 * Method to save professor information to database
+   	 * @param professor
+   	 * @return 
+   	 */
     @Override
     public void saveProfessor(Professor professor) {
         Connection connection = null;
@@ -45,7 +50,12 @@ public class ProfessorDAO implements ProfessorDaoInterface {
             }
         }
     }
-
+    
+    /**
+   	 * Method to Professor information from database.
+   	 * @param professorId
+   	 * @return Professor
+   	 */
     @Override
     public Professor getProfessorById(int professorId) {
         Connection connection = null;
@@ -85,7 +95,12 @@ public class ProfessorDAO implements ProfessorDaoInterface {
         }
         return null;
     }
-
+    
+    /**
+   	 * Method to populate courses  ofprofessor
+   	 * @param professor
+   	 * @return 
+   	 */
     @Override
     public void populateCourses(Professor professor) {
         List<Course> courseList = new CourseOperationDAO().getAllCourses();
@@ -95,7 +110,13 @@ public class ProfessorDAO implements ProfessorDaoInterface {
         }
         return;
     }
-
+    
+    /**
+   	 * Method to check login credentials of professor.
+   	 * @param email
+   	 * @param password
+   	 * @return 
+   	 */
     @Override
     public int checkCredentials(String email, String password) {
 
@@ -123,7 +144,13 @@ public class ProfessorDAO implements ProfessorDaoInterface {
         }
         return -1;
     }
-
+    
+    /**
+   	 * Method to update login credentials of professor.
+   	 * @param email
+   	 * @param password
+   	 * @return boolean
+   	 */
     @Override
     public boolean updateCredentials(String email, String password) {
         Connection connection = null;
@@ -154,7 +181,14 @@ public class ProfessorDAO implements ProfessorDaoInterface {
         }
         return true;
     }
-
+    
+    /**
+   	 * Method to add grades for courses by the  professor
+   	 * @param studentId
+   	 * @param courseId
+   	 * @param marks
+   	 * @return boolean 
+   	 */
     @Override
     public boolean addGrade(int studentId, int courseId, double marks) {
         Connection connection = null;

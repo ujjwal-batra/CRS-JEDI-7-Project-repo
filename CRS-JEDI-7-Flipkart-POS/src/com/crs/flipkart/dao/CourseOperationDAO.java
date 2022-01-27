@@ -12,12 +12,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CourseOperationDAO implements CourseOperationDaoInterface {
-
+	
+	/**
+	 * Method to get all courses  from the course catalogue
+	 * @param 
+	 * @return CourseCatalogue
+	 */
     @Override
     public CourseCatalogue getCourseCatalogue() {
         return new CourseCatalogue(1, "Catalogue", getAllCourses());
     }
-
+    
+    /**
+   	 * Method to get list of  all courses
+   	 * @param 
+   	 * @return List of Course
+   	 */
     @Override
     public List<Course> getAllCourses() {
         List<Course> courseList = new ArrayList<>();
@@ -49,7 +59,12 @@ public class CourseOperationDAO implements CourseOperationDaoInterface {
         }
         return courseList;
     }
-
+    
+    /**
+   	 * Method to get course by  its ID
+   	 * @param courseId
+   	 * @return Course
+   	 */
     @Override
     public Course getCourseById(int courseId) {
         Connection connection = null;
@@ -81,7 +96,12 @@ public class CourseOperationDAO implements CourseOperationDaoInterface {
         }
         return null;
     }
-
+    
+    /**
+   	 * Method to update course information
+   	 * @param course
+   	 * @return 
+   	 */
     @Override
     public void updateCourse(Course course) {
         Connection connection = null;
@@ -105,7 +125,12 @@ public class CourseOperationDAO implements CourseOperationDaoInterface {
             }
         }
     }
-
+    
+    /**
+   	 * Method to get the student count ina course.
+   	 * @param courseId
+   	 * @return int
+   	 */
     @Override
     public int getStudentCount(int courseId) {
         Connection connection = null;
@@ -133,7 +158,12 @@ public class CourseOperationDAO implements CourseOperationDaoInterface {
         }
         return 0;
     }
-
+    
+    /**
+   	 * Method to get student list in a course
+   	 * @param courseId
+   	 * @return List of Integer
+   	 */
     @Override
     public List<Integer> getStudentListByCourseId(int courseId) {
         List<Integer> res = new ArrayList<>();

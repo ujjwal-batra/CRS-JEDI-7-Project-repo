@@ -8,7 +8,13 @@ import com.crs.flipkart.utils.DBUtils;
 import java.sql.*;
 
 public class AdminDao implements AdminDaoInterface {
-
+	
+    /**
+	 * Method to check credentials of admin
+	 * @param email
+	 * @param password
+	 * @return boolean
+	 */
     @Override
     public int checkCredentials(String email, String password) {
 
@@ -36,7 +42,12 @@ public class AdminDao implements AdminDaoInterface {
         }
         return -1;
     }
-
+    
+    /**
+	 * Method to approve a student from the admin
+	 * @param student
+	 * @return 
+	 */
     @Override
     public void approveStudent(Student student) {
         Connection connection = null;
@@ -60,7 +71,13 @@ public class AdminDao implements AdminDaoInterface {
             }
         }
     }
-
+    
+    /**
+   	 * Method to add course from the admin
+   	 * @param courseId
+   	 * @param courseName
+   	 * @return boolean
+   	 */
     @Override
     public boolean addCourse(int courseId, String courseName) {
         Connection connection = null;
@@ -89,7 +106,12 @@ public class AdminDao implements AdminDaoInterface {
         }
         return false;
     }
-
+    
+    /**
+   	 * Method to delete course by the admin
+   	 * @param courseId
+   	 * @return boolean
+   	 */
     @Override
     public boolean deleteCourse(int courseId) {
         Connection connection = null;
@@ -114,7 +136,12 @@ public class AdminDao implements AdminDaoInterface {
         }
         return false;
     }
-
+    
+    /**
+	 * Method to add professor by the admin
+	 * @param professor
+	 * @return boolean
+	 */
     @Override
     public boolean addProfessor(Professor professor) {
         Connection connection = null;
