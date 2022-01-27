@@ -5,7 +5,7 @@ package com.crs.flipkart.application;
 
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.business.StudentService;
-import com.crs.flipkart.dao.CourseCatalogueDAO;
+import com.crs.flipkart.dao.CourseOperationDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,20 +60,9 @@ public class CRSStudentMenu {
                     courseRegistration(studentId);
                     break;
                 case 4: {
-                    System.out.println("1. Add a new course");
-                    System.out.println("2. Drop existing course");
-                    int option = sc.nextInt();
-                    switch (option) {
-                        case 1:
-                            addCourse(studentId);
-                            break;
-                        case 2:
-                            dropCourse(studentId);
-                            break;
-                    }
+                    addOrDrop(studentId);
                     break;
                 }
-
                 case 5:
                     viewRegisteredCourse(studentId);
                     break;
@@ -92,6 +81,30 @@ public class CRSStudentMenu {
                 default:
                     System.out.println("***** Wrong Choice *****");
             }
+        }
+    }
+
+    private void addOrDrop(int studentId) {
+        if (is_registered) {
+            List<String> courseNames = new StudentService().viewRegisteredCourse(studentId);
+            if (courseNames.size() == 0) {
+                System.out.println("Kindly complete the course registration process before add or drop");
+                return;
+            }
+
+            System.out.println("1. Add a new course");
+            System.out.println("2. Drop existing course");
+            int option = sc.nextInt();
+            switch (option) {
+                case 1:
+                    addCourse(studentId);
+                    break;
+                case 2:
+                    dropCourse(studentId);
+                    break;
+            }
+        } else {
+            System.out.println("Please complete registration");
         }
     }
 
@@ -161,7 +174,7 @@ public class CRSStudentMenu {
     }
 
     private void showCourseCatalogue() {
-        for (Course course : new CourseCatalogueDAO().getCourseCatalogue().getCourseList()) {
+        for (Course course : new CourseOperationDAO().getCourseCatalogue().getCourseList()) {
             System.out.println("CourseId: " + course.getCourseId() +
                     ", CourseName: " + course.getCourseName() +
                     ", Professor: " + (course.getProfessorId() == -1 ? "Not yet assigned" : course.getProfessorId()));
@@ -170,14 +183,19 @@ public class CRSStudentMenu {
 
     private void addCourse(int studentId) {
         if (is_registered) {
-            viewRegisteredCourse(studentId);
+            showCourseCatalogue();
             Scanner sc = new Scanner(System.in);
             System.out.println("Enter course you want to add");
             int courseId = Integer.parseInt(sc.nextLine());
 
-            boolean status = new StudentService().addCourse(studentId, courseId);
-            if (status) {
+            int status = new StudentService().addCourse(studentId, courseId);
+            if (status == 1) {
                 System.out.println("Add Successful");
+            } else if (status == -1) {
+                System.out.println("Course Already registered, please select another course.\n");
+                addCourse(studentId);
+            } else if (status == -2) {
+                System.out.println("Cannot enroll for more than 4 courses, please drop an existing course.\n");
             } else {
                 System.out.println("Add Failure");
             }

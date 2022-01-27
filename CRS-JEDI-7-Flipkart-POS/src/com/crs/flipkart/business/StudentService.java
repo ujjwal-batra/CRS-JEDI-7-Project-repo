@@ -1,6 +1,6 @@
 package com.crs.flipkart.business;
 
-import com.crs.flipkart.dao.CourseCatalogueDAO;
+import com.crs.flipkart.dao.CourseOperationDAO;
 import com.crs.flipkart.dao.StudentDao;
 
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.List;
 public class StudentService {
 
     StudentDao studentDao = new StudentDao();
-    CourseCatalogueDAO courseCatalogueDAO = new CourseCatalogueDAO();
+    CourseOperationDAO courseCatalogueDAO = new CourseOperationDAO();
 
     public boolean semesterRegistration(int studentId, int semester) {
         return new StudentDao().semesterRegistration(studentId, semester);
@@ -34,8 +34,11 @@ public class StudentService {
         return studentDao.dropCourse(studentId, courseId);
     }
 
-    public boolean addCourse(int studentId, int courseId) {
-        return studentDao.addCourse(studentId, courseId);
+    public int addCourse(int studentId, int courseId) {
+        List<Integer> enrolledCourses = studentDao.viewEnrolledCourse(studentId);
+        if (enrolledCourses.size() == 4) return -2;
+        if (enrolledCourses.contains(courseId)) return -1;
+        return studentDao.addCourse(studentId, courseId) ? 1 : 0;
     }
 
     public List<String> viewRegisteredCourse(int studentId) {
@@ -44,8 +47,9 @@ public class StudentService {
 
         for (Integer enrolledCourseId : enrolledCourses) {
             String courseName = courseCatalogueDAO.getCourseById(enrolledCourseId).getCourseName();
-            result.add(courseName);
+            result.add("\nCourseId: " + enrolledCourseId + ", Course name: " + courseName);
         }
         return result;
     }
+
 }

@@ -13,7 +13,7 @@ import com.crs.flipkart.bean.Student;
  *
  */
 public interface RegisteredStudentsInterface {
-	public List<Student> getStudentListByCourseId(int courseId);
+	public List<Integer> getStudentListByCourseId(int courseId);
 	public List<Course> getCourseListForStudentId(int studentId);
 	
 }

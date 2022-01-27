@@ -2,14 +2,14 @@ package com.crs.flipkart.dao;
 
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.constants.Constants;
 import com.crs.flipkart.utils.DBUtils;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
-public class AdminDao implements  AdminDaoInterface{
+public class AdminDao implements AdminDaoInterface {
+
+    @Override
     public int checkCredentials(String email, String password) {
 
         Connection connection = null;
@@ -17,7 +17,7 @@ public class AdminDao implements  AdminDaoInterface{
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = "select * from admin where email = '" + email + "' and password = '" + password + "'";
+            String sqlQuery = Constants.SELECT_ADMIN_BY_EMAIL + email + "' and password = '" + password + "'";
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             if (!resultSet.next()) {
@@ -37,14 +37,15 @@ public class AdminDao implements  AdminDaoInterface{
         return -1;
     }
 
-    public void approveStudent(Student student){
+    @Override
+    public void approveStudent(Student student) {
         Connection connection = null;
         Statement statement = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
             // System.out.println("Checking Credentials");
-            String sqlQuery = "update student SET is_approved = 1  WHERE student_id = " + student.getStudentId();
+            String sqlQuery = Constants.APPROVE_STUDENT + student.getStudentId();
             statement = connection.createStatement();
             statement.executeUpdate(sqlQuery);
 
@@ -60,19 +61,19 @@ public class AdminDao implements  AdminDaoInterface{
         }
     }
 
-    public boolean addCourse(int courseId, String courseName){
+    @Override
+    public boolean addCourse(int courseId, String courseName) {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
-            Integer nullObject = null;
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            System.out.println("Genetrating course");
-            String sqlQuery = "insert into course values(?, ?, ?)";
+            System.out.println("Generating course");
+            String sqlQuery = Constants.ADD_NEW_COURSE;
             statement = connection.prepareStatement(sqlQuery);
             statement.setInt(1, courseId);
             statement.setString(2, courseName);
-            statement.setNull(3, nullObject);
+            statement.setNull(3, Types.INTEGER);
 
             statement.executeUpdate();
             return true;
@@ -89,15 +90,15 @@ public class AdminDao implements  AdminDaoInterface{
         return false;
     }
 
-    public boolean deleteCourse(int courseId){
+    @Override
+    public boolean deleteCourse(int courseId) {
         Connection connection = null;
         Statement statement = null;
         try {
-            Integer nullObject = null;
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
             System.out.println("removing course...");
-            String sqlQuery = "delete from course where course_id =" + courseId;
+            String sqlQuery = Constants.DELETE_COURSE + courseId;
             statement = connection.createStatement();
             statement.executeUpdate(sqlQuery);
             return true;
@@ -114,14 +115,15 @@ public class AdminDao implements  AdminDaoInterface{
         return false;
     }
 
-    public boolean addProfessor(Professor professor){
+    @Override
+    public boolean addProfessor(Professor professor) {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
             System.out.println("Adding professor...");
-            String sqlQuery = "insert into professor values(?, ?, ?, ?, ?, ?, ?, ?)";
+            String sqlQuery = Constants.ADD_PROFESSOR;
             statement = connection.prepareStatement(sqlQuery);
             statement.setInt(1, professor.getProfessorId());
             statement.setString(2, professor.getName());

@@ -1,10 +1,10 @@
-package com.crs.flipkart.dao;
+package com.crs.flipkart.business;
 
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
 
-public interface AdminDaoInterface {
-    public boolean addCourse(int courseId, String courseName);
+public interface AdminServiceInterface {
+    public boolean addCourse(int courseId, String CourseName);
 
     public boolean deleteCourse(int courseId);
 

@@ -2,37 +2,26 @@ package com.crs.flipkart.dao;
 
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
+import com.crs.flipkart.constants.Constants;
 import com.crs.flipkart.utils.DBUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
 public class ProfessorDAO implements ProfessorDaoInterface {
 
-    public List<Professor> professorList = new ArrayList<>(
-            Arrays.asList(
-                    new Professor(1, "prof1", "root", "p1@gm.com", 78945612, "Professor", "indore", "male", "CSE", new ArrayList<>()),
-                    new Professor(2, "prof2", "root", "p2@gm.com", 98765432, "Professor", "bhopal", "male", "CSE", new ArrayList<>()),
-                    new Professor(3, "prof3", "root", "p3@gm.com", 78945612, "Professor", "indore", "male", "CSE", new ArrayList<>()),
-                    new Professor(4, "prof4", "root", "p4@gm.com", 98765432, "Professor", "bhopal", "male", "CSE", new ArrayList<>()),
-                    new Professor(5, "prof5", "root", "p5@gm.com", 78945612, "Professor", "indore", "male", "CSE", new ArrayList<>()),
-                    new Professor(6, "prof6", "root", "p6@gm.com", 98765432, "Professor", "bhopal", "male", "CSE", new ArrayList<>()),
-                    new Professor(7, "prof7", "root", "p7@gm.com", 78945612, "Professor", "indore", "male", "CSE", new ArrayList<>())
-            )
-    );
-
+    @Override
     public void saveProfessor(Professor professor) {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = "insert into professor values(?, ?, ?, ?, ?, ?, ?, ?)";
+            String sqlQuery = Constants.ADD_PROFESSOR;
             statement = connection.prepareStatement(sqlQuery);
             statement.setInt(1, professor.getProfessorId());
             statement.setString(2, professor.getName());
@@ -57,13 +46,14 @@ public class ProfessorDAO implements ProfessorDaoInterface {
         }
     }
 
+    @Override
     public Professor getProfessorById(int professorId) {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = "select * from professor where professor_id = " + professorId;
+            String sqlQuery = Constants.SELECT_PROFESSOR_BY_ID + professorId;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             Professor professor = null;
@@ -96,8 +86,9 @@ public class ProfessorDAO implements ProfessorDaoInterface {
         return null;
     }
 
-    private void populateCourses(Professor professor) {
-        List<Course> courseList = new CourseCatalogueDAO().getAllCourses();
+    @Override
+    public void populateCourses(Professor professor) {
+        List<Course> courseList = new CourseOperationDAO().getAllCourses();
         for (Course course : courseList) {
             if (course.getProfessorId() == professor.getProfessorId())
                 professor.getCourseList().add(course);
@@ -105,6 +96,7 @@ public class ProfessorDAO implements ProfessorDaoInterface {
         return;
     }
 
+    @Override
     public int checkCredentials(String email, String password) {
 
         Connection connection = null;
@@ -112,7 +104,7 @@ public class ProfessorDAO implements ProfessorDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = "select * from professor where email = '" + email + "' and password = '" + password + "'";
+            String sqlQuery = Constants.CHECK_CREDENTIALS_PROFESSOR + email + "' and password = '" + password + "'";
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             if (!resultSet.next()) {
@@ -132,19 +124,20 @@ public class ProfessorDAO implements ProfessorDaoInterface {
         return -1;
     }
 
+    @Override
     public boolean updateCredentials(String email, String password) {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = "select * from professor where email = " + email;
+            String sqlQuery = Constants.SELECT_PROFESSOR_BY_EMAIL + email;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             if (!resultSet.next()) {
                 return false;
             }
-            sqlQuery = "update professor set password = " + password + " where email = " + email;
+            sqlQuery = Constants.UPDATE_PROFESSOR_PASSWORD + password + " where email = " + email;
             ResultSet resultSet1 = statement.executeQuery(sqlQuery);
             if (!resultSet1.next())
                 return false;
@@ -160,6 +153,32 @@ public class ProfessorDAO implements ProfessorDaoInterface {
             }
         }
         return true;
+    }
+
+    @Override
+    public boolean addGrade(int studentId, int courseId, double marks) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DBUtils.getConnection();
+            String sqlQuery = Constants.ADD_GRADE_BY_PROFESSOR + ((int) marks)
+                    + " where student_id = " + studentId + " and course_id = " + courseId;
+            statement = connection.prepareStatement(sqlQuery);
+            statement.executeUpdate();
+            return true;
+        } catch (Exception ex) {
+            System.out.println(ex);
+        } finally {
+            try {
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        }
+
+        return false;
     }
 
 }

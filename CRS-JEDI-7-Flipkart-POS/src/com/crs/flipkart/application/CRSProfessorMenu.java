@@ -2,9 +2,8 @@ package com.crs.flipkart.application;
 
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
-import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.business.ProfessorService;
-import com.crs.flipkart.dao.CourseCatalogueDAO;
+import com.crs.flipkart.dao.CourseOperationDAO;
 import com.crs.flipkart.dao.ProfessorDAO;
 
 import java.util.List;
@@ -51,7 +50,7 @@ public class CRSProfessorMenu {
 
                 case 4:
                     //add grade for a student
-                    addGrade();
+                    addGrade(professorId);
                     break;
                 case 5:
                     //select course to teach
@@ -91,7 +90,7 @@ public class CRSProfessorMenu {
     }
 
     private void showCourseCatalogue() {
-        for (Course course : new CourseCatalogueDAO().getCourseCatalogue().getCourseList()) {
+        for (Course course : new CourseOperationDAO().getCourseCatalogue().getCourseList()) {
             System.out.println("CourseId: " + course.getCourseId() +
                     ", CourseName: " + course.getCourseName() +
                     ", Professor: " + (course.getProfessorId() == -1 ? "Not yet assigned" : course.getProfessorId()));
@@ -100,33 +99,25 @@ public class CRSProfessorMenu {
 
     private void viewStudents(int professorId) {
 
-        List<Student> studentList = new ProfessorService().viewStudentsForAllCourses(professorId);
+        List<String> studentList = new ProfessorService().viewStudentsForAllCourses(professorId);
         if (studentList.isEmpty()) System.out.println("No Students enrolled");
         else System.out.println("Student details: ");
-
-        for (Student student : studentList) {
-            System.out.println(
-                    "Name: " + student.getName() +
-                            ", contactNo: " + student.getContactNo() +
-                            ", branch: " + student.getBranch()
-            );
-        }
+        System.out.println(studentList);
     }
 
-    private void addGrade() {
+    private void addGrade(int professorId) {
+        viewStudents(professorId);
         Scanner scanner = new Scanner(System.in);
-        int courseId, studentId, semester;
+        int courseId, studentId;
         double marks;
 
         System.out.print("Enter courseId: ");
         courseId = scanner.nextInt();
         System.out.print("Enter studentId: ");
         studentId = scanner.nextInt();
-        System.out.print("Enter semester: ");
-        semester = scanner.nextInt();
         System.out.print("Enter marks: ");
         marks = scanner.nextDouble();
-        new ProfessorService().addGrade(courseId, studentId, semester, marks);
+        new ProfessorService().addGrade(courseId, studentId, marks);
     }
 
 
