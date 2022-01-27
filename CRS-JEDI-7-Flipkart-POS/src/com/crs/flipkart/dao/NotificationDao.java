@@ -7,6 +7,8 @@ import com.crs.flipkart.utils.DBUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NotificationDao implements NotificationDaoInterface{
 
@@ -64,5 +66,34 @@ public class NotificationDao implements NotificationDaoInterface{
             }
         }
         return 1;
+    }
+
+    @Override
+    public List<String> getNotificationById(int studentId) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DBUtils.getConnection();
+            String sqlQuery = Constants.SELECT_ALL_NOTIFICATION_BY_ID + studentId;
+            statement = connection.prepareStatement(sqlQuery);
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            List<String> messageList = new ArrayList<String>();
+            while (resultSet.next()){
+                messageList.add(resultSet.getString("message"));
+            }
+            return messageList;
+
+        } catch (Exception ex) {
+            System.out.println(ex.getLocalizedMessage());
+        } finally {
+            try {
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (Exception ex) {
+                System.out.println(ex.getLocalizedMessage());
+            }
+        }
+        return new ArrayList<>();
     }
 }

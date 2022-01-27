@@ -14,6 +14,7 @@ import com.crs.flipkart.utils.DBUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 /**
  * @author JEDI-8
@@ -50,4 +51,9 @@ public class PaymentNotificationService implements PaymentNotificationInterface 
         return notificationDaoInterface.getLastID(notification);
     }
 
+    @Override
+    public List<String> getNotificationById(int studentId) {
+        NotificationDaoInterface notificationDaoInterface = new NotificationDao();
+        return notificationDaoInterface.getNotificationById(studentId);
+    }
 }

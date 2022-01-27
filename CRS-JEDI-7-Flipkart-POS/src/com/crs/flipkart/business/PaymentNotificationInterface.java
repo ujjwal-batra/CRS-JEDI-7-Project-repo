@@ -7,6 +7,8 @@ import com.crs.flipkart.bean.Notification;
 import com.crs.flipkart.bean.Payment;
 import com.crs.flipkart.bean.Student;
 
+import java.util.List;
+
 /**
  * @author adarsh
  *
@@ -26,4 +28,6 @@ public interface PaymentNotificationInterface {
 	 * @return
 	 */
 	public int getLastID(Notification notification);
+
+	List<String> getNotificationById(int studentId);
 }

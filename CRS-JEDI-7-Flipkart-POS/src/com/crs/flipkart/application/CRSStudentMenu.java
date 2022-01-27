@@ -4,6 +4,7 @@
 package com.crs.flipkart.application;
 
 import com.crs.flipkart.bean.Course;
+import com.crs.flipkart.bean.Notification;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.business.*;
 
@@ -43,7 +44,8 @@ public class CRSStudentMenu {
             System.out.println("5. View Registered Courses");
             System.out.println("6. View grade card");
             System.out.println("7. Make Payment");
-            System.out.println("8. Logout");
+            System.out.println("8. View Notification");
+            System.out.println("9. Logout");
             System.out.println("------------------------------------------");
             System.out.print("ENTER YOUR CHOICE---->:\t");
 
@@ -76,12 +78,22 @@ public class CRSStudentMenu {
                     break;
 
                 case 8:
+                    showNotification(studentId);
+                    return;
+
+                case 9:
                     return;
 
                 default:
                     System.out.println("***** Wrong Choice *****");
             }
         }
+    }
+
+    private void showNotification(int studentId) {
+        PaymentNotificationInterface paymentNotificationInterface = new PaymentNotificationService();
+        List<String> notificationsList = paymentNotificationInterface.getNotificationById(studentId);
+        System.out.println(notificationsList);
     }
 
     private void addOrDrop(int studentId) {
