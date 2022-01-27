@@ -84,12 +84,23 @@ public class ProfessorService implements ProfessorInterface {
         }
         return studentList;
     }
-
+    
+    /**
+	 * Method to check Credentials of  Professor
+	 * @param email
+	 * @param password
+	 * @return 
+	 */
     @Override
     public int checkCredentials(String email, String password) {
         return new ProfessorDAO().checkCredentials(email, password);
     }
-
+    
+    /**
+	 * Method to get all the courses taken by a student
+	 * @param studentId
+	 * @return List of Integer (courseId)
+	 */
     @Override
     public Professor getProfessorById(int professorId) {
         return new ProfessorDAO().getProfessorById(professorId);

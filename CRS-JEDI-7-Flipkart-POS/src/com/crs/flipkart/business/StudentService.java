@@ -85,7 +85,12 @@ public class StudentService implements StudentServiceInterface {
      * @param studentId
      * @return List of Integer (courseId)
      */
-
+    
+    /**
+	 * Method to view all  the registered courses
+	 * @param studentId
+	 * @return List of string
+	 */
     @Override
     public List<String> viewRegisteredCourse(int studentId) {
         List<Integer> enrolledCourses = studentDao.viewEnrolledCourse(studentId);
@@ -97,27 +102,53 @@ public class StudentService implements StudentServiceInterface {
         }
         return result;
     }
-
+    
+    /**
+	 * Method to get last ID from database
+	 * @param student
+	 * @return 
+	 */
     @Override
     public void getLastId(Student student) {
         new StudentDao().getLastId(student);
     }
-
+    
+    /**
+	 * Method to save a student info to database
+	 * @param student
+	 * @return Student
+	 */
     @Override
     public Student saveStudent(Student student) {
         return new StudentDao().saveStudent(student);
     }
-
+    
+    /**
+	 * Method to check login credentials of Student
+	 * @param email
+	 * @param password
+	 * @return int
+	 */
     @Override
     public int checkCredentials(String email, String password) {
         return new StudentDao().checkCredentials(email, password);
     }
-
+    
+    /**
+	 * Method to retrieve Student info. from their ID
+	 * @param studentId
+	 * @return Student
+	 */
     @Override
     public Student getStudentById(int studentId) {
         return new StudentDao().getStudentById(studentId);
     }
-
+    
+    /**
+	 * Method to retrieve Grade card 
+	 * @param studentId
+	 * @return List of String
+	 */
     @Override
     public List<String> getGradeCard(int studentId) {
         return new CourseOperationDAO().getGrades(studentId);

@@ -50,8 +50,19 @@ public interface ProfessorInterface {
 	 * @return List of String.
 	 */
     public List<String> viewStudentsForAllCourses(int professorId);
-
+    
+	/**
+	 * Method to check Credentials of  Professor
+	 * @param email
+	 * @param password
+	 * @return 
+	 */
     int checkCredentials(String email, String password);
-
-    Professor getProfessorById(int professorId);
+    
+    /**
+	 * Method to retrieve Professor by ID
+	 * @param professorId
+	 * @return 
+	 */
+    public Professor getProfessorById(int professorId);
 }

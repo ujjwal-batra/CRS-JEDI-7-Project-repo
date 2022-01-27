@@ -19,6 +19,7 @@ public interface RegisteredStudentsInterface {
 	 * @return List of Integer (StudentId)
 	 */
 	public List<Integer> getStudentListByCourseId(int courseId);
+	
 	/**
 	 * Method to get all the courses taken by a student
 	 * @param studentId

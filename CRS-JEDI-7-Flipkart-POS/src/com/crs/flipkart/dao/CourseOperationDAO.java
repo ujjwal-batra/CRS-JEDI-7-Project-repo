@@ -191,7 +191,12 @@ public class CourseOperationDAO implements CourseOperationDaoInterface {
         }
         return res;
     }
-
+    
+    /**
+   	 * Method to retrieve Grades of a student
+   	 * @param studentId
+   	 * @return List of String
+   	 */
     @Override
     public List<String> getGrades(int studentId) {
         List<String> res = new ArrayList<>();

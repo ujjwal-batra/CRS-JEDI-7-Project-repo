@@ -18,7 +18,13 @@ import java.sql.ResultSet;
  *
  */
 public class PaymentNotificationService implements PaymentNotificationInterface {
-
+	
+	/**
+	 * Method to send payment notifications after successful semester registration
+	 * @param Student
+	 * @param payment
+	 * @return 
+	 */
     public void sendNotification(Student student, Payment payment) {
         Notification notification = new Notification();
         getLastID(notification);
@@ -51,7 +57,13 @@ public class PaymentNotificationService implements PaymentNotificationInterface 
             }
         }
     }
-
+    
+    /**
+	 * Method to get last payment ID
+	 * @param Student
+	 * @param payment
+	 * @return 
+	 */
     public void getLastID(Notification notification){
         Connection connection = null;
         PreparedStatement statement = null;
