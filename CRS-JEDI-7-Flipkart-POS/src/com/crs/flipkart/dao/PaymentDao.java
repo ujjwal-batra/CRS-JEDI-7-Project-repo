@@ -4,12 +4,11 @@ import com.crs.flipkart.utils.DBUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.util.UUID;
 
-public class PaymentDao implements PaymentDaoInterface{
+public class PaymentDao implements PaymentDaoInterface {
 
     @Override
-    public void makePayment(int payment_id,int invoice,int studentId,int amount,String status, String mode) {
+    public void makePayment(int payment_id, int invoice, int studentId, int amount, String status, String mode) {
 
 
         Connection connection = null;
@@ -38,7 +37,7 @@ public class PaymentDao implements PaymentDaoInterface{
                 System.out.println(ex);
             }
         }
-        }
+    }
 
 
     @Override
