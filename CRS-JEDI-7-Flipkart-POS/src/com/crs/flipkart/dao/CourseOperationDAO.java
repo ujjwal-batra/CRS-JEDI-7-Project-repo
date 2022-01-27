@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourseCatalogueDAO implements CourseCatalogueDaoInterface {
+public class CourseOperationDAO implements CourseOperationDaoInterface {
 
     @Override
     public CourseCatalogue getCourseCatalogue() {

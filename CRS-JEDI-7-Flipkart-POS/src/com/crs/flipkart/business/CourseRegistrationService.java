@@ -1,7 +1,7 @@
 package com.crs.flipkart.business;
 
 import com.crs.flipkart.bean.Course;
-import com.crs.flipkart.dao.CourseCatalogueDAO;
+import com.crs.flipkart.dao.CourseOperationDAO;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class CourseRegistrationService implements CourseRegistrationInterface {
     }
 
     public List<Course> viewCourseList() {
-        return new CourseCatalogueDAO().getCourseCatalogue().getCourseList();
+        return new CourseOperationDAO().getCourseCatalogue().getCourseList();
     }
 
     public boolean registerCourse() {

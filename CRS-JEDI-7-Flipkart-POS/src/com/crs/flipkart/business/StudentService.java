@@ -1,6 +1,6 @@
 package com.crs.flipkart.business;
 
-import com.crs.flipkart.dao.CourseCatalogueDAO;
+import com.crs.flipkart.dao.CourseOperationDAO;
 import com.crs.flipkart.dao.StudentDao;
 
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.List;
 public class StudentService {
 
     StudentDao studentDao = new StudentDao();
-    CourseCatalogueDAO courseCatalogueDAO = new CourseCatalogueDAO();
+    CourseOperationDAO courseCatalogueDAO = new CourseOperationDAO();
 
     public boolean semesterRegistration(int studentId, int semester) {
         return new StudentDao().semesterRegistration(studentId, semester);
