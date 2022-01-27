@@ -145,16 +145,15 @@ public class StudentDao implements StudentDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = "select * from student where studentId = " + studentId;
+            String sqlQuery = "select * from student where student_id = " + studentId;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             if (!resultSet.next()) {
                 return false;
             }
-            sqlQuery = "update student set semester = " + semester + " where studentId = " + studentId;
-            ResultSet resultSet1 = statement.executeQuery(sqlQuery);
-            if (!resultSet1.next())
-                return false;
+            sqlQuery = "update student set semester = " + semester + " where student_id = " + studentId;
+            int resultSet1 = statement.executeUpdate(sqlQuery);
+
             return true;
         } catch (Exception ex) {
             System.out.println(ex);
