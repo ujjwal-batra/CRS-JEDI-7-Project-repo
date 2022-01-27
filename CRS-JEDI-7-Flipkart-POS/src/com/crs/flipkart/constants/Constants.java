@@ -41,4 +41,10 @@ public class Constants {
     public static final String GET_ENROLLED_STUDENT_COUNT = "select count(*) from enrolled_course where course_id = ";
     public static final String GET_STUDENT_LIST_BY_COURSE_ID = "select * from enrolled_course where course_id = ";
 
+    /**
+     * Course Constants
+     */
+    public static final String SELECT_ALL_NOTIFICATION = "select * from notification";
+    public static final String ADD_NOTIFICATION = "insert into notification values(?, ?, ?, ?)";
+
 }
