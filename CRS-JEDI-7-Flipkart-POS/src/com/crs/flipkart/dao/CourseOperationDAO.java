@@ -170,7 +170,7 @@ public class CourseOperationDAO implements CourseOperationDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = "select * from enrolled_course where student_id = " + studentId;
+            String sqlQuery = Constants.VIEW_ENROLLED_COURSES + studentId;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             while (resultSet.next()) {
