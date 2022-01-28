@@ -3,14 +3,16 @@
  */
 package com.crs.flipkart.application;
 
+import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.business.ProfessorService;
 import com.crs.flipkart.business.AdminService;
 import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.utils.DBUtils;
 import com.mysql.jdbc.Connection;
-
 import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  * @author Tushar
@@ -155,6 +157,7 @@ public class CRSApplication {
                     boolean isApproved = new StudentService().getStudentById(studentId).isApproved();
                     if (isApproved) {
                         System.out.println("Login Successful!");
+                        displayLoginTime(studentId,1);
                         CRSStudentMenu studentMenu = new CRSStudentMenu();
                         studentMenu.create_menu(studentId);
 
@@ -164,11 +167,13 @@ public class CRSApplication {
                     break;
                 case 2:
                     System.out.println("Login Successful!");
+                    displayLoginTime(profId,2);
                     CRSProfessorMenu professorMenu = new CRSProfessorMenu();
                     professorMenu.professorMenu(profId);
                     break;
                 case 3:
                     System.out.println("Login Successful!");
+                    displayLoginTime(adminId,3);
                     CRSAdminMenu adminMenu = new CRSAdminMenu();
                     adminMenu.createMenu();
                     break;
@@ -178,7 +183,33 @@ public class CRSApplication {
 
     }
 
-
+    private static void displayLoginTime(int Id,int role) {
+    	String name="";
+    	switch(role) {
+    		case 1:
+    			Student student = new StudentService().getStudentById(Id);
+    			name = student.getName();
+    			break;
+    		case 2: 
+    			Professor prof = new ProfessorService().getProfessorById(Id);
+    			name = prof.getName();
+    			break;
+    		case 3:
+    			name = "Admin";
+    			break;
+    			
+    	}
+    	LocalDate localDate = LocalDate.now();
+		LocalTime localTime = LocalTime.now();
+		
+    	//System.out.println("------------------------------------------");
+    	System.out.println("\n++++++++++++++++++++++++++++++++++++++++++");
+    	System.out.println("Welcome "+ name);
+    	System.out.println("Time of Login :- "+ localTime);
+    	System.out.println("Todays Date :- "+ localDate);
+    	System.out.println("++++++++++++++++++++++++++++++++++++++++++");
+    	//System.out.println("------------------------------------------");
+    }
     private static void updatePassword() {
         Scanner sc = new Scanner(System.in);
         String email, password;
