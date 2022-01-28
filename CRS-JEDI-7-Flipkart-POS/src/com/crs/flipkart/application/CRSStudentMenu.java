@@ -4,7 +4,6 @@
 package com.crs.flipkart.application;
 
 import com.crs.flipkart.bean.Course;
-import com.crs.flipkart.bean.Notification;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.business.*;
 
@@ -186,11 +185,12 @@ public class CRSStudentMenu {
     }
 
     private void showCourseCatalogue() {
-        for (Course course : new CourseOperationService().getCourseCatalogue().getCourseList()) {
+        List<Course> courseList = new CourseOperationService().getCourseCatalogue().getCourseList();
+        courseList.forEach(course -> {
             System.out.println("CourseId: " + course.getCourseId() +
                     ", CourseName: " + course.getCourseName() +
                     ", Professor: " + (course.getProfessorId() == -1 || course.getProfessorId() == 0 ? "Not yet assigned" : course.getProfessorId()));
-        }
+        });
     }
 
     private void addCourse(int studentId) {

@@ -107,10 +107,10 @@ public class StudentService implements StudentServiceInterface {
         List<Integer> enrolledCourses = studentDao.viewEnrolledCourse(studentId);
         List<String> result = new ArrayList<>();
         logger.debug("In instance of StudentService view registered courses.");
-        for (Integer enrolledCourseId : enrolledCourses) {
+        enrolledCourses.forEach(enrolledCourseId -> {
             String courseName = courseCatalogueDAO.getCourseById(enrolledCourseId).getCourseName();
             result.add("\nCourseId: " + enrolledCourseId + ", Course name: " + courseName);
-        }
+        });
         return result;
     }
 

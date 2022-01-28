@@ -81,19 +81,20 @@ public class CRSProfessorMenu {
         Professor professor = new ProfessorService().getProfessorById(professorId);
         if (professor.getCourseList().isEmpty()) System.out.println("Not yet registered for any course");
         else System.out.println("My Course details: ");
-        for (Course course : professor.getCourseList()) {
+        professor.getCourseList().forEach(course -> {
             System.out.println("CourseId: " + course.getCourseId() +
                     ", CourseName: " + course.getCourseName() +
                     ", ProfessorId: " + course.getProfessorId());
-        }
+        });
     }
 
     private void showCourseCatalogue() {
-        for (Course course : new CourseOperationService().getCourseCatalogue().getCourseList()) {
+        List<Course> courseList = new CourseOperationService().getCourseCatalogue().getCourseList();
+        courseList.forEach(course -> {
             System.out.println("CourseId: " + course.getCourseId() +
                     ", CourseName: " + course.getCourseName() +
                     ", Professor: " + (course.getProfessorId() == -1 || course.getProfessorId() == 0 ? "Not yet assigned" : course.getProfessorId()));
-        }
+        });
     }
 
     private void viewStudents(int professorId) {

@@ -86,16 +86,16 @@ public class ProfessorService implements ProfessorInterface {
         logger.debug("In instance of professor service, view all enrolled students");
         List<String> studentList = new ArrayList<>();
         StudentDao studentDao = new StudentDao();
-        for (Course course : getCourseList()) {
+
+        getCourseList().forEach(course -> {
             if (course.getProfessorId() != -1 && course.getProfessorId() == professorId) {
                 List<Integer> studentListForSingleCourse = getStudentList(course.getCourseId());
-                for (Integer studentId : studentListForSingleCourse) {
+                studentListForSingleCourse.forEach(studentId -> {
                     studentList.add("\nStudentID: " + studentId + ", StudentName: " + studentDao.getStudentById(studentId).getName() +
                             ", CourseID: " + course.getCourseId() + ", CourseName" + course.getCourseName());
-                }
-
+                });
             }
-        }
+        });
         return studentList;
     }
 

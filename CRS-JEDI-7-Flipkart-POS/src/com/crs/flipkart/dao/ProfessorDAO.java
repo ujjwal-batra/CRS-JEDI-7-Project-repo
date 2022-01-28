@@ -111,10 +111,10 @@ public class ProfessorDAO implements ProfessorDaoInterface {
     @Override
     public void populateCourses(Professor professor) {
         List<Course> courseList = new CourseOperationDAO().getAllCourses();
-        for (Course course : courseList) {
+        courseList.forEach(course -> {
             if (course.getProfessorId() == professor.getProfessorId())
                 professor.getCourseList().add(course);
-        }
+        });
         return;
     }
 

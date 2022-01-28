@@ -12,6 +12,7 @@ import com.crs.flipkart.business.CourseOperationService;
 import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.exceptions.AddCourseException;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -78,11 +79,13 @@ public class CRSAdminMenu {
     }
 
     private void showCourseCatalogue() {
-        for (Course course : new CourseOperationService().getCourseCatalogue().getCourseList()) {
+
+        List<Course> courseList = new CourseOperationService().getCourseCatalogue().getCourseList();
+        courseList.forEach(course -> {
             System.out.println("CourseId: " + course.getCourseId() +
                     ", CourseName: " + course.getCourseName() +
                     ", Professor: " + (course.getProfessorId() == -1 || course.getProfessorId() == 0 ? "Not yet assigned" : course.getProfessorId()));
-        }
+        });
     }
 
     /**
