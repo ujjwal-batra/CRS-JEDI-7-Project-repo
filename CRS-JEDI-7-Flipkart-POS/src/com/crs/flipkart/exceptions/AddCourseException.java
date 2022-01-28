@@ -7,10 +7,10 @@ package com.crs.flipkart.exceptions;
  * @author JEDI-02 Exception to check if the course is available for adding.
  */
 public class AddCourseException extends Exception {
-	private String courseId;
+	private int courseId;
 
 
-	public AddCourseException(String courseCode) {
+	public AddCourseException(int courseId) {
 		this.courseId = courseId;
 	}
 

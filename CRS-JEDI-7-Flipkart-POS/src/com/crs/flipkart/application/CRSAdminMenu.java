@@ -10,6 +10,7 @@ import com.crs.flipkart.business.AdminService;
 import com.crs.flipkart.business.AdminServiceInterface;
 import com.crs.flipkart.business.CourseOperationService;
 import com.crs.flipkart.business.StudentService;
+import com.crs.flipkart.exceptions.AddCourseException;
 
 import java.util.Scanner;
 
@@ -97,13 +98,18 @@ public class CRSAdminMenu {
         scanner.nextLine();
         System.out.println("Enter Course Name:");
         String courseName = scanner.nextLine();
+        try {
 
-        AdminServiceInterface adminServiceInterface = new AdminService();
-        boolean isAdded = adminServiceInterface.addCourse(courseCode, courseName);
-        if (isAdded)
-            System.out.println("Course added successfully");
-        else
-            System.out.println("Error while adding course");
+
+            AdminServiceInterface adminServiceInterface = new AdminService();
+            boolean isAdded = adminServiceInterface.addCourse(courseCode, courseName);
+            if (isAdded)
+                System.out.println("Course added successfully");
+            else
+                System.out.println("Error while adding course");
+        } catch (AddCourseException addCourseException) {
+            System.out.println("Error while adding course: " + addCourseException.getMessage());
+        }
         System.out.println("---------------------------------------------------------------------------------------------\n");
 
     }

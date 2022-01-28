@@ -4,6 +4,7 @@ import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.dao.AdminDao;
 import com.crs.flipkart.dao.AdminDaoInterface;
+import com.crs.flipkart.exceptions.AddCourseException;
 import org.apache.log4j.Logger;
 
 
@@ -19,12 +20,17 @@ public class AdminService implements AdminServiceInterface {
      * @return boolean
      */
     @Override
-    public boolean addCourse(int courseId, String courseName) {
-        if (courseId < 0)
-            return false;
-        AdminDaoInterface adminDaoInterface = new AdminDao();
-        logger.info("In instance of AdminService, adding course with course id: " + courseId + " and course name: " + courseName);
-        return adminDaoInterface.addCourse(courseId, courseName);
+    public boolean addCourse(int courseId, String courseName) throws AddCourseException{
+        try {
+            if (courseId < 0)
+                return false;
+            AdminDaoInterface adminDaoInterface = new AdminDao();
+            logger.info("In instance of AdminService, adding course with course id: " + courseId + " and course name: " + courseName);
+
+            return adminDaoInterface.addCourse(courseId, courseName);
+        } catch (Exception ex) {
+            throw new AddCourseException(courseId);
+        }
     }
 
     /**
