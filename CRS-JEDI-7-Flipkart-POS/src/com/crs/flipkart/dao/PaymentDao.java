@@ -1,15 +1,29 @@
 package com.crs.flipkart.dao;
 
 import com.crs.flipkart.utils.DBUtils;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.util.UUID;
 
-public class PaymentDao implements PaymentDaoInterface{
+public class PaymentDao implements PaymentDaoInterface {
 
+    private static final Logger logger = LogManager.getLogger(PaymentDao.class);
+
+    /**
+     * Method to insert payment info to the Database
+     *
+     * @param payment_id
+     * @param invoice
+     * @param studentId
+     * @param amount
+     * @param status
+     * @param mode
+     * @return
+     */
     @Override
-    public void makePayment(int payment_id,int invoice,int studentId,int amount,String status, String mode) {
+    public int makePayment(int payment_id, int invoice, int studentId, int amount, String status, String mode) {
 
 
         Connection connection = null;
@@ -27,20 +41,26 @@ public class PaymentDao implements PaymentDaoInterface{
             statement.setString(6, mode);
 
             statement.executeUpdate();
-
+            return payment_id;
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error while making payment: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
-        }
+        return -1;
+    }
 
-
+    /**
+     * Method to send payment notifications to student
+     *
+     * @param
+     * @return
+     */
     @Override
     public void sendPaymentNotification() {
 

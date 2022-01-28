@@ -6,7 +6,12 @@ import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.dao.StudentDao;
 
 public class GenerateGradeCardService implements GenerateGradeCardInterface {
-
+	
+	/**
+	 * Method to generate the grade card for  student
+	 * @param studentId
+	 * @return 
+	 */
     public void generateGradeCard(int studentId) {
         Student student = new StudentDao().getStudentById(studentId);
         GradeCard gradeCard = student.getGradeCard();

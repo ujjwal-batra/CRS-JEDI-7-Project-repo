@@ -16,32 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `admin`
+-- Table structure for table `catalogue`
 --
 
-DROP TABLE IF EXISTS `admin`;
+DROP TABLE IF EXISTS `catalogue`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `admin` (
-  `admin_id` int NOT NULL,
-  `name` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  `contact_number` varchar(45) NOT NULL,
-  `address` varchar(45) NOT NULL,
-  `gender` varchar(45) NOT NULL,
-  PRIMARY KEY (`admin_id`)
+CREATE TABLE `catalogue` (
+  `catalogue_id` int NOT NULL,
+  `course_id` int NOT NULL,
+  KEY `catalogue_course_id_idx` (`course_id`),
+  CONSTRAINT `catalogue_course_id` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `admin`
+-- Dumping data for table `catalogue`
 --
 
-LOCK TABLES `admin` WRITE;
-/*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (1,'root','root','ad@gm.com','1234','address','male');
-/*!40000 ALTER TABLE `admin` ENABLE KEYS */;
+LOCK TABLES `catalogue` WRITE;
+/*!40000 ALTER TABLE `catalogue` DISABLE KEYS */;
+/*!40000 ALTER TABLE `catalogue` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-27 11:21:21
+-- Dump completed on 2022-01-27 11:24:37

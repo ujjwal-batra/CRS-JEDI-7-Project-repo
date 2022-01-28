@@ -6,5 +6,10 @@ package com.crs.flipkart.business;
  */
 
 public interface GenerateGradeCardInterface {
+	/**
+	 * Method to generate the grade card for  student
+	 * @param studentId
+	 * @return 
+	 */
 	public void generateGradeCard(int studentId);
 }

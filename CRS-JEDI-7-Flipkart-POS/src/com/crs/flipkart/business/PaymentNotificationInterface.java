@@ -3,13 +3,31 @@
  */
 package com.crs.flipkart.business;
 
+import com.crs.flipkart.bean.Notification;
 import com.crs.flipkart.bean.Payment;
 import com.crs.flipkart.bean.Student;
+
+import java.util.List;
 
 /**
  * @author adarsh
  *
  */
 public interface PaymentNotificationInterface {
-	public void sendNotification(Student student, Payment payment);
+	/**
+	 * Method to send payment notifications after successful semester registration
+	 * @param student
+	 * @param payment_id
+	 * @return 
+	 */
+	public void sendNotification(Student student, int payment_id);
+
+	/**
+	 * get last id of notification
+	 * notification
+	 * @return
+	 */
+	public int getLastID(Notification notification);
+
+	List<String> getNotificationById(int studentId);
 }

@@ -4,10 +4,9 @@
 package com.crs.flipkart.application;
 
 import com.crs.flipkart.bean.Course;
-import com.crs.flipkart.bean.Payment;
-import com.crs.flipkart.business.StudentService;
-import com.crs.flipkart.dao.CourseCatalogueDAO;
-import com.crs.flipkart.dao.PaymentDao;
+import com.crs.flipkart.bean.Notification;
+import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.business.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +44,8 @@ public class CRSStudentMenu {
             System.out.println("5. View Registered Courses");
             System.out.println("6. View grade card");
             System.out.println("7. Make Payment");
-            System.out.println("8. Logout");
+            System.out.println("8. View Notification");
+            System.out.println("9. Logout");
             System.out.println("------------------------------------------");
             System.out.print("ENTER YOUR CHOICE---->:\t");
 
@@ -78,12 +78,22 @@ public class CRSStudentMenu {
                     break;
 
                 case 8:
+                    showNotification(studentId);
+                    return;
+
+                case 9:
                     return;
 
                 default:
                     System.out.println("***** Wrong Choice *****");
             }
         }
+    }
+
+    private void showNotification(int studentId) {
+        PaymentNotificationInterface paymentNotificationInterface = new PaymentNotificationService();
+        List<String> notificationsList = paymentNotificationInterface.getNotificationById(studentId);
+        System.out.println(notificationsList);
     }
 
     private void addOrDrop(int studentId) {
@@ -176,10 +186,10 @@ public class CRSStudentMenu {
     }
 
     private void showCourseCatalogue() {
-        for (Course course : new CourseCatalogueDAO().getCourseCatalogue().getCourseList()) {
+        for (Course course : new CourseOperationService().getCourseCatalogue().getCourseList()) {
             System.out.println("CourseId: " + course.getCourseId() +
                     ", CourseName: " + course.getCourseName() +
-                    ", Professor: " + (course.getProfessorId() == -1 ? "Not yet assigned" : course.getProfessorId()));
+                    ", Professor: " + (course.getProfessorId() == -1 || course.getProfessorId() == 0 ? "Not yet assigned" : course.getProfessorId()));
         }
     }
 
@@ -237,9 +247,12 @@ public class CRSStudentMenu {
     }
 
     private void viewGradeCard(int studentId) {
-
-
-        //TODO : Implement View Grade Card Addition
+        if (is_registered) {
+            List<String> gradeCard = new StudentService().getGradeCard(studentId);
+            System.out.println("Grade Card: " + gradeCard);
+        } else {
+            System.out.println("Please complete registration");
+        }
 
     }
 
@@ -260,18 +273,18 @@ public class CRSStudentMenu {
             sc.nextLine();
 
 
-            int invoice ;
-          String BankName;
-          String ifsc;
+            int invoice;
+            String BankName;
+            String ifsc;
             int amount = 1000;
-            String status ="success";
+            String status = "success";
             System.out.print("Amount to be Paid :\t\tRs. " + amount);
             System.out.println("");
-            String mode="";
+            String mode = "";
             System.out.print("Enter Payment ID:\t");
             int payment_id = sc.nextInt();
             System.out.println("");
-            switch(choice) {
+            switch (choice) {
                 case 1:
 
 
@@ -291,19 +304,22 @@ public class CRSStudentMenu {
                     mode = "OFFLINE";
                     break;
 
-                default : System.out.println("Payment Denied\nTry Again!");
+                default:
+                    System.out.println("Payment Denied\nTry Again!");
                     return;
 
             }
 
-            PaymentDao payment = new PaymentDao();
-            payment.makePayment(payment_id,invoice,studentId,amount,status,mode);
+            PaymentServiceInterface payment = new PaymentService();
+            int payment_id1 = payment.makePayment(payment_id, invoice, studentId, amount, status, mode);
 
-        }
+            StudentServiceInterface studentServiceInterface = new StudentService();
+            Student student = studentServiceInterface.getStudentById(studentId);
 
+            PaymentNotificationInterface paymentNotificationInterface = new PaymentNotificationService();
+            paymentNotificationInterface.sendNotification(student, payment_id1);
 
-
-        else {
+        } else {
             System.out.println("Please complete registration");
         }
 

@@ -1,19 +1,19 @@
-package com.crs.flipkart.dao;
+package com.crs.flipkart.business;
 
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
 
-public interface AdminDaoInterface {
-    /**
-	 * Method to add course from the admin
+public interface AdminServiceInterface {
+	/**
+	 * Method to add a course by the admin
 	 * @param courseId
 	 * @param courseName
 	 * @return boolean
 	 */
-    public boolean addCourse(int courseId, String courseName);
+    public boolean addCourse(int courseId, String CourseName);
     
     /**
-	 * Method to delete course by the admin
+	 * Method to delete a course by the admin
 	 * @param courseId
 	 * @return boolean
 	 */
@@ -23,21 +23,21 @@ public interface AdminDaoInterface {
 	 * Method to check credentials of admin
 	 * @param email
 	 * @param password
-	 * @return boolean
+	 * @return int
 	 */
     public int checkCredentials(String email, String password);
-
+    
     /**
-	 * Method to approve a student from the admin
+	 * Method to approve a student by admin
 	 * @param student
 	 * @return 
 	 */
     public void approveStudent(Student student);
     
     /**
-	 * Method to add professor by the admin
+	 * Method to add a professor to the system by the admin
 	 * @param professor
-	 * @return boolean
+	 * @return 
 	 */
     public boolean addProfessor(Professor professor);
 }

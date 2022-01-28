@@ -1,26 +1,32 @@
 package com.crs.flipkart.dao;
 
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.constants.Constants;
 import com.crs.flipkart.utils.DBUtils;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class StudentDao implements StudentDaoInterface {
 
-    public StudentDao() {
-        //registerCourse();
-    }
+    private static final Logger logger = LogManager.getLogger(StudentDao.class);
 
+    /**
+   	 * Method to get lastId from the database
+   	 * @param student
+   	 * @return 
+   	 */
+    @Override
     public void getLastId(Student student) {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = "select * from student";
+            String sqlQuery = Constants.SELECT_ALL_STUDENTS;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             while (resultSet.next()) {
@@ -29,24 +35,30 @@ public class StudentDao implements StudentDaoInterface {
 
 
         } catch (Exception ex) {
-            System.out.println(ex.getLocalizedMessage());
+            logger.error("Error while retrieving student: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex.getLocalizedMessage());
+                logger.error("Error: " + ex.getMessage());
             }
         }
     }
-
+    
+    /**
+   	 * Method to save student info to database
+   	 * @param student
+   	 * @return Student
+   	 */
+    @Override
     public Student saveStudent(Student student) {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = "insert into student values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sqlQuery = Constants.ADD_STUDENT;
             statement = connection.prepareStatement(sqlQuery);
             statement.setInt(1, student.getStudentId());
             statement.setString(2, student.getName());
@@ -62,18 +74,24 @@ public class StudentDao implements StudentDaoInterface {
             statement.executeUpdate();
 
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error while saving student: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return student;
     }
-
+    
+    /**
+   	 * Method to retrieve student by their ID
+   	 * @param studentId
+   	 * @return Student
+   	 */
+    @Override
     public Student getStudentById(int studentId) {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -81,7 +99,7 @@ public class StudentDao implements StudentDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = "select * from student where student_id =" + studentId;
+            String sqlQuery = Constants.SELECT_STUDENT_BY_ID + studentId;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             while (resultSet.next()) {
@@ -99,18 +117,25 @@ public class StudentDao implements StudentDaoInterface {
             return student;
 
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error while retrieving student: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return null;
     }
-
+    
+    /**
+   	 * Method to check login credentials 
+   	 * @param email
+   	 * @param password
+   	 * @return int
+   	 */
+    @Override
     public int checkCredentials(String email, String password) {
 
         Connection connection = null;
@@ -119,7 +144,7 @@ public class StudentDao implements StudentDaoInterface {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
 
-            String sqlQuery = "select * from student where email = '" + email + "' and password = '" + password + "'";
+            String sqlQuery = Constants.CHECK_CREDENTIALS_STUDENT + email + "' and password = '" + password + "'";
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             if (!resultSet.next()) {
@@ -127,55 +152,69 @@ public class StudentDao implements StudentDaoInterface {
             } else
                 return resultSet.getInt("student_id");
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return -1;
     }
-
+    
+    /**
+   	 * Method to add semester registration info to the database
+   	 * @param studentId
+   	 * @param semester
+   	 * @return boolean
+   	 */
+    @Override
     public boolean semesterRegistration(int studentId, int semester) {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = "select * from student where studentId = " + studentId;
+
+            String sqlQuery = Constants.SELECT_STUDENT_BY_ID + studentId;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             if (!resultSet.next()) {
                 return false;
             }
-            sqlQuery = "update student set semester = " + semester + " where studentId = " + studentId;
-            ResultSet resultSet1 = statement.executeQuery(sqlQuery);
-            if (!resultSet1.next())
-                return false;
+            sqlQuery = Constants.SET_STUDENT_SEMESTER + semester + " where student_id = " + studentId;
+            statement = connection.prepareStatement(sqlQuery);
+            statement.executeUpdate();
             return true;
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error during semester registration: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return true;
     }
-
+    
+    /**
+   	 * Method to add course to the database
+   	 * @param studentId
+   	 * @param courseId
+   	 * @return boolean
+   	 */
+    @Override
     public boolean addCourse(int studentId, int courseId) {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = "insert into enrolled_course values(?, ?, ?)";
+            String sqlQuery = Constants.STUDENT_ENROLL_COURSE;
             statement = connection.prepareStatement(sqlQuery);
             statement.setInt(1, courseId);
             statement.setInt(2, studentId);
@@ -183,18 +222,25 @@ public class StudentDao implements StudentDaoInterface {
             statement.executeUpdate();
             return true;
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error while adding course: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return false;
     }
-
+    
+    /**
+   	 * Method to remove course from the database
+   	 * @param studentId
+   	 * @param courseId
+   	 * @return boolean
+   	 */
+    @Override
     public boolean dropCourse(int studentId, int courseId) {
         Connection connection = null;
         Statement statement = null;
@@ -202,23 +248,29 @@ public class StudentDao implements StudentDaoInterface {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
             statement = connection.createStatement();
-            String sqlQuery = "delete from enrolled_course where student_id = " + studentId
+            String sqlQuery = Constants.STUDENT_DROP_COURSE + studentId
                     + " and course_id = " + courseId;
             statement.executeUpdate(sqlQuery);
             return true;
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error while dropping course: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return false;
     }
-
+    
+    /**
+   	 * Method to view all enrolled courses ofa student
+   	 * @param studentId
+   	 * @return  List of Integer
+   	 */
+    @Override
     public List<Integer> viewEnrolledCourse(int studentId) {
         List<Integer> res = new ArrayList<>();
         Connection connection = null;
@@ -226,7 +278,7 @@ public class StudentDao implements StudentDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = "select * from enrolled_course where student_id = " + studentId;
+            String sqlQuery = Constants.VIEW_ENROLLED_COURSES + studentId;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             while (resultSet.next()) {
@@ -234,13 +286,13 @@ public class StudentDao implements StudentDaoInterface {
             }
             return res;
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return res;

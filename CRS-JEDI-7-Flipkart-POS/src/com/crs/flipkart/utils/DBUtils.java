@@ -1,5 +1,8 @@
 package com.crs.flipkart.utils;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,34 +12,35 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DBUtils {
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost/crs_app?characterEncoding=latin1";
 
-    //  Database credentials
-    static final String USER = "root";
-    static final String PASS = "password";
+    private static final Logger logger = LogManager.getLogger(DBUtils.class);
+
 
     public static Connection getConnection() {
-
         Connection connection = null;
         if (connection != null)
             return connection;
-        else
-        {
-            try
-            {
-                Class.forName("com.mysql.jdbc.Driver");
-                connection = DriverManager.getConnection(DB_URL,USER,PASS);
-
-            }
-            catch (ClassNotFoundException e){
-                e.printStackTrace();
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
+        else {
+            try {
+                Properties prop = new Properties();
+                InputStream inputStream = DBUtils.class.getClassLoader().getResourceAsStream("./config.properties");
+                prop.load(inputStream);
+                String driver = prop.getProperty("driver");
+                String url = prop.getProperty("url");
+                String user = prop.getProperty("user");
+                String password = prop.getProperty("password");
+                Class.forName(driver);
+                connection = DriverManager.getConnection(url, user, password);
+            } catch (ClassNotFoundException e) {
+                logger.error("Error: " + e.getMessage());
+            } catch (SQLException e) {
+                logger.error("Error: " + e.getMessage());
+            } catch (FileNotFoundException e) {
+                logger.error("Error: " + e.getMessage());
+            } catch (IOException e) {
+                logger.error("Error: " + e.getMessage());
             }
             return connection;
         }
-
     }
 }
