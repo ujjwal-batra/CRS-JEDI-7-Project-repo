@@ -3,14 +3,18 @@ package com.crs.flipkart.dao;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.constants.Constants;
 import com.crs.flipkart.utils.DBUtils;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class StudentDao implements StudentDaoInterface {
-	
-	 /**
+
+    private static final Logger logger = LogManager.getLogger(StudentDao.class);
+
+    /**
    	 * Method to get lastId from the database
    	 * @param student
    	 * @return 
@@ -31,13 +35,13 @@ public class StudentDao implements StudentDaoInterface {
 
 
         } catch (Exception ex) {
-            System.out.println(ex.getLocalizedMessage());
+            logger.error("Error while retrieving student: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex.getLocalizedMessage());
+                logger.error("Error: " + ex.getMessage());
             }
         }
     }
@@ -70,13 +74,13 @@ public class StudentDao implements StudentDaoInterface {
             statement.executeUpdate();
 
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error while saving student: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return student;
@@ -113,13 +117,13 @@ public class StudentDao implements StudentDaoInterface {
             return student;
 
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error while retrieving student: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return null;
@@ -148,13 +152,13 @@ public class StudentDao implements StudentDaoInterface {
             } else
                 return resultSet.getInt("student_id");
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return -1;
@@ -185,13 +189,13 @@ public class StudentDao implements StudentDaoInterface {
             statement.executeUpdate();
             return true;
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error during semester registration: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return true;
@@ -218,13 +222,13 @@ public class StudentDao implements StudentDaoInterface {
             statement.executeUpdate();
             return true;
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error while adding course: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return false;
@@ -249,13 +253,13 @@ public class StudentDao implements StudentDaoInterface {
             statement.executeUpdate(sqlQuery);
             return true;
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error while dropping course: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return false;
@@ -282,13 +286,13 @@ public class StudentDao implements StudentDaoInterface {
             }
             return res;
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return res;

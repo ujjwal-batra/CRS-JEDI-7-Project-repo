@@ -4,6 +4,8 @@ import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.CourseCatalogue;
 import com.crs.flipkart.constants.Constants;
 import com.crs.flipkart.utils.DBUtils;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,22 +14,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CourseOperationDAO implements CourseOperationDaoInterface {
-	
-	/**
-	 * Method to get all courses  from the course catalogue
-	 * @param 
-	 * @return CourseCatalogue
-	 */
+
+    private static final Logger logger = LogManager.getLogger(CourseOperationDAO.class);
+
+    /**
+     * Method to get all courses  from the course catalogue
+     *
+     * @param
+     * @return CourseCatalogue
+     */
     @Override
     public CourseCatalogue getCourseCatalogue() {
         return new CourseCatalogue(1, "Catalogue", getAllCourses());
     }
-    
+
     /**
-   	 * Method to get list of  all courses
-   	 * @param 
-   	 * @return List of Course
-   	 */
+     * Method to get list of  all courses
+     *
+     * @param
+     * @return List of Course
+     */
     @Override
     public List<Course> getAllCourses() {
         List<Course> courseList = new ArrayList<>();
@@ -48,23 +54,24 @@ public class CourseOperationDAO implements CourseOperationDaoInterface {
                 courseList.add(course);
             }
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error while retrieving all courses: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return courseList;
     }
-    
+
     /**
-   	 * Method to get course by  its ID
-   	 * @param courseId
-   	 * @return Course
-   	 */
+     * Method to get course by  its ID
+     *
+     * @param courseId
+     * @return Course
+     */
     @Override
     public Course getCourseById(int courseId) {
         Connection connection = null;
@@ -85,23 +92,24 @@ public class CourseOperationDAO implements CourseOperationDaoInterface {
             }
             return course;
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return null;
     }
-    
+
     /**
-   	 * Method to update course information
-   	 * @param course
-   	 * @return 
-   	 */
+     * Method to update course information
+     *
+     * @param course
+     * @return
+     */
     @Override
     public void updateCourse(Course course) {
         Connection connection = null;
@@ -115,22 +123,23 @@ public class CourseOperationDAO implements CourseOperationDaoInterface {
             statement.executeUpdate();
 
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
     }
-    
+
     /**
-   	 * Method to get the student count ina course.
-   	 * @param courseId
-   	 * @return int
-   	 */
+     * Method to get the student count ina course.
+     *
+     * @param courseId
+     * @return int
+     */
     @Override
     public int getStudentCount(int courseId) {
         Connection connection = null;
@@ -147,23 +156,24 @@ public class CourseOperationDAO implements CourseOperationDaoInterface {
             }
             return studentCount;
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return 0;
     }
-    
+
     /**
-   	 * Method to get student list in a course
-   	 * @param courseId
-   	 * @return List of Integer
-   	 */
+     * Method to get student list in a course
+     *
+     * @param courseId
+     * @return List of Integer
+     */
     @Override
     public List<Integer> getStudentListByCourseId(int courseId) {
         List<Integer> res = new ArrayList<>();
@@ -180,23 +190,24 @@ public class CourseOperationDAO implements CourseOperationDaoInterface {
             }
             return res;
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return res;
     }
-    
+
     /**
-   	 * Method to retrieve Grades of a student
-   	 * @param studentId
-   	 * @return List of String
-   	 */
+     * Method to retrieve Grades of a student
+     *
+     * @param studentId
+     * @return List of String
+     */
     @Override
     public List<String> getGrades(int studentId) {
         List<String> res = new ArrayList<>();
@@ -218,13 +229,13 @@ public class CourseOperationDAO implements CourseOperationDaoInterface {
             }
             return res;
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return res;

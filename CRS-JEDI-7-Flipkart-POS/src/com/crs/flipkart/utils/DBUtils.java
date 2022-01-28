@@ -1,5 +1,8 @@
 package com.crs.flipkart.utils;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,6 +12,8 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DBUtils {
+
+    private static final Logger logger = LogManager.getLogger(DBUtils.class);
 
 
     public static Connection getConnection() {
@@ -27,13 +32,13 @@ public class DBUtils {
                 Class.forName(driver);
                 connection = DriverManager.getConnection(url, user, password);
             } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+                logger.error("Error: " + e.getMessage());
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("Error: " + e.getMessage());
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                logger.error("Error: " + e.getMessage());
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("Error: " + e.getMessage());
             }
             return connection;
         }

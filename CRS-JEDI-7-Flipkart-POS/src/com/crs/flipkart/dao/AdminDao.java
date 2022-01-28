@@ -4,17 +4,21 @@ import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.constants.Constants;
 import com.crs.flipkart.utils.DBUtils;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 
 public class AdminDao implements AdminDaoInterface {
-	
+
+    private static final Logger logger = Logger.getLogger(AdminDao.class);
+
     /**
-	 * Method to check credentials of admin
-	 * @param email
-	 * @param password
-	 * @return boolean
-	 */
+     * Method to check credentials of admin
+     *
+     * @param email
+     * @param password
+     * @return boolean
+     */
     @Override
     public int checkCredentials(String email, String password) {
 
@@ -31,23 +35,24 @@ public class AdminDao implements AdminDaoInterface {
             } else
                 return resultSet.getInt("admin_id");
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error while checking credentials: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return -1;
     }
-    
+
     /**
-	 * Method to approve a student from the admin
-	 * @param student
-	 * @return 
-	 */
+     * Method to approve a student from the admin
+     *
+     * @param student
+     * @return
+     */
     @Override
     public void approveStudent(Student student) {
         Connection connection = null;
@@ -61,23 +66,24 @@ public class AdminDao implements AdminDaoInterface {
             statement.executeUpdate(sqlQuery);
 
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error while approving student: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
     }
-    
+
     /**
-   	 * Method to add course from the admin
-   	 * @param courseId
-   	 * @param courseName
-   	 * @return boolean
-   	 */
+     * Method to add course from the admin
+     *
+     * @param courseId
+     * @param courseName
+     * @return boolean
+     */
     @Override
     public boolean addCourse(int courseId, String courseName) {
         Connection connection = null;
@@ -92,26 +98,28 @@ public class AdminDao implements AdminDaoInterface {
             statement.setString(2, courseName);
             statement.setNull(3, Types.INTEGER);
 
+            logger.info("In instance of Admin DAO, adding course with course id: " + courseId + " and course name: " + courseName);
             statement.executeUpdate();
             return true;
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error while persisting course in db: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return false;
     }
-    
+
     /**
-   	 * Method to delete course by the admin
-   	 * @param courseId
-   	 * @return boolean
-   	 */
+     * Method to delete course by the admin
+     *
+     * @param courseId
+     * @return boolean
+     */
     @Override
     public boolean deleteCourse(int courseId) {
         Connection connection = null;
@@ -125,23 +133,24 @@ public class AdminDao implements AdminDaoInterface {
             statement.executeUpdate(sqlQuery);
             return true;
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return false;
     }
-    
+
     /**
-	 * Method to add professor by the admin
-	 * @param professor
-	 * @return boolean
-	 */
+     * Method to add professor by the admin
+     *
+     * @param professor
+     * @return boolean
+     */
     @Override
     public boolean addProfessor(Professor professor) {
         Connection connection = null;
@@ -164,13 +173,13 @@ public class AdminDao implements AdminDaoInterface {
             statement.executeUpdate();
             return true;
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return false;

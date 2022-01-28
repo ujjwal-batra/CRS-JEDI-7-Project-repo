@@ -4,6 +4,8 @@ import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.constants.Constants;
 import com.crs.flipkart.utils.DBUtils;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,12 +15,15 @@ import java.util.List;
 
 
 public class ProfessorDAO implements ProfessorDaoInterface {
-	
-	/**
-   	 * Method to save professor information to database
-   	 * @param professor
-   	 * @return 
-   	 */
+
+    private static final Logger logger = LogManager.getLogger(ProfessorDAO.class);
+
+    /**
+     * Method to save professor information to database
+     *
+     * @param professor
+     * @return
+     */
     @Override
     public void saveProfessor(Professor professor) {
         Connection connection = null;
@@ -40,22 +45,23 @@ public class ProfessorDAO implements ProfessorDaoInterface {
             statement.executeUpdate();
 
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error while saveProfessor: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
     }
-    
+
     /**
-   	 * Method to Professor information from database.
-   	 * @param professorId
-   	 * @return Professor
-   	 */
+     * Method to Professor information from database.
+     *
+     * @param professorId
+     * @return Professor
+     */
     @Override
     public Professor getProfessorById(int professorId) {
         Connection connection = null;
@@ -84,23 +90,24 @@ public class ProfessorDAO implements ProfessorDaoInterface {
             if (professor != null) populateCourses(professor);
             return professor;
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return null;
     }
-    
+
     /**
-   	 * Method to populate courses  ofprofessor
-   	 * @param professor
-   	 * @return 
-   	 */
+     * Method to populate courses  ofprofessor
+     *
+     * @param professor
+     * @return
+     */
     @Override
     public void populateCourses(Professor professor) {
         List<Course> courseList = new CourseOperationDAO().getAllCourses();
@@ -110,13 +117,14 @@ public class ProfessorDAO implements ProfessorDaoInterface {
         }
         return;
     }
-    
+
     /**
-   	 * Method to check login credentials of professor.
-   	 * @param email
-   	 * @param password
-   	 * @return 
-   	 */
+     * Method to check login credentials of professor.
+     *
+     * @param email
+     * @param password
+     * @return
+     */
     @Override
     public int checkCredentials(String email, String password) {
 
@@ -133,24 +141,25 @@ public class ProfessorDAO implements ProfessorDaoInterface {
             } else
                 return resultSet.getInt("professor_id");
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error while checking credentials: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return -1;
     }
-    
+
     /**
-   	 * Method to update login credentials of professor.
-   	 * @param email
-   	 * @param password
-   	 * @return boolean
-   	 */
+     * Method to update login credentials of professor.
+     *
+     * @param email
+     * @param password
+     * @return boolean
+     */
     @Override
     public boolean updateCredentials(String email, String password) {
         Connection connection = null;
@@ -170,25 +179,26 @@ public class ProfessorDAO implements ProfessorDaoInterface {
                 return false;
             return true;
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
         return true;
     }
-    
+
     /**
-   	 * Method to add grades for courses by the  professor
-   	 * @param studentId
-   	 * @param courseId
-   	 * @param marks
-   	 * @return boolean 
-   	 */
+     * Method to add grades for courses by the  professor
+     *
+     * @param studentId
+     * @param courseId
+     * @param marks
+     * @return boolean
+     */
     @Override
     public boolean addGrade(int studentId, int courseId, double marks) {
         Connection connection = null;
@@ -202,13 +212,13 @@ public class ProfessorDAO implements ProfessorDaoInterface {
             statement.executeUpdate();
             return true;
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error("Error while adding grades: " + ex.getMessage());
         } finally {
             try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                System.out.println(ex);
+                logger.error("Error: " + ex.getMessage());
             }
         }
 

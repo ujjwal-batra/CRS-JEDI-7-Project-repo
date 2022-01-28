@@ -4,16 +4,12 @@
 package com.crs.flipkart.business;
 
 import com.crs.flipkart.bean.Notification;
-import com.crs.flipkart.bean.Payment;
 import com.crs.flipkart.bean.Student;
-import com.crs.flipkart.constants.Constants;
 import com.crs.flipkart.dao.NotificationDao;
 import com.crs.flipkart.dao.NotificationDaoInterface;
-import com.crs.flipkart.utils.DBUtils;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.List;
 
 /**
@@ -21,13 +17,15 @@ import java.util.List;
  *
  */
 public class PaymentNotificationService implements PaymentNotificationInterface {
-	
-	/**
-	 * Method to send payment notifications after successful semester registration
-	 * @param student
-	 * @param payment_id
-	 * @return 
-	 */
+
+    private static final Logger logger = LogManager.getLogger(PaymentNotificationService.class);
+
+    /**
+     * Method to send payment notifications after successful semester registration
+     * @param student
+     * @param payment_id
+     * @return
+     */
     public void sendNotification(Student student, int payment_id) {
         Notification notification = new Notification();
         int notification_id = getLastID(notification) + 1;
@@ -37,16 +35,18 @@ public class PaymentNotificationService implements PaymentNotificationInterface 
         notification.setNotificationType("Payment notification");
         notification.setMessage("Your payment is successful with PaymentID:" + payment_id);
 
+        logger.info("Sending payment notification to student id: " + student.getStudentId() + ", payment id: " + payment_id);
+
         NotificationDaoInterface notificationDaoInterface = new NotificationDao();
         notificationDaoInterface.sendNotification(notification);
     }
-    
+
     /**
-	 * Method to get last payment ID
+     * Method to get last payment ID
      * notification
-	 * @return 
-	 */
-    public int getLastID(Notification notification){
+     * @return
+     */
+    public int getLastID(Notification notification) {
         NotificationDaoInterface notificationDaoInterface = new NotificationDao();
         return notificationDaoInterface.getLastID(notification);
     }
