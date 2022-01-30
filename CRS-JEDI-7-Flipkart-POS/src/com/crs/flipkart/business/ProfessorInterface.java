@@ -65,4 +65,6 @@ public interface ProfessorInterface {
 	 * @return 
 	 */
     public Professor getProfessorById(int professorId);
+
+	public void updateCredentials(String email, String password);
 }

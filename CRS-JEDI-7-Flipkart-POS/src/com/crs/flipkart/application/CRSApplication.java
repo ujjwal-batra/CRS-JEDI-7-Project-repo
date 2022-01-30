@@ -5,9 +5,8 @@ package com.crs.flipkart.application;
 
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
-import com.crs.flipkart.business.ProfessorService;
-import com.crs.flipkart.business.AdminService;
-import com.crs.flipkart.business.StudentService;
+import com.crs.flipkart.business.*;
+import com.crs.flipkart.dao.StudentDaoInterface;
 import com.crs.flipkart.utils.DBUtils;
 import com.mysql.jdbc.Connection;
 import java.util.Scanner;
@@ -220,11 +219,32 @@ public class CRSApplication {
         System.out.println("Password:");
         password = sc.nextLine();
         int profId = new ProfessorService().checkCredentials(email, password);
+        int studentId = new StudentService().checkCredentials(email, password);
+        int adminId = new AdminService().checkCredentials(email, password);
         if (profId != -1) {
             System.out.println("Enter new password:");
             String new_password = sc.nextLine();
-            new ProfessorService().updateCredentials(email, new_password);
+
+            ProfessorInterface professorInterface = new ProfessorService();
+            professorInterface.updateCredentials(email, new_password);
             System.out.println("Password Updated Successfully!!!");
+
+        } else if (studentId != -1){
+            System.out.println("Enter new password:");
+            String new_password = sc.nextLine();
+
+            StudentServiceInterface studentServiceInterface =  new StudentService();
+            studentServiceInterface.updateCredentials(email, new_password);
+            System.out.println("Password Updated Successfully!!!");
+
+        } else if(adminId != -1){
+            System.out.println("Enter new password:");
+            String new_password = sc.nextLine();
+
+            AdminServiceInterface adminServiceInterface = new AdminService();
+            adminServiceInterface.updateCredentials(email, new_password);
+            System.out.println("Password Updated Successfully!!!");
+
         } else {
             System.out.println("Invalid!!");
         }

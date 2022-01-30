@@ -36,3 +36,33 @@
 14:07:10,885 ERROR StudentDao,main:321 - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '? and course_id = ?' at line 1
 14:08:52,589 DEBUG PaymentService,main:111 - In instance of StudentService view registered courses.
 14:08:55,527 ERROR StudentDao,main:321 - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '? and course_id=?' at line 1
+19:47:01,277 DEBUG PaymentService,main:30 - In instance of StudentService, registering semester student id: 111, semester: 2
+19:49:04,154 DEBUG PaymentService,main:111 - In instance of StudentService view registered courses.
+19:49:07,219 ERROR StudentDao,main:321 - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '? and course_id=?' at line 1
+19:49:39,093 ERROR StudentDao,main:321 - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '? and course_id=?' at line 1
+19:49:49,355 DEBUG PaymentService,main:111 - In instance of StudentService view registered courses.
+19:50:23,512  INFO PaymentService,main:24 - Making payment for student id: 111, payment id: 123654, payment mode: ONLINE, amount: 1000
+19:50:23,584  INFO PaymentNotificationService,main:38 - Sending payment notification to student id: 111, payment id: 123654
+20:31:35,640 DEBUG ProfessorService,main:43 - Professor: 1 selecting course: 2 to teach
+20:31:46,145 DEBUG ProfessorService,main:86 - In instance of professor service, view all enrolled students
+20:31:53,637 DEBUG ProfessorService,main:86 - In instance of professor service, view all enrolled students
+20:32:04,261  INFO ProfessorService,main:29 - Professor adding grade for student id: 101, course id: 2, marks10.0
+21:19:48,570 DEBUG PaymentService,main:193 - In instance of Professor service updating credentials
+21:19:48,593 ERROR StudentDao,main:351 - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '@gm.com' at line 1
+21:21:57,324 DEBUG PaymentService,main:193 - In instance of Professor service updating credentials
+21:21:57,347 ERROR StudentDao,main:351 - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '@gm.com' at line 1
+21:22:48,253 DEBUG PaymentService,main:193 - In instance of Professor service updating credentials
+21:22:48,276 ERROR StudentDao,main:351 - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '@gm.com' at line 1
+21:23:26,399 DEBUG PaymentService,main:193 - In instance of Professor service updating credentials
+21:23:26,421 ERROR StudentDao,main:352 - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '@gm.com' at line 1
+21:23:48,613 DEBUG ProfessorService,main:75 - In instance of Professor service updating credentials
+21:23:48,631 ERROR ProfessorDAO,main:182 - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '@gm.com' at line 1
+21:25:19,792 DEBUG PaymentService,main:193 - In instance of Professor service updating credentials
+21:25:19,816 ERROR StudentDao,main:351 - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '@gm.com' at line 1
+21:27:46,876 DEBUG PaymentService,main:193 - In instance of Professor service updating credentials
+21:28:46,640 DEBUG PaymentService,main:193 - In instance of Professor service updating credentials
+21:28:46,664 ERROR StudentDao,main:351 - Error: Can not issue data manipulation statements with executeQuery().
+21:29:50,606 DEBUG PaymentService,main:193 - In instance of Professor service updating credentials
+21:29:50,625 ERROR StudentDao,main:349 - Error: Unknown column 'pass' in 'field list'
+21:32:11,127 DEBUG PaymentService,main:193 - In instance of Professor service updating credentials
+21:32:11,160 ERROR StudentDao,main:350 - Error: Unknown column 'pass' in 'field list'

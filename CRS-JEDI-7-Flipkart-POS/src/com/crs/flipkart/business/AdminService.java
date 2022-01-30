@@ -4,6 +4,7 @@ import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.dao.AdminDao;
 import com.crs.flipkart.dao.AdminDaoInterface;
+import com.crs.flipkart.dao.ProfessorDAO;
 import com.crs.flipkart.exceptions.AddCourseException;
 import com.crs.flipkart.exceptions.CourseNotDeletedException;
 import org.apache.log4j.Logger;
@@ -95,5 +96,9 @@ public class AdminService implements AdminServiceInterface {
         return adminDaoInterface.addProfessor(professor);
     }
 
-
+    @Override
+    public void updateCredentials(String email, String password) {
+        logger.debug("In instance of Professor service updating credentials");
+        new AdminDao().updateCredentials(email, password);
+    }
 }

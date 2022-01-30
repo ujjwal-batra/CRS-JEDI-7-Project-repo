@@ -47,4 +47,6 @@ public interface AdminServiceInterface {
      * @return
      */
     public boolean addProfessor(Professor professor);
+
+    public void updateCredentials(String email, String password);
 }

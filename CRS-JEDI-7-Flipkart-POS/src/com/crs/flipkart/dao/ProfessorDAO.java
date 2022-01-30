@@ -167,16 +167,14 @@ public class ProfessorDAO implements ProfessorDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = Constants.SELECT_PROFESSOR_BY_EMAIL + email;
+            String sqlQuery = "select * from professor where email = '" + email + "'";
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             if (!resultSet.next()) {
                 return false;
             }
-            sqlQuery = Constants.UPDATE_PROFESSOR_PASSWORD + password + " where email = " + email;
-            ResultSet resultSet1 = statement.executeQuery(sqlQuery);
-            if (!resultSet1.next())
-                return false;
+            sqlQuery = Constants.UPDATE_PROFESSOR_PASSWORD + "'" +password+ "'"+ " where email = '" + email + "'";
+            statement.executeUpdate(sqlQuery);
             return true;
         } catch (Exception ex) {
             logger.error("Error: " + ex.getMessage());

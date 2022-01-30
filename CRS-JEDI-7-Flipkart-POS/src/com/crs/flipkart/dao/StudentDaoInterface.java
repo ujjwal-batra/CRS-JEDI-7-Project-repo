@@ -66,4 +66,6 @@ public interface StudentDaoInterface {
     public List<Integer> viewEnrolledCourse(int studentId);
 
     public int ifCourseRegistred(int studentId, int courseId);
+
+	public void updateCredentials(String email, String password);
 }

@@ -84,4 +84,6 @@ public interface StudentServiceInterface {
     List<String> getGradeCard(int studentId);
 
     public int ifCourseRegistered(int studentId, int courseId) throws CourseAlreadyRegisteredException;
+
+	public void updateCredentials(String email, String password);
 }

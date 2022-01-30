@@ -186,4 +186,32 @@ public class AdminDao implements AdminDaoInterface {
         }
         return false;
     }
+
+    public void updateCredentials(String email, String password){
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DBUtils.getConnection();
+            String sqlQuery = "select * from admin where email = '" + email + "'";
+            statement = connection.prepareStatement(sqlQuery);
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            if (!resultSet.next()) {
+                return;
+            }
+            sqlQuery = Constants.UPDATE_ADMIN_PASSWORD + "'" +password+ "'"+ " where email = '" + email + "'";
+            statement.executeUpdate(sqlQuery);
+            return;
+        } catch (Exception ex) {
+            logger.error("Error: " + ex.getMessage());
+        } finally {
+            try {
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (Exception ex) {
+                logger.error("Error: " + ex.getMessage());
+            }
+        }
+        return;
+    }
 }

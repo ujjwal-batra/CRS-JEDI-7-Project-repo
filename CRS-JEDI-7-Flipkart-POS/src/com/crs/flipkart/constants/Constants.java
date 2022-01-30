@@ -9,6 +9,7 @@ public class Constants {
     public static final String APPROVE_STUDENT = "update student SET is_approved = 1  WHERE student_id = ";
     public static final String ADD_NEW_COURSE = "insert into course values(?, ?, ?)";
     public static final String DELETE_COURSE = "delete from course where course_id = ";
+    public static final String UPDATE_ADMIN_PASSWORD = "update admin set password = ";
 
     /**
      * Professor Constants
@@ -31,6 +32,8 @@ public class Constants {
     public static final String STUDENT_ENROLL_COURSE = "insert into enrolled_course values(?, ?, ?)";
     public static final String STUDENT_DROP_COURSE = "delete from enrolled_course where student_id = ";
     public static final String VIEW_ENROLLED_COURSES = "select * from enrolled_course where student_id = ";
+    public static final String SELECT_STUDENT_BY_EMAIL = "select * from student where email = ";
+    public static final String UPDATE_STUDENT_PASSWORD = "update student set password = ";
 
     /**
      * Course Constants
@@ -49,4 +52,5 @@ public class Constants {
     public static final String ADD_NOTIFICATION = "insert into notification values(?, ?, ?, ?)";
 
     public static final String CHECK_IF_COURSE_REGISTERED = "select * from enrolled_course where student_id=? and course_id=?";
+
 }

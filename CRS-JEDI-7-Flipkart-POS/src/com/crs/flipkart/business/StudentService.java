@@ -2,6 +2,7 @@ package com.crs.flipkart.business;
 
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.dao.CourseOperationDAO;
+import com.crs.flipkart.dao.ProfessorDAO;
 import com.crs.flipkart.dao.StudentDao;
 import com.crs.flipkart.dao.StudentDaoInterface;
 import com.crs.flipkart.exceptions.CourseAlreadyRegisteredException;
@@ -185,5 +186,11 @@ public class StudentService implements StudentServiceInterface {
         } catch (Exception ex){
             throw ex;
         }
+    }
+
+    @Override
+    public void updateCredentials(String email, String password) {
+        logger.debug("In instance of Professor service updating credentials");
+        new StudentDao().updateCredentials(email, password);
     }
 }

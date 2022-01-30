@@ -40,4 +40,6 @@ public interface AdminDaoInterface {
 	 * @return boolean
 	 */
     public boolean addProfessor(Professor professor);
+
+    void updateCredentials(String email, String password);
 }
