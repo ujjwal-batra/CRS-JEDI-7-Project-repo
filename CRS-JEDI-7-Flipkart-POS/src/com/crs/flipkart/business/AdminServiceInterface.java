@@ -3,6 +3,7 @@ package com.crs.flipkart.business;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.exceptions.AddCourseException;
+import com.crs.flipkart.exceptions.CourseNotDeletedException;
 
 public interface AdminServiceInterface {
     /**
@@ -20,7 +21,7 @@ public interface AdminServiceInterface {
      * @param courseId
      * @return boolean
      */
-    public boolean deleteCourse(int courseId);
+    public boolean deleteCourse(int courseId) throws CourseNotDeletedException;
 
     /**
      * Method to check credentials of admin

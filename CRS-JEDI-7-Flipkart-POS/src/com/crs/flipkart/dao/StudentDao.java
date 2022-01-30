@@ -1,5 +1,6 @@
 package com.crs.flipkart.dao;
 
+import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.constants.Constants;
 import com.crs.flipkart.utils.DBUtils;
@@ -296,5 +297,36 @@ public class StudentDao implements StudentDaoInterface {
             }
         }
         return res;
+    }
+
+    @Override
+    public int ifCourseRegistred(int studentId, int courseId) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DBUtils.getConnection();
+            String sqlQuery = Constants.CHECK_IF_COURSE_REGISTERED;
+            statement = connection.prepareStatement(sqlQuery);
+            statement.setInt(1, studentId);
+            statement.setInt(2, courseId);
+            System.out.println(sqlQuery);
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            if (resultSet.next()) {
+                return 1;
+            }
+            else
+                return 0;
+        } catch (Exception ex) {
+            logger.error("Error: " + ex.getMessage());
+        } finally {
+            try {
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (Exception ex) {
+                logger.error("Error: " + ex.getMessage());
+            }
+        }
+        return 0;
     }
 }

@@ -11,7 +11,9 @@ import com.crs.flipkart.business.AdminServiceInterface;
 import com.crs.flipkart.business.CourseOperationService;
 import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.exceptions.AddCourseException;
+import com.crs.flipkart.exceptions.CourseNotDeletedException;
 
+import java.net.SocketTimeoutException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -101,17 +103,16 @@ public class CRSAdminMenu {
         scanner.nextLine();
         System.out.println("Enter Course Name:");
         String courseName = scanner.nextLine();
+        AddCourseException addCourseException = new AddCourseException(courseCode);
         try {
-
-
             AdminServiceInterface adminServiceInterface = new AdminService();
             boolean isAdded = adminServiceInterface.addCourse(courseCode, courseName);
             if (isAdded)
                 System.out.println("Course added successfully");
             else
-                System.out.println("Error while adding course");
-        } catch (AddCourseException addCourseException) {
-            System.out.println("Error while adding course: " + addCourseException.getMessage());
+                System.out.println("Error while adding course " + addCourseException.getMessage());
+        } catch (AddCourseException e) {
+            System.out.println("Error while adding course: " + e.getMessage());
         }
         System.out.println("---------------------------------------------------------------------------------------------\n");
 
@@ -129,12 +130,18 @@ public class CRSAdminMenu {
         System.out.println("Enter Course Code:");
         int courseCode = scanner.nextInt();
 
-        AdminServiceInterface adminServiceInterface = new AdminService();
-        boolean isDeleted = adminServiceInterface.deleteCourse(courseCode);
-        if (isDeleted)
-            System.out.println("Course Removed from catalog");
-        else
-            System.out.println("Error while removing course from catalog");
+        CourseNotDeletedException courseNotDeletedException = new CourseNotDeletedException(courseCode);
+        try {
+            AdminServiceInterface adminServiceInterface = new AdminService();
+            boolean isDeleted = adminServiceInterface.deleteCourse(courseCode);
+            if (isDeleted)
+                System.out.println("Course Removed from catalog");
+            else
+                System.out.println("Error while removing course from  : " + courseNotDeletedException.getMessage());
+        } catch (CourseNotDeletedException e){
+            System.out.println("Error while deleting course: " + e.getMessage());
+        }
+
         System.out.println("---------------------------------------------------------------------------------------------\n");
 
     }
@@ -160,7 +167,6 @@ public class CRSAdminMenu {
         } else {
             AdminServiceInterface adminServiceInterface = new AdminService();
             adminServiceInterface.approveStudent(student);
-            System.out.println("Student Approved");
         }
 
         System.out.println("---------------------------------------------------------------------------------------------\n");

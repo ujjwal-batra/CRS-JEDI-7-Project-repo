@@ -11,10 +11,10 @@ public class CourseNotAssignedToProfessorException extends Exception {
 	/*
 	 * @courseCode is not assigned to professor with @professorId.
 	 */
-	private String courseCode;
-	private String professorId;
+	private int courseCode;
+	private int professorId;
 
-	public CourseNotAssignedToProfessorException(String courseCode, String professorId) {
+	public CourseNotAssignedToProfessorException(int courseCode, int professorId) {
 		this.courseCode = courseCode;
 		this.professorId = professorId;
 	}

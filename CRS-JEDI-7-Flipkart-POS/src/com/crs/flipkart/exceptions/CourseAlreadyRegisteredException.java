@@ -8,14 +8,14 @@ package com.crs.flipkart.exceptions;
  */
 public class CourseAlreadyRegisteredException extends Exception {
 
-	private String courseId;
+	private int courseId;
 
 	/***
 	 * Constructor
 	 * 
 	 * @param courseId
 	 */
-	public CourseAlreadyRegisteredException(String courseId) {
+	public CourseAlreadyRegisteredException(int courseId) {
 		this.courseId = courseId;
 	}
 

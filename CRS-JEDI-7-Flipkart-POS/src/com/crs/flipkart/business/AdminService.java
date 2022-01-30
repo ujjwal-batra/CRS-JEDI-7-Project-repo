@@ -5,6 +5,7 @@ import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.dao.AdminDao;
 import com.crs.flipkart.dao.AdminDaoInterface;
 import com.crs.flipkart.exceptions.AddCourseException;
+import com.crs.flipkart.exceptions.CourseNotDeletedException;
 import org.apache.log4j.Logger;
 
 
@@ -40,12 +41,16 @@ public class AdminService implements AdminServiceInterface {
      * @return boolean
      */
     @Override
-    public boolean deleteCourse(int courseId) {
+    public boolean deleteCourse(int courseId) throws CourseNotDeletedException {
         if (courseId < 0)
             return false;
-        AdminDaoInterface adminDaoInterface = new AdminDao();
-        logger.info("In instance of AdminService, delete course with course id: " + courseId);
-        return adminDaoInterface.deleteCourse(courseId);
+        try {
+            AdminDaoInterface adminDaoInterface = new AdminDao();
+            logger.info("In instance of AdminService, delete course with course id: " + courseId);
+            return adminDaoInterface.deleteCourse(courseId);
+        }catch (Exception ex){
+            throw new CourseNotDeletedException(courseId);
+        }
     }
 
     /**

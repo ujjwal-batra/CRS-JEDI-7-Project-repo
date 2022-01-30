@@ -11,9 +11,9 @@ public class CourseNotDeletedException extends Exception {
 	/*
 	 * Course Code which cannot be Deleted.
 	 */
-	private String courseCode;
+	private int courseCode;
 
-	public CourseNotDeletedException(String courseCode) {
+	public CourseNotDeletedException(int courseCode) {
 		this.courseCode = courseCode;
 	}
 

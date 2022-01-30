@@ -1,0 +1,38 @@
+15:49:09,356  INFO AdminService,main:29 - In instance of AdminService, adding course with course id: 7 and course name: OS
+15:49:09,369  INFO AdminDao,main:101 - In instance of Admin DAO, adding course with course id: 7 and course name: OS
+15:49:09,379 ERROR AdminDao,main:105 - Error while persisting course in db: Duplicate entry '7' for key 'course.PRIMARY'
+15:49:36,961  INFO AdminService,main:49 - In instance of AdminService, delete course with course id: 10
+15:57:58,734  INFO AdminService,main:49 - In instance of AdminService, delete course with course id: 10
+15:58:50,181  INFO AdminService,main:29 - In instance of AdminService, adding course with course id: 7 and course name: OS
+15:58:50,197  INFO AdminDao,main:101 - In instance of Admin DAO, adding course with course id: 7 and course name: OS
+15:58:50,201 ERROR AdminDao,main:105 - Error while persisting course in db: Duplicate entry '7' for key 'course.PRIMARY'
+16:01:16,080  INFO AdminService,main:49 - In instance of AdminService, delete course with course id: 10
+16:01:25,043  INFO AdminService,main:29 - In instance of AdminService, adding course with course id: 2 and course name: as
+16:01:25,059  INFO AdminDao,main:101 - In instance of Admin DAO, adding course with course id: 2 and course name: as
+16:01:25,067 ERROR AdminDao,main:105 - Error while persisting course in db: Duplicate entry '2' for key 'course.PRIMARY'
+17:50:26,626  INFO AdminService,main:49 - In instance of AdminService, delete course with course id: 1
+17:50:26,676 ERROR AdminDao,main:136 - Error: Cannot delete or update a parent row: a foreign key constraint fails (`crs_app`.`enrolled_course`, CONSTRAINT `course_id` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`))
+17:52:44,532  INFO AdminService,main:49 - In instance of AdminService, delete course with course id: 7
+17:53:29,597  INFO AdminService,main:49 - In instance of AdminService, delete course with course id: 7
+17:58:11,898  INFO AdminService,main:49 - In instance of AdminService, delete course with course id: 7
+17:58:29,050  INFO AdminService,main:49 - In instance of AdminService, delete course with course id: 6
+17:59:36,475  INFO AdminService,main:49 - In instance of AdminService, delete course with course id: 6
+17:59:52,238  INFO AdminService,main:29 - In instance of AdminService, adding course with course id: 6 and course name: OS
+17:59:52,250  INFO AdminDao,main:101 - In instance of Admin DAO, adding course with course id: 6 and course name: OS
+18:00:01,971  INFO AdminService,main:29 - In instance of AdminService, adding course with course id: 6 and course name: OS
+18:00:01,983  INFO AdminDao,main:101 - In instance of Admin DAO, adding course with course id: 6 and course name: OS
+18:00:01,991 ERROR AdminDao,main:105 - Error while persisting course in db: Duplicate entry '6' for key 'course.PRIMARY'
+14:00:37,712 DEBUG PaymentService,main:111 - In instance of StudentService view registered courses.
+14:00:42,760 ERROR StudentDao,main:320 - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '? and course_id = ?' at line 1
+14:02:37,022 DEBUG PaymentService,main:111 - In instance of StudentService view registered courses.
+14:02:39,021 DEBUG PaymentService,main:111 - In instance of StudentService view registered courses.
+14:02:40,532  INFO PaymentService,main:70 - Dropping course with id: 1
+14:02:44,714 DEBUG PaymentService,main:111 - In instance of StudentService view registered courses.
+14:02:54,664 ERROR StudentDao,main:321 - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '? and course_id = ?' at line 1
+14:07:01,925 DEBUG PaymentService,main:111 - In instance of StudentService view registered courses.
+14:07:03,590 DEBUG PaymentService,main:111 - In instance of StudentService view registered courses.
+14:07:05,233  INFO PaymentService,main:70 - Dropping course with id: 2
+14:07:07,668 DEBUG PaymentService,main:111 - In instance of StudentService view registered courses.
+14:07:10,885 ERROR StudentDao,main:321 - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '? and course_id = ?' at line 1
+14:08:52,589 DEBUG PaymentService,main:111 - In instance of StudentService view registered courses.
+14:08:55,527 ERROR StudentDao,main:321 - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '? and course_id=?' at line 1

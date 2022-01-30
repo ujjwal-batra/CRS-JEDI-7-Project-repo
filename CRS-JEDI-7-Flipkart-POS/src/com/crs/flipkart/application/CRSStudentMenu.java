@@ -6,6 +6,7 @@ package com.crs.flipkart.application;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.business.*;
+import com.crs.flipkart.exceptions.CourseAlreadyRegisteredException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -200,7 +201,16 @@ public class CRSStudentMenu {
             System.out.println("Enter course you want to add");
             int courseId = Integer.parseInt(sc.nextLine());
 
-            int status = new StudentService().addCourse(studentId, courseId);
+            StudentServiceInterface studentServiceInterface = new StudentService();
+            try {
+                int isRegistered = studentServiceInterface.ifCourseRegistered(studentId, courseId);
+            } catch (CourseAlreadyRegisteredException ex){
+                System.out.println("Error while registering course -> " + ex.getMessage());
+            } catch (Exception ex){
+                throw ex;
+            }
+
+            int status = studentServiceInterface.addCourse(studentId, courseId);
             if (status == 1) {
                 System.out.println("Add Successful");
             } else if (status == -1) {
@@ -223,7 +233,6 @@ public class CRSStudentMenu {
             Scanner sc = new Scanner(System.in);
             System.out.println("Enter course you want to drop");
             int courseId = Integer.parseInt(sc.nextLine());
-
             boolean status = new StudentService().dropCourse(studentId, courseId);
             if (status) {
                 System.out.println("Drop Successful");

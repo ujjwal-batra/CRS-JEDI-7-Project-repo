@@ -32,8 +32,10 @@ public class AdminDao implements AdminDaoInterface {
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             if (!resultSet.next()) {
                 return -1;
-            } else
+            } else {
+                logger.info("Admin logged in. admin_id -> " + resultSet.getInt("admin_id"));
                 return resultSet.getInt("admin_id");
+            }
         } catch (Exception ex) {
             logger.error("Error while checking credentials: " + ex.getMessage());
         } finally {
@@ -60,11 +62,10 @@ public class AdminDao implements AdminDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            // System.out.println("Checking Credentials");
             String sqlQuery = Constants.APPROVE_STUDENT + student.getStudentId();
             statement = connection.createStatement();
             statement.executeUpdate(sqlQuery);
-
+            logger.info("student Approved successfully");
         } catch (Exception ex) {
             logger.error("Error while approving student: " + ex.getMessage());
         } finally {
@@ -128,10 +129,11 @@ public class AdminDao implements AdminDaoInterface {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
             System.out.println("removing course...");
+
             String sqlQuery = Constants.DELETE_COURSE + courseId;
             statement = connection.createStatement();
-            statement.executeUpdate(sqlQuery);
-            return true;
+            return statement.executeUpdate(sqlQuery) == 1;
+
         } catch (Exception ex) {
             logger.error("Error: " + ex.getMessage());
         } finally {

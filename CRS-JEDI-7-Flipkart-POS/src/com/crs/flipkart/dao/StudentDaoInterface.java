@@ -64,4 +64,6 @@ public interface StudentDaoInterface {
    	 * @return  List of Integer
    	 */
     public List<Integer> viewEnrolledCourse(int studentId);
+
+    public int ifCourseRegistred(int studentId, int courseId);
 }

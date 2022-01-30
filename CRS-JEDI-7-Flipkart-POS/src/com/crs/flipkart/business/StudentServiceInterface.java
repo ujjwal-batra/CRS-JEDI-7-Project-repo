@@ -1,6 +1,7 @@
 package com.crs.flipkart.business;
 
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.exceptions.CourseAlreadyRegisteredException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,4 +82,6 @@ public interface StudentServiceInterface {
 	 * @return List of String
 	 */
     List<String> getGradeCard(int studentId);
+
+    public int ifCourseRegistered(int studentId, int courseId) throws CourseAlreadyRegisteredException;
 }

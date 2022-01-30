@@ -3,6 +3,8 @@ package com.crs.flipkart.business;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.dao.CourseOperationDAO;
 import com.crs.flipkart.dao.StudentDao;
+import com.crs.flipkart.dao.StudentDaoInterface;
+import com.crs.flipkart.exceptions.CourseAlreadyRegisteredException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -168,5 +170,20 @@ public class StudentService implements StudentServiceInterface {
     @Override
     public List<String> getGradeCard(int studentId) {
         return new CourseOperationDAO().getGrades(studentId);
+    }
+
+    public int ifCourseRegistered(int studentId, int courseId) throws CourseAlreadyRegisteredException {
+        try {
+            CourseAlreadyRegisteredException courseAlreadyRegisteredException = new CourseAlreadyRegisteredException(courseId);
+            StudentDaoInterface studentDaoInterface = new StudentDao();
+            if(studentDaoInterface.ifCourseRegistred(studentId, courseId) == 1){
+                return 1;
+            }
+            else{
+                throw courseAlreadyRegisteredException;
+            }
+        } catch (Exception ex){
+            throw ex;
+        }
     }
 }
