@@ -26,7 +26,7 @@ public class CRSApplication {
         Connection connection = (Connection) DBUtils.getConnection();
         Scanner sc = new Scanner(System.in);
         System.out.println("================================================================================");
-        System.out.println("********************WELCOME to Course Registration System!!!********************");
+        System.out.println("********************\033[1mWELCOME to Course Registration System!!!\033[0m********************");
         System.out.println("================================================================================");
 
         printMenu();
@@ -51,13 +51,13 @@ public class CRSApplication {
             printMenu();
             Input = sc.nextInt();
         }
-        System.out.println("*******************************Thank you for using our Application.*********************************");
+        System.out.println("*******************************\033[1mThank you for using our Application.\033[0m*********************************");
         sc.close();
     }
 
     public static void printMenu() {
         System.out.println("\n\n----------------------------------------------------------------------------------------");
-        System.out.println("------------------------------------MAIN MENU-----------------------------------");
+        System.out.println("------------------------------------\033[1mMAIN MENU\033[0m-----------------------------------");
         System.out.println("-----------------------------------------------------------------------------------------\n");
 
         System.out.println("1. Student Signup");
@@ -120,7 +120,7 @@ public class CRSApplication {
         student.setStudentId(sid);
         student.setEmailId(email);
         student = new StudentService().saveStudent(student);
-        System.out.println("Your Student ID:" + student.getStudentId() + "\n Your email ID:" + student.getEmailId() + "\n Please wait for the admin to approve your profile.");
+        System.out.println("\033[1mYour Student ID:" + student.getStudentId() + "\nYour email ID:" + student.getEmailId() + "\nPlease wait for the admin to approve your profile.\033[0m");
     }
 
     private static void login() {
@@ -155,7 +155,7 @@ public class CRSApplication {
                 case 1:
                     boolean isApproved = new StudentService().getStudentById(studentId).isApproved();
                     if (isApproved) {
-                        System.out.println("Login Successful!");
+                        System.out.println("\033[1mLogin Successful!\033[0m");
                         displayLoginTime(studentId,1);
                         CRSStudentMenu studentMenu = new CRSStudentMenu();
                         studentMenu.create_menu(studentId);
@@ -166,13 +166,13 @@ public class CRSApplication {
                     }
                     break;
                 case 2:
-                    System.out.println("Login Successful!");
+                    System.out.println("\033[1mLogin Successful!\033[0m");
                     displayLoginTime(profId,2);
                     CRSProfessorMenu professorMenu = new CRSProfessorMenu();
                     professorMenu.professorMenu(profId);
                     break;
                 case 3:
-                    System.out.println("Login Successful!");
+                    System.out.println("\033[1mLogin Successful!\033[0m");
                     displayLoginTime(adminId,3);
                     CRSAdminMenu adminMenu = new CRSAdminMenu();
                     adminMenu.createMenu();
@@ -206,10 +206,9 @@ public class CRSApplication {
 		
     	//System.out.println("------------------------------------------");
     	System.out.println("\n++++++++++++++++++++++++++++++++++++++++++");
-    	System.out.println("Welcome "+ name);
-    	System.out.println("Time of Login :- "+ localTime);
-    	System.out.println("Todays Date :- "+ localDate);
-    	System.out.println("++++++++++++++++++++++++++++++++++++++++++");
+    	System.out.println("\033[1mWelcome "+ name);
+    	System.out.println("Time of Login :- "+ localTime + "on " + localDate);
+    	System.out.println("\033[0m++++++++++++++++++++++++++++++++++++++++++");
     	//System.out.println("------------------------------------------");
     }
     private static void updatePassword() {
@@ -228,7 +227,7 @@ public class CRSApplication {
 
             ProfessorInterface professorInterface = new ProfessorService();
             professorInterface.updateCredentials(email, new_password);
-            System.out.println("Password Updated Successfully!!!");
+            System.out.println("\033[1mPassword Updated Successfully!!!\033[0m");
 
         } else if (studentId != -1){
             System.out.println("Enter new password:");
@@ -236,7 +235,7 @@ public class CRSApplication {
 
             StudentServiceInterface studentServiceInterface =  new StudentService();
             studentServiceInterface.updateCredentials(email, new_password);
-            System.out.println("Password Updated Successfully!!!");
+            System.out.println("\033[1mPassword Updated Successfully!!!\033[0m");
 
         } else if(adminId != -1){
             System.out.println("Enter new password:");
@@ -244,7 +243,7 @@ public class CRSApplication {
 
             AdminServiceInterface adminServiceInterface = new AdminService();
             adminServiceInterface.updateCredentials(email, new_password);
-            System.out.println("Password Updated Successfully!!!");
+            System.out.println("\033[1mPassword Updated Successfully!!!\033[0m");
 
         } else {
             System.out.println("Invalid!!");
