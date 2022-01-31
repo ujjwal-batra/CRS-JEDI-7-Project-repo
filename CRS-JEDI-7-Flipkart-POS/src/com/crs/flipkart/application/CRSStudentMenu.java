@@ -79,7 +79,7 @@ public class CRSStudentMenu {
 
                 case 8:
                     showNotification(studentId);
-                    return;
+                    break;
 
                 case 9:
                     return;
@@ -204,8 +204,10 @@ public class CRSStudentMenu {
             StudentServiceInterface studentServiceInterface = new StudentService();
             try {
                 int isRegistered = studentServiceInterface.ifCourseRegistered(studentId, courseId);
+
             } catch (CourseAlreadyRegisteredException ex){
                 System.out.println("Error while registering course -> " + ex.getMessage());
+
             } catch (Exception ex){
                 throw ex;
             }

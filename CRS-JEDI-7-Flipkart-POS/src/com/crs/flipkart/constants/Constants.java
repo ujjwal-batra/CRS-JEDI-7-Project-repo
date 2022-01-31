@@ -51,6 +51,6 @@ public class Constants {
     public static final String SELECT_ALL_NOTIFICATION_BY_ID = "select * from notification where student_id = ";
     public static final String ADD_NOTIFICATION = "insert into notification values(?, ?, ?, ?)";
 
-    public static final String CHECK_IF_COURSE_REGISTERED = "select * from enrolled_course where student_id=? and course_id=?";
+    public static final String CHECK_IF_COURSE_REGISTERED = "select * from enrolled_course where student_id=";
 
 }

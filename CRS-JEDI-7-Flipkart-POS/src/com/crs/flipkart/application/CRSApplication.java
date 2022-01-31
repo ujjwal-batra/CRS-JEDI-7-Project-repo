@@ -161,6 +161,7 @@ public class CRSApplication {
                         studentMenu.create_menu(studentId);
 
                     } else {
+                        System.out.println("User not approved. Wait for admin approval");
                         loggedIn = false;
                     }
                     break;

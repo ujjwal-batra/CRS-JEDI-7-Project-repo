@@ -66,3 +66,93 @@
 21:29:50,625 ERROR StudentDao,main:349 - Error: Unknown column 'pass' in 'field list'
 21:32:11,127 DEBUG PaymentService,main:193 - In instance of Professor service updating credentials
 21:32:11,160 ERROR StudentDao,main:350 - Error: Unknown column 'pass' in 'field list'
+21:32:48,761 DEBUG PaymentService,main:193 - In instance of Professor service updating credentials
+10:07:40,526 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+10:07:45,028 ERROR StudentDao,main:321 - Error: Parameter index out of range (1 > number of parameters, which is 0).
+11:18:12,958  INFO AdminDao,main:36 - Admin logged in. admin_id -> 1
+11:18:25,760  INFO AdminDao,main:68 - student Approved successfully
+11:18:54,063 DEBUG PaymentService,main:31 - In instance of StudentService, registering semester student id: 113, semester: 4
+11:19:36,939 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:19:43,991 ERROR StudentDao,main:321 - Error: Parameter index out of range (1 > number of parameters, which is 0).
+11:20:13,261 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:20:14,813 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:20:16,695  INFO PaymentService,main:71 - Dropping course with id: 4
+11:20:22,546 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:20:26,175 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:20:29,771 ERROR StudentDao,main:321 - Error: Parameter index out of range (1 > number of parameters, which is 0).
+11:20:38,466 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:20:42,351 ERROR StudentDao,main:321 - Error: Parameter index out of range (1 > number of parameters, which is 0).
+11:20:48,405 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:22:25,907 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:22:30,330 ERROR StudentDao,main:321 - Error: Parameter index out of range (1 > number of parameters, which is 0).
+11:22:36,903 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:22:40,555 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:22:43,463 ERROR StudentDao,main:321 - Error: Parameter index out of range (1 > number of parameters, which is 0).
+11:25:46,849 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:25:56,189 ERROR StudentDao,main:321 - Error: Parameter index out of range (1 > number of parameters, which is 0).
+11:29:19,567 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:29:22,230 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:29:24,468  INFO PaymentService,main:71 - Dropping course with id: 1
+11:29:28,679 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:29:34,585 ERROR StudentDao,main:321 - Error: Parameter index out of range (1 > number of parameters, which is 0).
+11:29:47,942 ERROR StudentDao,main:321 - Error: Parameter index out of range (1 > number of parameters, which is 0).
+11:30:00,977 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:31:12,476 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:31:13,545 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:31:14,422  INFO PaymentService,main:71 - Dropping course with id: 1
+11:31:18,219 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:31:22,668 ERROR StudentDao,main:321 - Error: Parameter index out of range (1 > number of parameters, which is 0).
+11:31:31,894 ERROR StudentDao,main:321 - Error: Parameter index out of range (1 > number of parameters, which is 0).
+11:34:19,794 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:34:23,183 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:34:24,376 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:34:26,594  INFO PaymentService,main:71 - Dropping course with id: 1
+11:34:32,896 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:34:35,649 ERROR StudentDao,main:321 - Error: Parameter index out of range (1 > number of parameters, which is 0).
+11:34:35,657 ERROR StudentDao,main:321 - Error: Parameter index out of range (1 > number of parameters, which is 0).
+11:34:52,815 ERROR StudentDao,main:321 - Error: Parameter index out of range (1 > number of parameters, which is 0).
+11:34:52,823 ERROR StudentDao,main:321 - Error: Parameter index out of range (1 > number of parameters, which is 0).
+11:36:21,861 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:36:23,346 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:36:24,475  INFO PaymentService,main:71 - Dropping course with id: 1
+11:36:28,997 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:36:32,353 ERROR StudentDao,main:322 - Error: Parameter index out of range (1 > number of parameters, which is 0).
+11:36:32,362 ERROR StudentDao,main:322 - Error: Parameter index out of range (1 > number of parameters, which is 0).
+11:37:11,632 ERROR StudentDao,main:322 - Error: Parameter index out of range (1 > number of parameters, which is 0).
+11:37:11,639 ERROR StudentDao,main:322 - Error: Parameter index out of range (1 > number of parameters, which is 0).
+11:39:37,214 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:39:38,374 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:39:39,441  INFO PaymentService,main:71 - Dropping course with id: 1
+11:39:41,787 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:39:45,067 ERROR StudentDao,main:322 - Error: Parameter index out of range (1 > number of parameters, which is 0).
+11:39:45,076 ERROR StudentDao,main:322 - Error: Parameter index out of range (1 > number of parameters, which is 0).
+11:39:53,890 ERROR StudentDao,main:322 - Error: Parameter index out of range (1 > number of parameters, which is 0).
+11:39:53,897 ERROR StudentDao,main:322 - Error: Parameter index out of range (1 > number of parameters, which is 0).
+11:40:52,057 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:40:52,950 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:40:54,397  INFO PaymentService,main:71 - Dropping course with id: 1
+11:40:57,294 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:40:59,501 ERROR StudentDao,main:319 - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'course_id=2' at line 1
+11:40:59,510 ERROR StudentDao,main:319 - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'course_id=2' at line 1
+11:41:24,647 ERROR StudentDao,main:319 - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'course_id=1' at line 1
+11:41:24,655 ERROR StudentDao,main:319 - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'course_id=1' at line 1
+11:42:21,397 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:42:22,420 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:42:24,097  INFO PaymentService,main:71 - Dropping course with id: 1
+11:42:29,845 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:42:59,641 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:44:06,506 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:44:09,500 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:44:10,467  INFO PaymentService,main:71 - Dropping course with id: 1
+11:44:12,224 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:45:53,512 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:45:55,375 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:45:57,713  INFO PaymentService,main:71 - Dropping course with id: 2
+11:45:59,647 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:46:10,555 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:46:23,586  INFO PaymentService,main:182 - course added with course_id = 2 for student_id = 113
+11:46:29,528 DEBUG PaymentService,main:112 - In instance of StudentService view registered courses.
+11:46:54,768  INFO PaymentService,main:24 - Making payment for student id: 113, payment id: 7615, payment mode: ONLINE, amount: 1000
+11:46:54,827  INFO PaymentNotificationService,main:38 - Sending payment notification to student id: 113, payment id: 7615
+11:47:44,012 DEBUG PaymentService,main:195 - In instance of Professor service updating credentials
+11:48:13,186 DEBUG PaymentService,main:195 - In instance of Professor service updating credentials

@@ -177,7 +177,9 @@ public class StudentService implements StudentServiceInterface {
         try {
             CourseAlreadyRegisteredException courseAlreadyRegisteredException = new CourseAlreadyRegisteredException(courseId);
             StudentDaoInterface studentDaoInterface = new StudentDao();
-            if(studentDaoInterface.ifCourseRegistred(studentId, courseId) == 1){
+            System.out.println(studentDaoInterface.ifCourseRegistred(studentId, courseId));
+            if(studentDaoInterface.ifCourseRegistred(studentId, courseId) != 1){
+                logger.info("course added with course_id = " + courseId + " for student_id = " + studentId);
                 return 1;
             }
             else{

@@ -229,7 +229,7 @@ public class StudentDao implements StudentDaoInterface {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception ex) {
-                logger.error("Error: " + ex.getMessage());
+//                logger.error("Error: " + ex.getMessage());
             }
         }
         return false;
@@ -306,11 +306,8 @@ public class StudentDao implements StudentDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = Constants.CHECK_IF_COURSE_REGISTERED;
+            String sqlQuery = Constants.CHECK_IF_COURSE_REGISTERED + studentId + " and course_id="+courseId;
             statement = connection.prepareStatement(sqlQuery);
-            statement.setInt(1, studentId);
-            statement.setInt(2, courseId);
-            System.out.println(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             if (resultSet.next()) {
                 return 1;
