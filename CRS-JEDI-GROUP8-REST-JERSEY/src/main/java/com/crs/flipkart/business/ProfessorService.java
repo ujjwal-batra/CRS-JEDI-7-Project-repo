@@ -51,6 +51,7 @@ public class ProfessorService implements ProfessorInterface {
      * @return List of Integer (studentId)
      */
     public List<Integer> getStudentList(int courseId) {
+        logger.info("Retrieving StudentList for courseId: " + courseId);
         return new RegisteredStudentsService().getStudentListByCourseId(courseId);
     }
 
@@ -61,6 +62,7 @@ public class ProfessorService implements ProfessorInterface {
      * @return List of Course
      */
     public List<Course> getCourseList() {
+        logger.info("Retrieving course list for professor");
         return new CourseOperationDAO().getCourseCatalogue().getCourseList();
     }
 
@@ -91,7 +93,7 @@ public class ProfessorService implements ProfessorInterface {
             if (course.getProfessorId() != -1 && course.getProfessorId() == professorId) {
                 List<Integer> studentListForSingleCourse = getStudentList(course.getCourseId());
                 studentListForSingleCourse.forEach(studentId -> {
-                    studentList.add("\nStudentID: " + studentId + ", StudentName: " + studentDao.getStudentById(studentId).getName() +
+                    studentList.add("StudentID: " + studentId + ", StudentName: " + studentDao.getStudentById(studentId).getName() +
                             ", CourseID: " + course.getCourseId() + ", CourseName" + course.getCourseName());
                 });
             }
@@ -108,6 +110,7 @@ public class ProfessorService implements ProfessorInterface {
      */
     @Override
     public int checkCredentials(String email, String password) {
+        logger.info("Checking credentials for emailId: " + email);
         return new ProfessorDAO().checkCredentials(email, password);
     }
 
