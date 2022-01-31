@@ -15,9 +15,20 @@ import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * API End points for Professor
+ */
 @Path("/professor")
 public class ProfessorRestAPI {
 
+
+    /**
+     *
+     * Endpoint for verifying professor login credentials
+     *
+     * @param professor
+     * @return
+     */
     @POST
     @Path("/login")
     @Produces(MediaType.TEXT_PLAIN)
@@ -31,6 +42,10 @@ public class ProfessorRestAPI {
     }
 
 
+    /**
+     * Endpoint to retrieve course catalogue
+     * @return
+     */
     @GET
     @Path("/showCourseCatalogue")
     @Produces(MediaType.APPLICATION_JSON)
@@ -45,6 +60,11 @@ public class ProfessorRestAPI {
         return Response.status(200).entity(res).build();
     }
 
+    /**
+     * Endpoint to retrieve professor's course details
+     * @param professorId
+     * @return
+     */
     @GET
     @Path("/showMyCourses")
     @Produces(MediaType.APPLICATION_JSON)
@@ -66,6 +86,11 @@ public class ProfessorRestAPI {
         return Response.status(200).entity(res).build();
     }
 
+    /**
+     * Endpoint to retrieve registered students details
+     * @param professorId
+     * @return
+     */
     @GET
     @Path("/viewStudents")
     @Produces(MediaType.APPLICATION_JSON)
@@ -79,6 +104,14 @@ public class ProfessorRestAPI {
         return Response.status(200).entity(res).build();
     }
 
+    /**
+     * Endpoint to add grade for a particular student
+     * @param professorId
+     * @param studentId
+     * @param courseId
+     * @param marks
+     * @return
+     */
     @GET
     @Path("/addGrade")
     @Produces(MediaType.TEXT_PLAIN)
@@ -92,6 +125,12 @@ public class ProfessorRestAPI {
         return Response.status(200).entity("Successfully Added").build();
     }
 
+    /**
+     * Endpoint to register for a course to teach
+     * @param professorId
+     * @param courseId
+     * @return
+     */
     @GET
     @Path("/selectCourseToTeach")
     @Produces(MediaType.TEXT_PLAIN)
