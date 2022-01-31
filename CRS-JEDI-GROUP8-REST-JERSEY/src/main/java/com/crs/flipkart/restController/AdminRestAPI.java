@@ -3,6 +3,7 @@
  */
 package com.crs.flipkart.restController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -34,6 +35,15 @@ import com.crs.flipkart.exceptions.CourseNotDeletedException;
 
 @Path("/admin")
 public class AdminRestAPI {
+	
+	/**
+	 * 
+	 * REST-service for assigning course to professor
+	 * @param courseCode
+	 * @param professorId
+	 * @return
+	 */
+	
 	@POST
 	@Path("/addCourse")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -51,15 +61,33 @@ public class AdminRestAPI {
 		 
 	}
 	
+	/**
+	 * 
+	 * REST-service to show course catalog
+	 * @param 
+	 * @return List of all courses
+	 */
 	@GET
 	@Path("/showCoursesCatalogue")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Course> showCourseCatalogue() {
+	public Response showCourseCatalogue() {
 		 List<Course> courseList = new CourseOperationService().getCourseCatalogue().getCourseList();
-		 return courseList;
+		 List<String> result = new ArrayList<String>();
+		 courseList.forEach(course -> {
+	            result.add("CourseId: " + course.getCourseId() +
+	                    ", CourseName: " + course.getCourseName() +
+	                    ", Professor: " + (course.getProfessorId() == -1 || course.getProfessorId() == 0 ? "Not yet assigned" : course.getProfessorId()));
+	        });
+	        return Response.status(200).entity(result).build();
+		 
 	}
 	
-	
+	/**
+	 * 
+	 * REST-service to delete Course by admin
+	 * @param CourseCode
+	 * @return 
+	 */
 	@PUT
 	@Path("/deleteCourse")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -78,6 +106,12 @@ public class AdminRestAPI {
         }
 	}
 	
+	/**
+	 * 
+	 * REST-service to approve a student by admin
+	 * @param 
+	 * @return 
+	 */
 	@PUT
 	@Path("/approveStudent")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -96,7 +130,13 @@ public class AdminRestAPI {
 		
 	}
 	
-	// Will not use @QueryParam here since professor has large no. of params
+	/**
+	 * 
+	 * REST-service to add professor by admin.
+	 * @param professor
+	 * @return 
+	 */
+	// Have not used @QueryParam here since professor has large no. of params
 	// Instead we can accept the professor object reprs. as JSON.
 	@POST
 	@Path("/addProfessor")
@@ -112,6 +152,12 @@ public class AdminRestAPI {
         	return Response.status(201).entity("Some Error Occoured, Try Again Later").build();
 	}
 	
+	/**
+	 * 
+	 * REST-service to generate Grade Card
+	 * @param studentId ??
+	 * @return 
+	 */
 	@POST
 	@Path("/generateReport")
 	@Produces(MediaType.APPLICATION_JSON)
