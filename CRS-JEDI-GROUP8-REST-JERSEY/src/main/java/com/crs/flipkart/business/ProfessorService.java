@@ -91,7 +91,7 @@ public class ProfessorService implements ProfessorInterface {
             if (course.getProfessorId() != -1 && course.getProfessorId() == professorId) {
                 List<Integer> studentListForSingleCourse = getStudentList(course.getCourseId());
                 studentListForSingleCourse.forEach(studentId -> {
-                    studentList.add("\nStudentID: " + studentId + ", StudentName: " + studentDao.getStudentById(studentId).getName() +
+                    studentList.add("StudentID: " + studentId + ", StudentName: " + studentDao.getStudentById(studentId).getName() +
                             ", CourseID: " + course.getCourseId() + ", CourseName" + course.getCourseName());
                 });
             }
