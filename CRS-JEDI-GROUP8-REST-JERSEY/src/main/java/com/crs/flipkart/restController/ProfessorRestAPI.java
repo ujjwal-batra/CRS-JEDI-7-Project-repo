@@ -18,7 +18,7 @@ public class ProfessorRestAPI {
 	@POST
 	@Path("/login")
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response professorlogin(Professor professor) {
+	public Response professorLogin(Professor professor) {
 		return Response.status(200).entity("Success").build();
 	}
 	
