@@ -357,4 +357,30 @@ public class StudentDao implements StudentDaoInterface {
         }
         return;
     }
+    
+    public int isApproved(int studentId) {
+    	Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DBUtils.getConnection();
+            String sqlQuery = "select * from student where student_id = " + studentId + " and is_approved = 1";
+            statement = connection.prepareStatement(sqlQuery);
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            if (resultSet.next()) {
+                return 1;
+            }
+            return 0;
+        } catch (Exception ex) {
+            logger.error("Error: " + ex.getMessage());
+        } finally {
+            try {
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (Exception ex) {
+                logger.error("Error: " + ex.getMessage());
+            }
+        }
+        return 0;
+    }
 }

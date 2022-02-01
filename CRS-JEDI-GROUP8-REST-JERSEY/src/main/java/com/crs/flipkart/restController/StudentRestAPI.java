@@ -15,11 +15,17 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import com.crs.flipkart.bean.CourseSelection;
 import com.crs.flipkart.bean.EnrolledCourse;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.business.StudentServiceInterface;
+import com.crs.flipkart.exceptions.InvalidCredentialsException;
+import com.crs.flipkart.exceptions.UserNotApprovedExecption;
+import com.crs.flipkart.exceptions.UserNotFoundException;
 
 /**
  * @author ujjwal
@@ -28,6 +34,8 @@ import com.crs.flipkart.business.StudentServiceInterface;
 
 @Path("/student")
 public class StudentRestAPI {
+	
+	private static final Logger logger = LogManager.getLogger(StudentRestAPI.class);
 	StudentServiceInterface studentServiceInterface = new StudentService();
 	
 	@POST
@@ -35,17 +43,16 @@ public class StudentRestAPI {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response studentLogin(Student student) {
-		
-		int isLogged = studentServiceInterface.checkCredentials(student.getEmailId(), student.getPassword());
-		if(isLogged != -1) {
-			Student student1 = studentServiceInterface.getStudentById(isLogged);
-			if(student1.isApproved())
-				return Response.status(201).entity("LoggedIn with student_id as :" + isLogged).build();
-			else {
-				return Response.status(201).entity("Not approved by Admin. student_id -> " + isLogged).build();
-			}
+		logger.info("Login request: " + student.getEmailId());
+		try {
+			int isLogged = studentServiceInterface.checkCredentials(student.getEmailId(), student.getPassword());
+			int isApproved = studentServiceInterface.isApproved(isLogged);
+			return Response.status(201).entity("Logged in successful").build();
+		} catch(InvalidCredentialsException ex) {
+			return Response.status(201).entity(ex.getMessage()).build();
+		} catch(UserNotApprovedExecption ex) {
+			return Response.status(201).entity(ex.getMessage()).build();
 		}
-		return Response.status(201).entity("Wrong email or password").build();
 	}
 	
 	@POST

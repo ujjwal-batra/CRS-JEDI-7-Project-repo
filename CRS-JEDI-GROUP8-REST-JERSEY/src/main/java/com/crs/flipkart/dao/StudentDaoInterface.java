@@ -68,4 +68,6 @@ public interface StudentDaoInterface {
     public int ifCourseRegistred(int studentId, int courseId);
 
 	public void updateCredentials(String email, String password);
+
+	public int isApproved(int studentId);
 }

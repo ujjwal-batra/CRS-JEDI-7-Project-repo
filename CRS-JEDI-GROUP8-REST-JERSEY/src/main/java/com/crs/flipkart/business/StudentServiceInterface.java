@@ -2,6 +2,8 @@ package com.crs.flipkart.business;
 
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.exceptions.CourseAlreadyRegisteredException;
+import com.crs.flipkart.exceptions.InvalidCredentialsException;
+import com.crs.flipkart.exceptions.UserNotApprovedExecption;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,8 +68,9 @@ public interface StudentServiceInterface {
 	 * @param email
 	 * @param password
 	 * @return int
+     * @throws InvalidCredentialsException 
 	 */
-    int checkCredentials(String email, String password);
+    int checkCredentials(String email, String password) throws InvalidCredentialsException;
     
     /**
 	 * Method to retrieve Student info. from their ID
@@ -86,4 +89,6 @@ public interface StudentServiceInterface {
     public int ifCourseRegistered(int studentId, int courseId) throws CourseAlreadyRegisteredException;
 
 	public void updateCredentials(String email, String password);
+	
+	public int isApproved(int studentId) throws UserNotApprovedExecption;
 }

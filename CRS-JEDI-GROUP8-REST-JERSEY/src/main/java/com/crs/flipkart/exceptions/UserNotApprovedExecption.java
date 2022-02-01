@@ -8,7 +8,7 @@ package com.crs.flipkart.exceptions;
  */
 
 public class UserNotApprovedExecption extends Exception {
-	private String userId;
+	private int userId;
 
 	/***
 	 * Constructor function for UserId
@@ -16,7 +16,7 @@ public class UserNotApprovedExecption extends Exception {
 	 * @param userId
 	 */
 
-	public UserNotApprovedExecption(String userId) {
+	public UserNotApprovedExecption(int userId) {
 		super();
 		this.userId = userId;
 	}

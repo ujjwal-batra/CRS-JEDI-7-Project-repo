@@ -6,6 +6,9 @@ import com.crs.flipkart.dao.ProfessorDAO;
 import com.crs.flipkart.dao.StudentDao;
 import com.crs.flipkart.dao.StudentDaoInterface;
 import com.crs.flipkart.exceptions.CourseAlreadyRegisteredException;
+import com.crs.flipkart.exceptions.InvalidCredentialsException;
+import com.crs.flipkart.exceptions.UserNotApprovedExecption;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -144,11 +147,15 @@ public class StudentService implements StudentServiceInterface {
      *
      * @param email
      * @param password
-     * @return int
+     * @return
      */
     @Override
-    public int checkCredentials(String email, String password) {
-        return new StudentDao().checkCredentials(email, password);
+    public int checkCredentials(String email, String password) throws InvalidCredentialsException {
+    	logger.info("Checking credentials for emailId: " + email);
+        StudentDaoInterface studentDaoInterface = new StudentDao();
+        int found = studentDaoInterface.checkCredentials(email, password);
+        if(found == -1) throw new InvalidCredentialsException();
+        return found;
     }
 
     /**
@@ -192,5 +199,14 @@ public class StudentService implements StudentServiceInterface {
     public void updateCredentials(String email, String password) {
         logger.debug("In instance of Professor service updating credentials");
         new StudentDao().updateCredentials(email, password);
+    }
+    
+    public int isApproved(int studentId) throws UserNotApprovedExecption {
+        logger.debug("In instance of Professor service updating credentials");
+        StudentDaoInterface studentDaoInterface = new StudentDao();
+        int isApproved = studentDaoInterface.isApproved(studentId);
+        if(isApproved == 0) throw new UserNotApprovedExecption(studentId);
+        return 1;
+        
     }
 }
