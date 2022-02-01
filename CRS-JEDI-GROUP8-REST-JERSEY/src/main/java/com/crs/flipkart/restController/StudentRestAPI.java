@@ -26,6 +26,7 @@ import com.crs.flipkart.business.StudentServiceInterface;
 import com.crs.flipkart.exceptions.CourseAlreadyRegisteredException;
 import com.crs.flipkart.exceptions.CourseNotEnrolledException;
 import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.CourseRegistrationAlreadyDone;
 import com.crs.flipkart.exceptions.InvalidCredentialsException;
 import com.crs.flipkart.exceptions.StudentAlreadyRegisteredForSemester;
 import com.crs.flipkart.exceptions.UserNotApprovedExecption;
@@ -129,9 +130,13 @@ public class StudentRestAPI {
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response courseRegistration(CourseSelection courseSelection) {
 		System.out.println();
-		ArrayList<Integer> list =  studentServiceInterface.courseRegistration(courseSelection.getStudentId(), courseSelection.getPrimary(), courseSelection.getSecondary());
-		System.out.println(list);
-		return Response.status(201).entity("successfully registered : "+ list.toString()).build();
+		ArrayList<Integer> list;
+		try {
+			list = studentServiceInterface.courseRegistration(courseSelection.getStudentId(), courseSelection.getPrimary(), courseSelection.getSecondary());
+			return Response.status(201).entity("successfully registered : "+ list.toString()).build();
+		} catch (CourseRegistrationAlreadyDone ex) {
+			return Response.status(201).entity(ex.getMessage()).build();
+		}
 	}
 	
 	@GET
