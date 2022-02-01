@@ -24,6 +24,7 @@ import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.business.StudentServiceInterface;
 import com.crs.flipkart.exceptions.CourseAlreadyRegisteredException;
+import com.crs.flipkart.exceptions.CourseNotEnrolledException;
 import com.crs.flipkart.exceptions.CourseNotFoundException;
 import com.crs.flipkart.exceptions.InvalidCredentialsException;
 import com.crs.flipkart.exceptions.StudentAlreadyRegisteredForSemester;
@@ -111,12 +112,15 @@ public class StudentRestAPI {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response dropCourse(EnrolledCourse enrolledCourse) {
-		System.out.println();
-		boolean isDropped =  studentServiceInterface.dropCourse(enrolledCourse.getStudentId(), enrolledCourse.getCourseId());
-		if(isDropped) {
+		try {
+			boolean isDropped =  studentServiceInterface.dropCourse(enrolledCourse.getStudentId(), enrolledCourse.getCourseId());
+			
 			return Response.status(201).entity("Dropped successful").build();
+		} catch(CourseNotFoundException ex) {
+			return Response.status(201).entity(ex.getMessage()).build();
+		} catch(CourseNotEnrolledException ex) {
+			return Response.status(201).entity(ex.getMessage()).build();
 		}
-		return Response.status(201).entity("Cannot be dropped").build();
 	}
 	
 	@POST

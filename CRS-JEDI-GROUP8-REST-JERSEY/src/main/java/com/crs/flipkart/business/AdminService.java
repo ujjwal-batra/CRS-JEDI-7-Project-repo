@@ -6,7 +6,7 @@ import com.crs.flipkart.dao.AdminDao;
 import com.crs.flipkart.dao.AdminDaoInterface;
 import com.crs.flipkart.dao.ProfessorDAO;
 import com.crs.flipkart.exceptions.AddCourseException;
-import com.crs.flipkart.exceptions.CourseNotDeletedException;
+import com.crs.flipkart.exceptions.CourseNotEnrolledException;
 import org.apache.log4j.Logger;
 
 
@@ -42,7 +42,7 @@ public class AdminService implements AdminServiceInterface {
      * @return boolean
      */
     @Override
-    public boolean deleteCourse(int courseId) throws CourseNotDeletedException {
+    public boolean deleteCourse(int courseId) throws CourseNotEnrolledException {
         if (courseId < 0)
             return false;
         try {
@@ -50,7 +50,7 @@ public class AdminService implements AdminServiceInterface {
             logger.info("In instance of AdminService, delete course with course id: " + courseId);
             return adminDaoInterface.deleteCourse(courseId);
         }catch (Exception ex){
-            throw new CourseNotDeletedException(courseId);
+            throw new CourseNotEnrolledException(courseId);
         }
     }
 

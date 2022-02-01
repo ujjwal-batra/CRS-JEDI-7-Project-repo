@@ -29,7 +29,7 @@ import com.crs.flipkart.business.ProfessorInterface;
 import com.crs.flipkart.business.ProfessorService;
 import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.exceptions.AddCourseException;
-import com.crs.flipkart.exceptions.CourseNotDeletedException;
+import com.crs.flipkart.exceptions.CourseNotEnrolledException;
 
 /**
  * @author Adarsh
@@ -114,7 +114,7 @@ public class AdminRestAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteCourse(@NotNull
 								 @QueryParam("courseCode") int courseCode) {
-		CourseNotDeletedException courseNotDeletedException = new CourseNotDeletedException(courseCode);
+		CourseNotEnrolledException courseNotDeletedException = new CourseNotEnrolledException(courseCode);
         try {
             AdminServiceInterface adminServiceInterface = new AdminService();
             boolean isDeleted = adminServiceInterface.deleteCourse(courseCode);
@@ -122,7 +122,7 @@ public class AdminRestAPI {
             	return Response.status(201).entity("Course with courseCode: " + courseCode + " deleted from catalog").build();
             else
             	return Response.status(406).entity("Error while removing course from  : " + courseNotDeletedException.getMessage()).build();
-        } catch (CourseNotDeletedException ex){
+        } catch (CourseNotEnrolledException ex){
         	return Response.status(409).entity(ex.getMessage()).build();
         }
 	}

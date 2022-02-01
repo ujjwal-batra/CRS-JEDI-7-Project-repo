@@ -225,7 +225,7 @@ public class StudentDao implements StudentDaoInterface {
             connection = DBUtils.getConnection();
             String sqlQuery = "select * from course where course_id = " + courseId;
             statement = connection.prepareStatement(sqlQuery);
-            ResultSet resultSet = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
             
             if(!resultSet.next()) {
             	return false;
@@ -258,17 +258,33 @@ public class StudentDao implements StudentDaoInterface {
    	 * @return boolean
    	 */
     @Override
-    public boolean dropCourse(int studentId, int courseId) {
+    public int dropCourse(int studentId, int courseId) {
         Connection connection = null;
         Statement statement = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
             statement = connection.createStatement();
-            String sqlQuery = Constants.STUDENT_DROP_COURSE + studentId
+            
+            String sqlQuery = "select * from course where course_id = " + courseId;
+            statement = connection.prepareStatement(sqlQuery);
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            
+            if(!resultSet.next()) {
+            	return -1;
+            }
+            
+            sqlQuery = "select * from enrolled_course where student_id = " + studentId + " and course_id = " + courseId;
+            ResultSet resultSet1 = statement.executeQuery(sqlQuery);
+            
+            if(!resultSet1.next()) {
+            	return -2;
+            }
+            
+            sqlQuery = Constants.STUDENT_DROP_COURSE + studentId
                     + " and course_id = " + courseId;
             statement.executeUpdate(sqlQuery);
-            return true;
+            return 1;
         } catch (Exception ex) {
             logger.error("Error while dropping course: " + ex.getMessage());
         } finally {
@@ -279,7 +295,7 @@ public class StudentDao implements StudentDaoInterface {
                 logger.error("Error: " + ex.getMessage());
             }
         }
-        return false;
+        return 1;
     }
     
     /**

@@ -2,6 +2,7 @@ package com.crs.flipkart.business;
 
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.exceptions.CourseAlreadyRegisteredException;
+import com.crs.flipkart.exceptions.CourseNotEnrolledException;
 import com.crs.flipkart.exceptions.CourseNotFoundException;
 import com.crs.flipkart.exceptions.InvalidCredentialsException;
 import com.crs.flipkart.exceptions.StudentAlreadyRegisteredForSemester;
@@ -36,8 +37,10 @@ public interface StudentServiceInterface {
 	 * @param studentId
 	 * @param courseId
 	 * @return boolean
+     * @throws CourseNotEnrolledException 
+     * @throws CourseNotFoundException 
 	 */
-    boolean dropCourse(int studentId, int courseId);
+    boolean dropCourse(int studentId, int courseId) throws CourseNotFoundException, CourseNotEnrolledException;
     
     /**
 	 * Method to add a course

@@ -6,6 +6,7 @@ import com.crs.flipkart.dao.ProfessorDAO;
 import com.crs.flipkart.dao.StudentDao;
 import com.crs.flipkart.dao.StudentDaoInterface;
 import com.crs.flipkart.exceptions.CourseAlreadyRegisteredException;
+import com.crs.flipkart.exceptions.CourseNotEnrolledException;
 import com.crs.flipkart.exceptions.CourseNotFoundException;
 import com.crs.flipkart.exceptions.InvalidCredentialsException;
 import com.crs.flipkart.exceptions.StudentAlreadyRegisteredForSemester;
@@ -81,9 +82,15 @@ public class StudentService implements StudentServiceInterface {
      */
 
     @Override
-    public boolean dropCourse(int studentId, int courseId) {
+    public boolean dropCourse(int studentId, int courseId) throws CourseNotFoundException, CourseNotEnrolledException {
         logger.info("Dropping course with id: " + courseId);
-        return studentDao.dropCourse(studentId, courseId);
+        int isDropped = studentDao.dropCourse(studentId, courseId);
+        if(isDropped == -1) {
+        	throw new CourseNotFoundException(courseId);
+        } else if(isDropped == -2) {
+        	throw new CourseNotEnrolledException(courseId);
+        }
+        return true;
     }
 
     /**

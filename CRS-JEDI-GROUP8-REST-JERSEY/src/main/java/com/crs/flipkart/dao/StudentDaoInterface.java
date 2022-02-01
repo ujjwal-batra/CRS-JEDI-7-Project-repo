@@ -56,7 +56,7 @@ public interface StudentDaoInterface {
    	 * @param courseId
    	 * @return boolean
    	 */
-    public boolean dropCourse(int studentId, int courseId);
+    public int dropCourse(int studentId, int courseId);
     
     /**
    	 * Method to view all enrolled courses ofa student
