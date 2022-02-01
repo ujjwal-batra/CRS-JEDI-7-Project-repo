@@ -3,7 +3,9 @@ package com.crs.flipkart.business;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.exceptions.CourseAlreadyRegisteredException;
 import com.crs.flipkart.exceptions.InvalidCredentialsException;
+import com.crs.flipkart.exceptions.StudentAlreadyRegisteredForSemester;
 import com.crs.flipkart.exceptions.UserNotApprovedExecption;
+import com.crs.flipkart.exceptions.UserNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +16,10 @@ public interface StudentServiceInterface {
 	 * @param student
 	 * @param semester
 	 * @return List of Integer (courseId)
+	 * @throws StudentAlreadyRegisteredForSemester 
+	 * @throws UserNotFoundException 
 	 */
-    boolean semesterRegistration(int studentId, int semester);
+    boolean semesterRegistration(int studentId, int semester) throws StudentAlreadyRegisteredForSemester, UserNotFoundException;
     
     /**
 	 * Method to initiate course Registration

@@ -172,7 +172,7 @@ public class StudentDao implements StudentDaoInterface {
    	 * @return boolean
    	 */
     @Override
-    public boolean semesterRegistration(int studentId, int semester) {
+    public int semesterRegistration(int studentId, int semester) {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -183,12 +183,20 @@ public class StudentDao implements StudentDaoInterface {
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             if (!resultSet.next()) {
-                return false;
+                return -2;
             }
+            
+            sqlQuery = Constants.SELECT_STUDENT_BY_ID + studentId + " and semester = -1";
+            statement = connection.prepareStatement(sqlQuery);
+            ResultSet resultSet1 = statement.executeQuery(sqlQuery);
+            if (!resultSet1.next()) {
+                return -1;
+            }
+            
             sqlQuery = Constants.SET_STUDENT_SEMESTER + semester + " where student_id = " + studentId;
             statement = connection.prepareStatement(sqlQuery);
             statement.executeUpdate();
-            return true;
+            return 1;
         } catch (Exception ex) {
             logger.error("Error during semester registration: " + ex.getMessage());
         } finally {
@@ -199,7 +207,7 @@ public class StudentDao implements StudentDaoInterface {
                 logger.error("Error: " + ex.getMessage());
             }
         }
-        return true;
+        return 1;
     }
     
     /**

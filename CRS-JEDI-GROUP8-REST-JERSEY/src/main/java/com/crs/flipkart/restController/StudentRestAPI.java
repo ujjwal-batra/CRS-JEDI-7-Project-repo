@@ -24,6 +24,7 @@ import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.business.StudentServiceInterface;
 import com.crs.flipkart.exceptions.InvalidCredentialsException;
+import com.crs.flipkart.exceptions.StudentAlreadyRegisteredForSemester;
 import com.crs.flipkart.exceptions.UserNotApprovedExecption;
 import com.crs.flipkart.exceptions.UserNotFoundException;
 
@@ -60,12 +61,16 @@ public class StudentRestAPI {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response semesterRegistration(Student student) {
-		
-		boolean isRegistered = studentServiceInterface.semesterRegistration(student.getStudentId(), student.getSemester());
-		if(isRegistered) {
+		try {
+			studentServiceInterface.semesterRegistration(student.getStudentId(), student.getSemester());
+			
 			return Response.status(201).entity("Semester Registration Complete").build();
+			
+		} catch(StudentAlreadyRegisteredForSemester ex) {
+			return Response.status(201).entity(ex.getMessage()).build();
+		} catch(UserNotFoundException ex) {
+			return Response.status(201).entity(ex.getMessage()).build();
 		}
-		return Response.status(201).entity("Registration failed try again").build();
 	}
 	
 	@POST

@@ -40,7 +40,7 @@ public interface StudentDaoInterface {
    	 * @param semester
    	 * @return boolean
    	 */
-    public boolean semesterRegistration(int studentId, int semester);
+    public int semesterRegistration(int studentId, int semester);
     
     /**
    	 * Method to add course to the database

@@ -7,7 +7,10 @@ import com.crs.flipkart.dao.StudentDao;
 import com.crs.flipkart.dao.StudentDaoInterface;
 import com.crs.flipkart.exceptions.CourseAlreadyRegisteredException;
 import com.crs.flipkart.exceptions.InvalidCredentialsException;
+import com.crs.flipkart.exceptions.StudentAlreadyRegisteredForSemester;
+import com.crs.flipkart.exceptions.StudentNotRegisteredException;
 import com.crs.flipkart.exceptions.UserNotApprovedExecption;
+import com.crs.flipkart.exceptions.UserNotFoundException;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -27,12 +30,19 @@ public class StudentService implements StudentServiceInterface {
      * @param studentId
      * @param semester
      * @return List of Integer (courseId)
+     * @throws UserNotFoundException 
      */
 
     @Override
-    public boolean semesterRegistration(int studentId, int semester) {
+    public boolean semesterRegistration(int studentId, int semester) throws StudentAlreadyRegisteredForSemester, UserNotFoundException {
         logger.debug("In instance of StudentService, registering semester student id: " + studentId + ", semester: " + semester);
-        return new StudentDao().semesterRegistration(studentId, semester);
+        StudentDaoInterface studentDaoInterface = new StudentDao();
+        int isRegistered = studentDaoInterface.semesterRegistration(studentId, semester);
+        if(isRegistered == -1)
+        	throw new StudentAlreadyRegisteredForSemester(studentId);
+        if(isRegistered == -2)
+        	throw new UserNotFoundException(studentId);
+        return true;
     }
 
     /**

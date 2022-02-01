@@ -8,14 +8,14 @@ package com.crs.flipkart.exceptions;
  */
 
 public class UserNotFoundException extends Exception {
-	private String userId;
+	private int userId;
 
 	/***
 	 * Constructor function for UserId
 	 * 
 	 * @param userId
 	 */
-	public UserNotFoundException(String userId) {
+	public UserNotFoundException(int userId) {
 		super();
 		this.userId = userId;
 	}
