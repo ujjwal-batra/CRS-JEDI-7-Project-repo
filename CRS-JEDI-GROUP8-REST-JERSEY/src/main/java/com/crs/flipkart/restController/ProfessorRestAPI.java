@@ -8,6 +8,12 @@ import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.business.CourseOperationService;
 import com.crs.flipkart.business.ProfessorInterface;
 import com.crs.flipkart.business.ProfessorService;
+import com.crs.flipkart.exceptions.CourseNotAssignedToProfessorException;
+import com.crs.flipkart.exceptions.GradeNotAddedException;
+import com.crs.flipkart.exceptions.InvalidCredentialsException;
+import com.crs.flipkart.exceptions.ProfessorNotFoundException;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -22,6 +28,8 @@ import java.util.List;
 public class ProfessorRestAPI {
 
 
+    private static final Logger logger = LogManager.getLogger(ProfessorRestAPI.class);
+
     /**
      *
      * Endpoint for verifying professor login credentials
@@ -33,12 +41,16 @@ public class ProfessorRestAPI {
     @Path("/login")
     @Produces(MediaType.TEXT_PLAIN)
     public Response professorLogin(Professor professor) {
+        logger.info("Login request: " + professor.getEmailId());
         ProfessorInterface professorObj = new ProfessorService();
-        int response = professorObj.checkCredentials(professor.getEmailId(), professor.getPassword());
-        if (response != -1) {
-            return Response.status(200).entity("Success").build();
+        try {
+            professorObj.checkCredentials(professor.getEmailId(), professor.getPassword());
+            logger.info("Login successful");
+            return Response.status(200).entity("Login successful").build();
+        } catch (InvalidCredentialsException exception) {
+            logger.error(exception.getMessage());
+            return Response.status(200).entity(exception.getMessage()).build();
         }
-        return Response.status(200).entity("Invalid credentials").build();
     }
 
 
@@ -57,6 +69,7 @@ public class ProfessorRestAPI {
                     ", CourseName: " + course.getCourseName() +
                     ", Professor: " + (course.getProfessorId() == -1 || course.getProfessorId() == 0 ? "Not yet assigned" : course.getProfessorId()));
         });
+        logger.info("API success for show catalogue, by professor");
         return Response.status(200).entity(res).build();
     }
 
@@ -69,21 +82,23 @@ public class ProfessorRestAPI {
     @Path("/showMyCourses")
     @Produces(MediaType.APPLICATION_JSON)
     public Response showMyCourses(@QueryParam("professorId") int professorId) {
-
-        List<String> res = new ArrayList<>();
-
-        Professor professor = new ProfessorService().getProfessorById(professorId);
-        if (professor.getCourseList().isEmpty())
-            return Response.status(200).entity("Not yet registered for any course").build();
-        res.add("My Course details: ");
-
-
-        professor.getCourseList().forEach(course -> {
-            res.add("CourseId: " + course.getCourseId() +
-                    ", CourseName: " + course.getCourseName() +
-                    ", ProfessorId: " + course.getProfessorId());
-        });
-        return Response.status(200).entity(res).build();
+        try {
+            List<String> res = new ArrayList<>();
+            Professor professor = new ProfessorService().getProfessorById(professorId);
+            if (professor.getCourseList().isEmpty())
+                return Response.status(200).entity("Not yet registered for any course").build();
+            res.add("My Course details: ");
+            professor.getCourseList().forEach(course -> {
+                res.add("CourseId: " + course.getCourseId() +
+                        ", CourseName: " + course.getCourseName() +
+                        ", ProfessorId: " + course.getProfessorId());
+            });
+            logger.info("API success for show course of professor");
+            return Response.status(200).entity(res).build();
+        } catch (ProfessorNotFoundException exception) {
+            logger.error(exception.getMessage());
+            return Response.status(200).entity(exception.getMessage()).build();
+        }
     }
 
     /**
@@ -100,7 +115,7 @@ public class ProfessorRestAPI {
         if (studentList.isEmpty()) return Response.status(200).entity("No Students enrolled").build();
         res.add("Student details: ");
         res.addAll(studentList);
-
+        logger.info("API success for view enrolled students of professor");
         return Response.status(200).entity(res).build();
     }
 
@@ -121,8 +136,14 @@ public class ProfessorRestAPI {
                              @QueryParam("marks") int marks) {
 
         viewStudents(professorId);
-        new ProfessorService().addGrade(courseId, studentId, marks);
-        return Response.status(200).entity("Successfully Added").build();
+        try {
+            new ProfessorService().addGrade(courseId, studentId, marks);
+            logger.info("API success for add grade");
+            return Response.status(200).entity("Successfully Added").build();
+        } catch (GradeNotAddedException exception) {
+            logger.error(exception.getMessage());
+            return Response.status(200).entity(exception.getMessage()).build();
+        }
     }
 
     /**
@@ -136,8 +157,14 @@ public class ProfessorRestAPI {
     @Produces(MediaType.TEXT_PLAIN)
     public Response selectCourseToTeach(@QueryParam("professorId") int professorId,
                                         @QueryParam("courseId") int courseId) {
-        new ProfessorService().selectCourseToTeach(courseId, professorId);
-        return Response.status(200).entity("Successfully Registered").build();
+        try {
+            new ProfessorService().selectCourseToTeach(courseId, professorId);
+            logger.info("API success for select course to teach");
+            return Response.status(200).entity("Successfully Registered").build();
+        } catch (CourseNotAssignedToProfessorException exception) {
+            logger.error(exception.getMessage());
+            return Response.status(200).entity(exception.getMessage()).build();
+        }
     }
 
 

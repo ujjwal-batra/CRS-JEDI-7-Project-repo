@@ -111,7 +111,7 @@ public class CourseOperationDAO implements CourseOperationDaoInterface {
      * @return
      */
     @Override
-    public void updateCourse(Course course) {
+    public boolean updateCourse(Course course) {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -121,7 +121,7 @@ public class CourseOperationDAO implements CourseOperationDaoInterface {
                     course.getProfessorId() + " where course_id = " + course.getCourseId();
             statement = connection.prepareStatement(sqlQuery);
             statement.executeUpdate();
-
+            return true;
         } catch (Exception ex) {
             logger.error("Error: " + ex.getMessage());
         } finally {
@@ -132,6 +132,7 @@ public class CourseOperationDAO implements CourseOperationDaoInterface {
                 logger.error("Error: " + ex.getMessage());
             }
         }
+        return false;
     }
 
     /**

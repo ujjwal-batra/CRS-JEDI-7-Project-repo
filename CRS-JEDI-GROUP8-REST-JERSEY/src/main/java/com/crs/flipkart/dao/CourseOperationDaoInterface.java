@@ -23,9 +23,9 @@ public interface CourseOperationDaoInterface {
     /**
    	 * Method to update course information
    	 * @param course
-   	 * @return 
+   	 * @return
    	 */
-    public void updateCourse(Course course);
+    public boolean updateCourse(Course course);
     
     /**
    	 * Method to get list of  all courses

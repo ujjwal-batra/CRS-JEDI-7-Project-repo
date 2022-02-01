@@ -5,6 +5,10 @@ package com.crs.flipkart.business;
 
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
+import com.crs.flipkart.exceptions.CourseNotAssignedToProfessorException;
+import com.crs.flipkart.exceptions.GradeNotAddedException;
+import com.crs.flipkart.exceptions.InvalidCredentialsException;
+import com.crs.flipkart.exceptions.ProfessorNotFoundException;
 
 import java.util.List;
 
@@ -20,15 +24,15 @@ public interface ProfessorInterface {
 	 * @param marks
 	 * @return boolean
 	 */
-    public boolean addGrade(int courseId, int studentId, double marks);
+    public boolean addGrade(int courseId, int studentId, double marks) throws GradeNotAddedException;
     
     /**
 	 * Method to select a particular course  to teach for the  professor.
 	 * @param courseId
 	 * @param professorId
-	 * @return 
+	 * @return
 	 */
-    public void selectCourseToTeach(int courseId, int professorId);
+    public boolean selectCourseToTeach(int courseId, int professorId) throws CourseNotAssignedToProfessorException;
     
     /**
 	 * Method to retrieve all the students enrolled for a particular course.  
@@ -57,14 +61,14 @@ public interface ProfessorInterface {
 	 * @param password
 	 * @return 
 	 */
-    int checkCredentials(String email, String password);
+    int checkCredentials(String email, String password) throws InvalidCredentialsException;
     
     /**
 	 * Method to retrieve Professor by ID
 	 * @param professorId
 	 * @return 
 	 */
-    public Professor getProfessorById(int professorId);
+    public Professor getProfessorById(int professorId) throws ProfessorNotFoundException;
 
 	public void updateCredentials(String email, String password);
 }

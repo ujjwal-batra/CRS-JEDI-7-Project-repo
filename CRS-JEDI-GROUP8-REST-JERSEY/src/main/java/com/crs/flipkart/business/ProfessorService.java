@@ -6,6 +6,10 @@ import com.crs.flipkart.dao.CourseOperationDAO;
 import com.crs.flipkart.dao.ProfessorDAO;
 import com.crs.flipkart.dao.ProfessorDaoInterface;
 import com.crs.flipkart.dao.StudentDao;
+import com.crs.flipkart.exceptions.CourseNotAssignedToProfessorException;
+import com.crs.flipkart.exceptions.GradeNotAddedException;
+import com.crs.flipkart.exceptions.InvalidCredentialsException;
+import com.crs.flipkart.exceptions.ProfessorNotFoundException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -24,10 +28,12 @@ public class ProfessorService implements ProfessorInterface {
      * @param marks
      * @return boolean
      */
-    public boolean addGrade(int courseId, int studentId, double marks) {
+    public boolean addGrade(int courseId, int studentId, double marks) throws GradeNotAddedException {
         ProfessorDaoInterface professorDaoInterface = new ProfessorDAO();
         logger.info("Professor adding grade for student id: " + studentId + ", course id: " + courseId + ", marks" + marks);
-        return professorDaoInterface.addGrade(studentId, courseId, marks);
+        boolean added = professorDaoInterface.addGrade(studentId, courseId, marks);
+        if (!added) throw new GradeNotAddedException(studentId);
+        return true;
     }
 
     /**
@@ -37,11 +43,13 @@ public class ProfessorService implements ProfessorInterface {
      * @param professorId
      * @return
      */
-    public void selectCourseToTeach(int courseId, int professorId) {
+    public boolean selectCourseToTeach(int courseId, int professorId) throws CourseNotAssignedToProfessorException {
         Course course = new CourseOperationDAO().getCourseById(courseId);
         course.setProfessorId(professorId);
         logger.debug("Professor: " + professorId + " selecting course: " + courseId + " to teach");
-        new CourseOperationDAO().updateCourse(course);
+        boolean added = new CourseOperationDAO().updateCourse(course);
+        if (!added) throw new CourseNotAssignedToProfessorException(courseId, professorId);
+        return true;
     }
 
     /**
@@ -109,19 +117,24 @@ public class ProfessorService implements ProfessorInterface {
      * @return
      */
     @Override
-    public int checkCredentials(String email, String password) {
+    public int checkCredentials(String email, String password) throws InvalidCredentialsException {
         logger.info("Checking credentials for emailId: " + email);
-        return new ProfessorDAO().checkCredentials(email, password);
+        int found = new ProfessorDAO().checkCredentials(email, password);
+        if (found == -1) throw new InvalidCredentialsException();
+        return found;
     }
 
     /**
-     * Method to get all the courses taken by a student
+     * Method to get professor by id
      *
-     * @param studentId
-     * @return List of Integer (courseId)
+     * @param professorId
+     * @return
+     * @throws ProfessorNotFoundException
      */
     @Override
-    public Professor getProfessorById(int professorId) {
-        return new ProfessorDAO().getProfessorById(professorId);
+    public Professor getProfessorById(int professorId) throws ProfessorNotFoundException {
+        Professor professor = new ProfessorDAO().getProfessorById(professorId);
+        if (professor == null) throw new ProfessorNotFoundException(professorId);
+        return professor;
     }
 }
