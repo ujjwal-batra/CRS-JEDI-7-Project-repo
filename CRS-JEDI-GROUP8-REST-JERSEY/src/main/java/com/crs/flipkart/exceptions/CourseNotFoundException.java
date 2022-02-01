@@ -9,9 +9,9 @@ package com.crs.flipkart.exceptions;
 public class CourseNotFoundException extends Exception {
 
 	// Course Code which cannot be found.
-	private String courseCode;
+	private int courseCode;
 
-	public CourseNotFoundException(String courseCode) {
+	public CourseNotFoundException(int courseCode) {
 		this.courseCode = courseCode;
 	}
 

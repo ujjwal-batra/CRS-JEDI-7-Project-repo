@@ -6,6 +6,7 @@ import com.crs.flipkart.dao.ProfessorDAO;
 import com.crs.flipkart.dao.StudentDao;
 import com.crs.flipkart.dao.StudentDaoInterface;
 import com.crs.flipkart.exceptions.CourseAlreadyRegisteredException;
+import com.crs.flipkart.exceptions.CourseNotFoundException;
 import com.crs.flipkart.exceptions.InvalidCredentialsException;
 import com.crs.flipkart.exceptions.StudentAlreadyRegisteredForSemester;
 import com.crs.flipkart.exceptions.StudentNotRegisteredException;
@@ -94,15 +95,21 @@ public class StudentService implements StudentServiceInterface {
      */
 
     @Override
-    public int addCourse(int studentId, int courseId) {
+    public int addCourse(int studentId, int courseId) throws CourseAlreadyRegisteredException, CourseNotFoundException {
         List<Integer> enrolledCourses = studentDao.viewEnrolledCourse(studentId);
         if (enrolledCourses.size() == 4) {
             return -2;
         }
         if (enrolledCourses.contains(courseId)) {
-            return -1;
+        	throw new CourseAlreadyRegisteredException(courseId);
         }
-        return studentDao.addCourse(studentId, courseId) ? 1 : 0;
+        boolean isAdded = studentDao.addCourse(studentId, courseId);
+        if(isAdded)
+        	return 1;
+        if(!isAdded) {
+        	throw new CourseNotFoundException(courseId);
+        }
+		return 1;
     }
 
     /**

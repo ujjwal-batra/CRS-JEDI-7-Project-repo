@@ -23,6 +23,8 @@ import com.crs.flipkart.bean.EnrolledCourse;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.business.StudentServiceInterface;
+import com.crs.flipkart.exceptions.CourseAlreadyRegisteredException;
+import com.crs.flipkart.exceptions.CourseNotFoundException;
 import com.crs.flipkart.exceptions.InvalidCredentialsException;
 import com.crs.flipkart.exceptions.StudentAlreadyRegisteredForSemester;
 import com.crs.flipkart.exceptions.UserNotApprovedExecption;
@@ -91,14 +93,17 @@ public class StudentRestAPI {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response addCourse(EnrolledCourse enrolledCourse) {
-		int isAdded = studentServiceInterface.addCourse(enrolledCourse.getStudentId(), enrolledCourse.getCourseId());
-		if(isAdded == -2) {
-			return Response.status(201).entity("Alredy registed for 4 courses. Drop one to add another").build();
+		try {
+			int isAdded = studentServiceInterface.addCourse(enrolledCourse.getStudentId(), enrolledCourse.getCourseId());
+			if(isAdded == -2) {
+				return Response.status(201).entity("Alredy registed for 4 courses. Drop one to add another").build();
+			}
+			return Response.status(201).entity("Course added Succesfully").build();
+		} catch(CourseAlreadyRegisteredException ex) {
+			return Response.status(201).entity(ex.getMessage()).build();
+		} catch (CourseNotFoundException ex) {
+			return Response.status(201).entity(ex.getMessage()).build();
 		}
-		else if(isAdded == -1) {
-			return Response.status(201).entity("Course with Course_id = "+ enrolledCourse.getCourseId() + " already added").build();
-		}
-		return Response.status(201).entity("Course added Succesfully").build();
 	}
 	
 	@POST

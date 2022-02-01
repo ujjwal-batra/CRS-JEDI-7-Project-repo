@@ -223,7 +223,15 @@ public class StudentDao implements StudentDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = Constants.STUDENT_ENROLL_COURSE;
+            String sqlQuery = "select * from course where course_id = " + courseId;
+            statement = connection.prepareStatement(sqlQuery);
+            ResultSet resultSet = statement.executeQuery();
+            
+            if(!resultSet.next()) {
+            	return false;
+            }
+            
+            sqlQuery = Constants.STUDENT_ENROLL_COURSE;
             statement = connection.prepareStatement(sqlQuery);
             statement.setInt(1, courseId);
             statement.setInt(2, studentId);
@@ -240,7 +248,7 @@ public class StudentDao implements StudentDaoInterface {
                 logger.error("Error: " + ex.getMessage());
             }
         }
-        return false;
+        return true;
     }
     
     /**
