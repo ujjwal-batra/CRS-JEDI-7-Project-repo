@@ -12,6 +12,7 @@ import com.crs.flipkart.business.CourseOperationService;
 import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.exceptions.AddCourseException;
 import com.crs.flipkart.exceptions.CourseNotDeletedException;
+import org.apache.log4j.Logger;
 
 import java.net.SocketTimeoutException;
 import java.util.List;
@@ -19,11 +20,18 @@ import java.util.Scanner;
 
 /**
  * @author Tushar
- *
+ * Class that display Admin Client Menu
  */
 public class CRSAdminMenu {
+    /*
+     * Getting all reqiured objects for all the operations
+     *
+     * */
+    private static final Logger logger = Logger.getLogger(CRSAdminMenu.class);
     Scanner scanner = new Scanner(System.in);
-
+    /*
+     * Creates AdminMenu
+     * */
     public void createMenu() {
 
         int in = 0;
@@ -37,9 +45,7 @@ public class CRSAdminMenu {
             System.out.println("3. Delete Course from catalog");
             System.out.println("4. Approve Students");
             System.out.println("5. Add Professor");
-            System.out.println("6. Generate Report Card");
-
-            System.out.println("7. Exit Admin Menu");
+            System.out.println("6. Exit Admin Menu");
 
             System.out.println("------------------------------------------");
             System.out.print("ENTER YOUR CHOICE--->:\t");
@@ -67,11 +73,9 @@ public class CRSAdminMenu {
                     addProfessor();
                     break;
 
-                case 6:
-                    generateReport();
-                    break;
 
-                case 7:
+
+                case 6:
                     return;
 
                 default:
@@ -253,23 +257,6 @@ public class CRSAdminMenu {
     }
 
 
-    /**
-     * Function to generate report
-     */
-    private void generateReport() {
-        System.out.println("\n\n----------------------------------------------------------------------------------------");
-        System.out.println("---------------------------------------\033[1mGENERATE Report Card\033[0m----------------------------------------");
-        System.out.println("---------------------------------------------------------------------------------------------\n");
-
-        System.out.println("Enter student Id:");
-        String studentId = scanner.nextLine();
-
-
-        //TODO : Generate Report Card
-
-        System.out.println("---------------------------------------------------------------------------------------------\n");
-
-    }
 }
 
 

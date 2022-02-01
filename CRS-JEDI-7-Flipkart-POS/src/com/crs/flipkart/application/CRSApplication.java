@@ -25,6 +25,10 @@ public class CRSApplication {
     public static void main(String[] args) {
         Connection connection = (Connection) DBUtils.getConnection();
         Scanner sc = new Scanner(System.in);
+        /*
+         * Main Menu of the project
+         *
+         * */
         System.out.println("================================================================================");
         System.out.println("********************\033[1mWELCOME to Course Registration System!!!\033[0m********************");
         System.out.println("================================================================================");
@@ -69,7 +73,10 @@ public class CRSApplication {
 
     }
 
-
+    /*
+     *Student signup function
+     *
+     * */
     private static void registerStudent() {
         Scanner sc = new Scanner(System.in);
         Student student = new Student();
@@ -122,7 +129,10 @@ public class CRSApplication {
         student = new StudentService().saveStudent(student);
         System.out.println("\033[1mYour Student ID:" + student.getStudentId() + "\nYour email ID:" + student.getEmailId() + "\nPlease wait for the admin to approve your profile.\033[0m");
     }
-
+    /*
+     *Login function
+     *
+     * */
     private static void login() {
         Scanner sc = new Scanner(System.in);
         String email, password;
@@ -211,6 +221,11 @@ public class CRSApplication {
     	System.out.println("\033[0m++++++++++++++++++++++++++++++++++++++++++");
     	//System.out.println("------------------------------------------");
     }
+
+    /*
+     *Update Password function
+     *
+     * */
     private static void updatePassword() {
         Scanner sc = new Scanner(System.in);
         String email, password;
