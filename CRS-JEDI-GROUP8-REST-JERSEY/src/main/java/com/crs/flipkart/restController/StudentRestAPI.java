@@ -3,9 +3,6 @@
  */
 package com.crs.flipkart.restController;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,13 +12,11 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.crs.flipkart.bean.CourseSelection;
 import com.crs.flipkart.bean.EnrolledCourse;
-import com.crs.flipkart.bean.Grade;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.business.StudentServiceInterface;
@@ -43,7 +38,12 @@ public class StudentRestAPI {
 		
 		int isLogged = studentServiceInterface.checkCredentials(student.getEmailId(), student.getPassword());
 		if(isLogged != -1) {
-			return Response.status(201).entity("LoggedIn with student_id as :" + isLogged).build();
+			Student student1 = studentServiceInterface.getStudentById(isLogged);
+			if(student1.isApproved())
+				return Response.status(201).entity("LoggedIn with student_id as :" + isLogged).build();
+			else {
+				return Response.status(201).entity("Not approved by Admin. student_id -> " + isLogged).build();
+			}
 		}
 		return Response.status(201).entity("Wrong email or password").build();
 	}
@@ -62,10 +62,10 @@ public class StudentRestAPI {
 	}
 	
 	@POST
-	@Path("/getStudent")
+	@Path("/saveStudent")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response getStudent(Student student) {
+	public Response saveStudent(Student student) {
 		
 		Student isSaved = studentServiceInterface.saveStudent(student);
 		if(isSaved != null) {

@@ -18,12 +18,15 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.crs.flipkart.bean.Admin;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.business.AdminService;
 import com.crs.flipkart.business.AdminServiceInterface;
 import com.crs.flipkart.business.CourseOperationService;
+import com.crs.flipkart.business.ProfessorInterface;
+import com.crs.flipkart.business.ProfessorService;
 import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.exceptions.AddCourseException;
 import com.crs.flipkart.exceptions.CourseNotDeletedException;
@@ -38,12 +41,30 @@ public class AdminRestAPI {
 	
 	/**
 	 * 
+	 * REST-service for admin Login
+	 * @param Admin object
+	 * @return
+	 */
+	@POST
+    @Path("/login")
+    @Produces(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_JSON)
+    public Response adminLogin(Admin admin) {
+        AdminServiceInterface adminObj = new AdminService();
+        int response = adminObj.checkCredentials(admin.getEmailId(), admin.getPassword());
+        if (response != -1) {
+            return Response.status(200).entity("Success").build();
+        }
+        return Response.status(200).entity("Invalid credentials").build();
+    }
+	
+	/**
+	 * 
 	 * REST-service for assigning course to professor
 	 * @param courseCode
 	 * @param professorId
 	 * @return
 	 */
-	
 	@POST
 	@Path("/addCourse")
 	@Produces(MediaType.APPLICATION_JSON)
