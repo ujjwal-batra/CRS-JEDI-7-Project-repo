@@ -134,8 +134,6 @@ public class ProfessorRestAPI {
                              @QueryParam("studentId") int studentId,
                              @QueryParam("courseId") int courseId,
                              @QueryParam("marks") int marks) {
-
-        viewStudents(professorId);
         try {
             new ProfessorService().addGrade(courseId, studentId, marks);
             logger.info("API success for add grade");
