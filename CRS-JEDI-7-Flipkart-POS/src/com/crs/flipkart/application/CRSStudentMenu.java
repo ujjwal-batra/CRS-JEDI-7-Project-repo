@@ -6,6 +6,7 @@ package com.crs.flipkart.application;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.business.*;
+import com.crs.flipkart.constants.ModeOfPaymentConstants;
 import com.crs.flipkart.exceptions.CourseAlreadyRegisteredException;
 
 import java.util.ArrayList;
@@ -302,7 +303,7 @@ public class CRSStudentMenu {
                     System.out.print("Enter Invoice Number:\t");
                     invoice = sc.nextInt();
                     System.out.println("");
-                    mode = "ONLINE";
+                    mode = String.valueOf(ModeOfPaymentConstants.getModeofPayment(choice));
                     System.out.println("Payment Successful");
                     break;
                 case 2:
@@ -312,7 +313,7 @@ public class CRSStudentMenu {
                     System.out.print("Enter Invoice Number:\t");
                     invoice = sc.nextInt();
                     System.out.println("Payment Successful");
-                    mode = "OFFLINE";
+                    mode = String.valueOf(ModeOfPaymentConstants.getModeofPayment(choice));
                     break;
 
                 default:
