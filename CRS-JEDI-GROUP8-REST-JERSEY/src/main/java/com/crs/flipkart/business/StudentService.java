@@ -6,6 +6,15 @@ import com.crs.flipkart.dao.ProfessorDAO;
 import com.crs.flipkart.dao.StudentDao;
 import com.crs.flipkart.dao.StudentDaoInterface;
 import com.crs.flipkart.exceptions.CourseAlreadyRegisteredException;
+import com.crs.flipkart.exceptions.CourseNotEnrolledException;
+import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.CourseRegistrationAlreadyDone;
+import com.crs.flipkart.exceptions.InvalidCredentialsException;
+import com.crs.flipkart.exceptions.StudentAlreadyRegisteredForSemester;
+import com.crs.flipkart.exceptions.StudentNotRegisteredException;
+import com.crs.flipkart.exceptions.UserNotApprovedExecption;
+import com.crs.flipkart.exceptions.UserNotFoundException;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -24,12 +33,19 @@ public class StudentService implements StudentServiceInterface {
      * @param studentId
      * @param semester
      * @return List of Integer (courseId)
+     * @throws UserNotFoundException 
      */
 
     @Override
-    public boolean semesterRegistration(int studentId, int semester) {
+    public boolean semesterRegistration(int studentId, int semester) throws StudentAlreadyRegisteredForSemester, UserNotFoundException {
         logger.debug("In instance of StudentService, registering semester student id: " + studentId + ", semester: " + semester);
-        return new StudentDao().semesterRegistration(studentId, semester);
+        StudentDaoInterface studentDaoInterface = new StudentDao();
+        int isRegistered = studentDaoInterface.semesterRegistration(studentId, semester);
+        if(isRegistered == -1)
+        	throw new StudentAlreadyRegisteredForSemester(studentId);
+        if(isRegistered == -2)
+        	throw new UserNotFoundException(studentId);
+        return true;
     }
 
     /**
@@ -42,9 +58,15 @@ public class StudentService implements StudentServiceInterface {
      */
 
     @Override
-    public ArrayList<Integer> courseRegistration(int studentId, int[] primary, int[] secondary) {
+    public ArrayList<Integer> courseRegistration(int studentId, int[] primary, int[] secondary) throws CourseRegistrationAlreadyDone {
         int secondaryIndex = 0;
         ArrayList<Integer> registeredCourse = new ArrayList<>();
+        StudentDaoInterface studentDaoInterface = new StudentDao();
+        List<Integer> enrolledCourses = studentDaoInterface.viewEnrolledCourse(studentId);
+        System.out.println(enrolledCourses);
+        if(!enrolledCourses.isEmpty()) {
+        	throw new CourseRegistrationAlreadyDone(studentId);
+        }
         for (int courseId : primary) {
             if (courseCatalogueDAO.getStudentCount(courseId) >= 10) {
                 logger.info("Course id: " + courseId + " already contains 10 students, hence going with secondary course id: " + secondary[secondaryIndex]);
@@ -67,9 +89,15 @@ public class StudentService implements StudentServiceInterface {
      */
 
     @Override
-    public boolean dropCourse(int studentId, int courseId) {
+    public boolean dropCourse(int studentId, int courseId) throws CourseNotFoundException, CourseNotEnrolledException {
         logger.info("Dropping course with id: " + courseId);
-        return studentDao.dropCourse(studentId, courseId);
+        int isDropped = studentDao.dropCourse(studentId, courseId);
+        if(isDropped == -1) {
+        	throw new CourseNotFoundException(courseId);
+        } else if(isDropped == -2) {
+        	throw new CourseNotEnrolledException(courseId);
+        }
+        return true;
     }
 
     /**
@@ -81,15 +109,21 @@ public class StudentService implements StudentServiceInterface {
      */
 
     @Override
-    public int addCourse(int studentId, int courseId) {
+    public int addCourse(int studentId, int courseId) throws CourseAlreadyRegisteredException, CourseNotFoundException {
         List<Integer> enrolledCourses = studentDao.viewEnrolledCourse(studentId);
         if (enrolledCourses.size() == 4) {
             return -2;
         }
         if (enrolledCourses.contains(courseId)) {
-            return -1;
+        	throw new CourseAlreadyRegisteredException(courseId);
         }
-        return studentDao.addCourse(studentId, courseId) ? 1 : 0;
+        boolean isAdded = studentDao.addCourse(studentId, courseId);
+        if(isAdded)
+        	return 1;
+        if(!isAdded) {
+        	throw new CourseNotFoundException(courseId);
+        }
+		return 1;
     }
 
     /**
@@ -136,6 +170,16 @@ public class StudentService implements StudentServiceInterface {
      */
     @Override
     public Student saveStudent(Student student) {
+    	System.out.println(student.getName());
+    	logger.info(student.getName());
+    	getLastId(student);
+        int sid = student.getStudentId();
+        sid++;
+        student.setStudentId(sid);
+        String email = String.valueOf(sid) + "@gm.com";
+        student.setStudentId(sid);
+        student.setEmailId(email);
+        logger.info("saving student with email Id :" + student.getEmailId());
         return new StudentDao().saveStudent(student);
     }
 
@@ -144,11 +188,15 @@ public class StudentService implements StudentServiceInterface {
      *
      * @param email
      * @param password
-     * @return int
+     * @return
      */
     @Override
-    public int checkCredentials(String email, String password) {
-        return new StudentDao().checkCredentials(email, password);
+    public int checkCredentials(String email, String password) throws InvalidCredentialsException {
+    	logger.info("Checking credentials for emailId: " + email);
+        StudentDaoInterface studentDaoInterface = new StudentDao();
+        int found = studentDaoInterface.checkCredentials(email, password);
+        if(found == -1) throw new InvalidCredentialsException();
+        return found;
     }
 
     /**
@@ -192,5 +240,15 @@ public class StudentService implements StudentServiceInterface {
     public void updateCredentials(String email, String password) {
         logger.debug("In instance of Professor service updating credentials");
         new StudentDao().updateCredentials(email, password);
+    }
+    
+    public int isApproved(int studentId) throws UserNotApprovedExecption {
+        logger.debug("In instance of Professor service updating credentials");
+        StudentDaoInterface studentDaoInterface = new StudentDao();
+        int isApproved = studentDaoInterface.isApproved(studentId);
+        System.out.println(studentId);
+        if(isApproved == 0) throw new UserNotApprovedExecption(studentId);
+        return 1;
+        
     }
 }

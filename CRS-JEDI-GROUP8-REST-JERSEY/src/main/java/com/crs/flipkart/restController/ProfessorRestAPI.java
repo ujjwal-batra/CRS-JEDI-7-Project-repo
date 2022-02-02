@@ -8,10 +8,7 @@ import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.business.CourseOperationService;
 import com.crs.flipkart.business.ProfessorInterface;
 import com.crs.flipkart.business.ProfessorService;
-import com.crs.flipkart.exceptions.CourseNotAssignedToProfessorException;
-import com.crs.flipkart.exceptions.GradeNotAddedException;
-import com.crs.flipkart.exceptions.InvalidCredentialsException;
-import com.crs.flipkart.exceptions.ProfessorNotFoundException;
+import com.crs.flipkart.exceptions.*;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -140,6 +137,12 @@ public class ProfessorRestAPI {
             return Response.status(200).entity("Successfully Added").build();
         } catch (GradeNotAddedException exception) {
             logger.error(exception.getMessage());
+            return Response.status(200).entity(exception.getMessage()).build();
+        } catch (UserNotFoundException exception) {
+        	logger.error(exception.getMessage());
+            return Response.status(200).entity(exception.getMessage()).build();
+        } catch (CourseNotFoundException exception) {
+        	logger.error(exception.getMessage());
             return Response.status(200).entity(exception.getMessage()).build();
         }
     }

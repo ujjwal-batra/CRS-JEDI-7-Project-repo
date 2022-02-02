@@ -6,14 +6,14 @@ package com.crs.flipkart.exceptions;
 /**
  * @author JEDI-02 Exception to check if course was delted successfully.
  */
-public class CourseNotDeletedException extends Exception {
+public class CourseNotEnrolledException extends Exception {
 
 	/*
 	 * Course Code which cannot be Deleted.
 	 */
 	private int courseCode;
 
-	public CourseNotDeletedException(int courseCode) {
+	public CourseNotEnrolledException(int courseCode) {
 		this.courseCode = courseCode;
 	}
 
@@ -22,6 +22,6 @@ public class CourseNotDeletedException extends Exception {
 	 */
 	@Override
 	public String getMessage() {
-		return "Course with courseCode: " + courseCode + " can not be deleted.";
+		return "Course with courseCode: " + courseCode + "  is not enrolled.";
 	}
 }

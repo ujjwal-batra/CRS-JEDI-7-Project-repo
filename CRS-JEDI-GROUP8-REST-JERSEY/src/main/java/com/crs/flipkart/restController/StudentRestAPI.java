@@ -15,11 +15,22 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import com.crs.flipkart.bean.CourseSelection;
 import com.crs.flipkart.bean.EnrolledCourse;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.business.StudentServiceInterface;
+import com.crs.flipkart.exceptions.CourseAlreadyRegisteredException;
+import com.crs.flipkart.exceptions.CourseNotEnrolledException;
+import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.CourseRegistrationAlreadyDone;
+import com.crs.flipkart.exceptions.InvalidCredentialsException;
+import com.crs.flipkart.exceptions.StudentAlreadyRegisteredForSemester;
+import com.crs.flipkart.exceptions.UserNotApprovedExecption;
+import com.crs.flipkart.exceptions.UserNotFoundException;
 
 /**
  * @author ujjwal
@@ -28,6 +39,8 @@ import com.crs.flipkart.business.StudentServiceInterface;
 
 @Path("/student")
 public class StudentRestAPI {
+	
+	private static final Logger logger = LogManager.getLogger(StudentRestAPI.class);
 	StudentServiceInterface studentServiceInterface = new StudentService();
 	
 	@POST
@@ -35,17 +48,16 @@ public class StudentRestAPI {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response studentLogin(Student student) {
-		
-		int isLogged = studentServiceInterface.checkCredentials(student.getEmailId(), student.getPassword());
-		if(isLogged != -1) {
-			Student student1 = studentServiceInterface.getStudentById(isLogged);
-			if(student1.isApproved())
-				return Response.status(201).entity("LoggedIn with student_id as :" + isLogged).build();
-			else {
-				return Response.status(201).entity("Not approved by Admin. student_id -> " + isLogged).build();
-			}
+		logger.info("Login request: " + student.getEmailId());
+		try {
+			int isLogged = studentServiceInterface.checkCredentials(student.getEmailId(), student.getPassword());
+			int isApproved = studentServiceInterface.isApproved(isLogged);
+			return Response.status(201).entity("Logged in successful").build();
+		} catch(InvalidCredentialsException ex) {
+			return Response.status(201).entity(ex.getMessage()).build();
+		} catch(UserNotApprovedExecption ex) {
+			return Response.status(201).entity(ex.getMessage()).build();
 		}
-		return Response.status(201).entity("Wrong email or password").build();
 	}
 	
 	@POST
@@ -53,12 +65,16 @@ public class StudentRestAPI {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response semesterRegistration(Student student) {
-		
-		boolean isRegistered = studentServiceInterface.semesterRegistration(student.getStudentId(), student.getSemester());
-		if(isRegistered) {
+		try {
+			studentServiceInterface.semesterRegistration(student.getStudentId(), student.getSemester());
+			
 			return Response.status(201).entity("Semester Registration Complete").build();
+			
+		} catch(StudentAlreadyRegisteredForSemester ex) {
+			return Response.status(201).entity(ex.getMessage()).build();
+		} catch(UserNotFoundException ex) {
+			return Response.status(201).entity(ex.getMessage()).build();
 		}
-		return Response.status(201).entity("Registration failed try again").build();
 	}
 	
 	@POST
@@ -66,10 +82,11 @@ public class StudentRestAPI {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response saveStudent(Student student) {
-		
+		System.out.println(student.toString());
+		System.out.println("ujjwal");
 		Student isSaved = studentServiceInterface.saveStudent(student);
 		if(isSaved != null) {
-			return Response.status(201).entity("Student Registration complete. Email -> " + isSaved.getStudentId()).build();
+			return Response.status(201).entity("Student Registration complete. Email -> " + isSaved.getEmailId()).build();
 		}
 		return Response.status(201).entity("Student can't be saved. Try again!!").build();
 	}
@@ -79,14 +96,17 @@ public class StudentRestAPI {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response addCourse(EnrolledCourse enrolledCourse) {
-		int isAdded = studentServiceInterface.addCourse(enrolledCourse.getStudentId(), enrolledCourse.getCourseId());
-		if(isAdded == -2) {
-			return Response.status(201).entity("Alredy registed for 4 courses. Drop one to add another").build();
+		try {
+			int isAdded = studentServiceInterface.addCourse(enrolledCourse.getStudentId(), enrolledCourse.getCourseId());
+			if(isAdded == -2) {
+				return Response.status(201).entity("Alredy registed for 4 courses. Drop one to add another").build();
+			}
+			return Response.status(201).entity("Course added Succesfully").build();
+		} catch(CourseAlreadyRegisteredException ex) {
+			return Response.status(201).entity(ex.getMessage()).build();
+		} catch (CourseNotFoundException ex) {
+			return Response.status(201).entity(ex.getMessage()).build();
 		}
-		else if(isAdded == -1) {
-			return Response.status(201).entity("Course with Course_id = "+ enrolledCourse.getCourseId() + " already added").build();
-		}
-		return Response.status(201).entity("Course added Succesfully").build();
 	}
 	
 	@POST
@@ -94,12 +114,15 @@ public class StudentRestAPI {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response dropCourse(EnrolledCourse enrolledCourse) {
-		System.out.println();
-		boolean isDropped =  studentServiceInterface.dropCourse(enrolledCourse.getStudentId(), enrolledCourse.getCourseId());
-		if(isDropped) {
+		try {
+			boolean isDropped =  studentServiceInterface.dropCourse(enrolledCourse.getStudentId(), enrolledCourse.getCourseId());
+			
 			return Response.status(201).entity("Dropped successful").build();
+		} catch(CourseNotFoundException ex) {
+			return Response.status(201).entity(ex.getMessage()).build();
+		} catch(CourseNotEnrolledException ex) {
+			return Response.status(201).entity(ex.getMessage()).build();
 		}
-		return Response.status(201).entity("Cannot be dropped").build();
 	}
 	
 	@POST
@@ -108,9 +131,13 @@ public class StudentRestAPI {
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response courseRegistration(CourseSelection courseSelection) {
 		System.out.println();
-		ArrayList<Integer> list =  studentServiceInterface.courseRegistration(courseSelection.getStudentId(), courseSelection.getPrimary(), courseSelection.getSecondary());
-		System.out.println(list);
-		return Response.status(201).entity("successfully registered : "+ list.toString()).build();
+		ArrayList<Integer> list;
+		try {
+			list = studentServiceInterface.courseRegistration(courseSelection.getStudentId(), courseSelection.getPrimary(), courseSelection.getSecondary());
+			return Response.status(201).entity("successfully registered : "+ list.toString()).build();
+		} catch (CourseRegistrationAlreadyDone ex) {
+			return Response.status(201).entity(ex.getMessage()).build();
+		}
 	}
 	
 	@GET

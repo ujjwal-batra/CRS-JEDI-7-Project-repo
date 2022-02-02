@@ -3,6 +3,8 @@ package com.crs.flipkart.dao;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.constants.Constants;
+import com.crs.flipkart.exceptions.ProfessorNotAddedException;
+import com.crs.flipkart.exceptions.UserAlreadyExistException;
 import com.crs.flipkart.utils.DBUtils;
 import org.apache.log4j.Logger;
 

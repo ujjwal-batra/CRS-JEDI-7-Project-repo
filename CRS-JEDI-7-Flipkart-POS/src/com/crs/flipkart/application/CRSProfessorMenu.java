@@ -10,7 +10,11 @@ import java.util.Scanner;
 
 public class CRSProfessorMenu {
 
-
+    /**
+     * Method to create Professor menu
+     * @param professorId: professor id obtained after logging into the system
+     * returns displays all the options for the professor, and provides navigation
+     */
     public void professorMenu(int professorId) {
         Scanner sc = new Scanner(System.in);
 
