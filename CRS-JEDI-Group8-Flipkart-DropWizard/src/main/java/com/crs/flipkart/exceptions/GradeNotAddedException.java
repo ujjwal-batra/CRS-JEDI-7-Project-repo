@@ -2,7 +2,7 @@ package com.crs.flipkart.exceptions;
 
 /**
  * Exception to check if student has been allotted grade by professor
- * 
+ *
  * @author JEDI-02
  *
  */
@@ -12,7 +12,7 @@ public class GradeNotAddedException extends Exception {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param studentId
 	 */
 	public GradeNotAddedException(int studentId) {
@@ -26,7 +26,7 @@ public class GradeNotAddedException extends Exception {
 	 */
 	@Override
 	public String getMessage() {
-		return "Grade not allotted yet to: " + studentId;
+		return "Grade not added for studentId: " + studentId + " because student has not registered for the course.";
 	}
 
 }

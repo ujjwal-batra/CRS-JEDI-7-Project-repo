@@ -1,6 +1,5 @@
 package com.crs.flipkart.dao;
 
-import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.constants.Constants;
 import com.crs.flipkart.utils.DBUtils;
@@ -16,10 +15,11 @@ public class StudentDao implements StudentDaoInterface {
     private static final Logger logger = LogManager.getLogger(StudentDao.class);
 
     /**
-   	 * Method to get lastId from the database
-   	 * @param student
-   	 * @return 
-   	 */
+     * Method to get lastId from the database
+     *
+     * @param student
+     * @return
+     */
     @Override
     public void getLastId(Student student) {
         Connection connection = null;
@@ -46,12 +46,13 @@ public class StudentDao implements StudentDaoInterface {
             }
         }
     }
-    
+
     /**
-   	 * Method to save student info to database
-   	 * @param student
-   	 * @return Student
-   	 */
+     * Method to save student info to database
+     *
+     * @param student
+     * @return Student
+     */
     @Override
     public Student saveStudent(Student student) {
         Connection connection = null;
@@ -86,17 +87,18 @@ public class StudentDao implements StudentDaoInterface {
         }
         return student;
     }
-    
+
     /**
-   	 * Method to retrieve student by their ID
-   	 * @param studentId
-   	 * @return Student
-   	 */
+     * Method to retrieve student by their ID
+     *
+     * @param studentId
+     * @return Student
+     */
     @Override
     public Student getStudentById(int studentId) {
         Connection connection = null;
         PreparedStatement statement = null;
-        Student student = new Student();
+        Student student = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
@@ -104,6 +106,7 @@ public class StudentDao implements StudentDaoInterface {
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             while (resultSet.next()) {
+                student = new Student();
                 student.setStudentId(resultSet.getInt("student_id"));
                 student.setGender(resultSet.getString("gender"));
                 student.setAddress(resultSet.getString("address"));
@@ -129,13 +132,14 @@ public class StudentDao implements StudentDaoInterface {
         }
         return null;
     }
-    
+
     /**
-   	 * Method to check login credentials 
-   	 * @param email
-   	 * @param password
-   	 * @return int
-   	 */
+     * Method to check login credentials
+     *
+     * @param email
+     * @param password
+     * @return int
+     */
     @Override
     public int checkCredentials(String email, String password) {
 
@@ -148,6 +152,7 @@ public class StudentDao implements StudentDaoInterface {
             String sqlQuery = Constants.CHECK_CREDENTIALS_STUDENT + email + "' and password = '" + password + "'";
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
+            System.out.println(resultSet.getFetchSize());
             if (!resultSet.next()) {
                 return -1;
             } else
@@ -164,13 +169,14 @@ public class StudentDao implements StudentDaoInterface {
         }
         return -1;
     }
-    
+
     /**
-   	 * Method to add semester registration info to the database
-   	 * @param studentId
-   	 * @param semester
-   	 * @return boolean
-   	 */
+     * Method to add semester registration info to the database
+     *
+     * @param studentId
+     * @param semester
+     * @return boolean
+     */
     @Override
     public int semesterRegistration(int studentId, int semester) {
         Connection connection = null;
@@ -185,14 +191,14 @@ public class StudentDao implements StudentDaoInterface {
             if (!resultSet.next()) {
                 return -2;
             }
-            
+
             sqlQuery = Constants.SELECT_STUDENT_BY_ID + studentId + " and semester = -1";
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet1 = statement.executeQuery(sqlQuery);
             if (!resultSet1.next()) {
                 return -1;
             }
-            
+
             sqlQuery = Constants.SET_STUDENT_SEMESTER + semester + " where student_id = " + studentId;
             statement = connection.prepareStatement(sqlQuery);
             statement.executeUpdate();
@@ -209,13 +215,14 @@ public class StudentDao implements StudentDaoInterface {
         }
         return 1;
     }
-    
+
     /**
-   	 * Method to add course to the database
-   	 * @param studentId
-   	 * @param courseId
-   	 * @return boolean
-   	 */
+     * Method to add course to the database
+     *
+     * @param studentId
+     * @param courseId
+     * @return boolean
+     */
     @Override
     public boolean addCourse(int studentId, int courseId) {
         Connection connection = null;
@@ -226,11 +233,11 @@ public class StudentDao implements StudentDaoInterface {
             String sqlQuery = "select * from course where course_id = " + courseId;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
-            
-            if(!resultSet.next()) {
-            	return false;
+
+            if (!resultSet.next()) {
+                return false;
             }
-            
+
             sqlQuery = Constants.STUDENT_ENROLL_COURSE;
             statement = connection.prepareStatement(sqlQuery);
             statement.setInt(1, courseId);
@@ -250,13 +257,14 @@ public class StudentDao implements StudentDaoInterface {
         }
         return true;
     }
-    
+
     /**
-   	 * Method to remove course from the database
-   	 * @param studentId
-   	 * @param courseId
-   	 * @return boolean
-   	 */
+     * Method to remove course from the database
+     *
+     * @param studentId
+     * @param courseId
+     * @return boolean
+     */
     @Override
     public int dropCourse(int studentId, int courseId) {
         Connection connection = null;
@@ -265,22 +273,22 @@ public class StudentDao implements StudentDaoInterface {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
             statement = connection.createStatement();
-            
+
             String sqlQuery = "select * from course where course_id = " + courseId;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
-            
-            if(!resultSet.next()) {
-            	return -1;
+
+            if (!resultSet.next()) {
+                return -1;
             }
-            
+
             sqlQuery = "select * from enrolled_course where student_id = " + studentId + " and course_id = " + courseId;
             ResultSet resultSet1 = statement.executeQuery(sqlQuery);
-            
-            if(!resultSet1.next()) {
-            	return -2;
+
+            if (!resultSet1.next()) {
+                return -2;
             }
-            
+
             sqlQuery = Constants.STUDENT_DROP_COURSE + studentId
                     + " and course_id = " + courseId;
             statement.executeUpdate(sqlQuery);
@@ -297,12 +305,13 @@ public class StudentDao implements StudentDaoInterface {
         }
         return 1;
     }
-    
+
     /**
-   	 * Method to view all enrolled courses ofa student
-   	 * @param studentId
-   	 * @return  List of Integer
-   	 */
+     * Method to view all enrolled courses ofa student
+     *
+     * @param studentId
+     * @return List of Integer
+     */
     @Override
     public List<Integer> viewEnrolledCourse(int studentId) {
         List<Integer> res = new ArrayList<>();
@@ -346,8 +355,7 @@ public class StudentDao implements StudentDaoInterface {
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             if (resultSet.next()) {
                 return 1;
-            }
-            else
+            } else
                 return 0;
         } catch (Exception ex) {
             logger.error("Error: " + ex.getMessage());
@@ -374,7 +382,7 @@ public class StudentDao implements StudentDaoInterface {
             if (!resultSet.next()) {
                 return;
             }
-            sqlQuery = Constants.UPDATE_STUDENT_PASSWORD + "'" +password+ "'"+ " where email = '" + email + "'";
+            sqlQuery = Constants.UPDATE_STUDENT_PASSWORD + "'" + password + "'" + " where email = '" + email + "'";
             int isUpdated = statement.executeUpdate(sqlQuery);
             return;
         } catch (Exception ex) {
@@ -389,9 +397,9 @@ public class StudentDao implements StudentDaoInterface {
         }
         return;
     }
-    
+
     public int isApproved(int studentId) {
-    	Connection connection = null;
+        Connection connection = null;
         PreparedStatement statement = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
