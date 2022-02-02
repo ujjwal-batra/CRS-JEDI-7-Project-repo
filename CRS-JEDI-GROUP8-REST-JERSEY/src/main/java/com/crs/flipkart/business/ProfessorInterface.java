@@ -5,10 +5,7 @@ package com.crs.flipkart.business;
 
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
-import com.crs.flipkart.exceptions.CourseNotAssignedToProfessorException;
-import com.crs.flipkart.exceptions.GradeNotAddedException;
-import com.crs.flipkart.exceptions.InvalidCredentialsException;
-import com.crs.flipkart.exceptions.ProfessorNotFoundException;
+import com.crs.flipkart.exceptions.*;
 
 import java.util.List;
 
@@ -24,7 +21,7 @@ public interface ProfessorInterface {
 	 * @param marks
 	 * @return boolean
 	 */
-    public boolean addGrade(int courseId, int studentId, double marks) throws GradeNotAddedException;
+    public boolean addGrade(int courseId, int studentId, double marks) throws GradeNotAddedException, CourseNotFoundException, UserNotFoundException;
     
     /**
 	 * Method to select a particular course  to teach for the  professor.

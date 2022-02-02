@@ -26,7 +26,7 @@ public class GradeNotAddedException extends Exception {
 	 */
 	@Override
 	public String getMessage() {
-		return "Grade not allotted yet to: " + studentId;
+		return "Grade not added for studentId: " + studentId + " because student has not registered for the course.";
 	}
 
 }

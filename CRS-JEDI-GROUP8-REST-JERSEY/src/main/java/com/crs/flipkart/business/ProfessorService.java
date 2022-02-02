@@ -2,14 +2,12 @@ package com.crs.flipkart.business;
 
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
+import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.dao.CourseOperationDAO;
 import com.crs.flipkart.dao.ProfessorDAO;
 import com.crs.flipkart.dao.ProfessorDaoInterface;
 import com.crs.flipkart.dao.StudentDao;
-import com.crs.flipkart.exceptions.CourseNotAssignedToProfessorException;
-import com.crs.flipkart.exceptions.GradeNotAddedException;
-import com.crs.flipkart.exceptions.InvalidCredentialsException;
-import com.crs.flipkart.exceptions.ProfessorNotFoundException;
+import com.crs.flipkart.exceptions.*;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -28,9 +26,17 @@ public class ProfessorService implements ProfessorInterface {
      * @param marks
      * @return boolean
      */
-    public boolean addGrade(int courseId, int studentId, double marks) throws GradeNotAddedException {
-        ProfessorDaoInterface professorDaoInterface = new ProfessorDAO();
-        logger.info("Professor adding grade for student id: " + studentId + ", course id: " + courseId + ", marks" + marks);
+    public boolean addGrade(int courseId, int studentId, double marks) throws GradeNotAddedException, CourseNotFoundException, UserNotFoundException {
+    	logger.info("Professor adding grade for student id: " + studentId + ", course id: " + courseId + ", marks" + marks);
+    	
+    	ProfessorDaoInterface professorDaoInterface = new ProfessorDAO();
+        Course course = new CourseOperationDAO().getCourseById(courseId);
+        Student student = new StudentDao().getStudentById(studentId);
+        if (course == null) 
+        	throw new CourseNotFoundException(courseId);
+        if (student == null) 
+        	throw new UserNotFoundException(studentId);
+
         boolean added = professorDaoInterface.addGrade(studentId, courseId, marks);
         if (!added) throw new GradeNotAddedException(studentId);
         return true;

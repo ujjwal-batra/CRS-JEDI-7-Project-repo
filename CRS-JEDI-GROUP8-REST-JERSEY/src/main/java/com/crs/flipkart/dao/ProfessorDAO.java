@@ -173,7 +173,7 @@ public class ProfessorDAO implements ProfessorDaoInterface {
             if (!resultSet.next()) {
                 return false;
             }
-            sqlQuery = Constants.UPDATE_PROFESSOR_PASSWORD + "'" +password+ "'"+ " where email = '" + email + "'";
+            sqlQuery = Constants.UPDATE_PROFESSOR_PASSWORD + "'" + password + "'" + " where email = '" + email + "'";
             statement.executeUpdate(sqlQuery);
             return true;
         } catch (Exception ex) {
@@ -207,8 +207,10 @@ public class ProfessorDAO implements ProfessorDaoInterface {
             String sqlQuery = Constants.ADD_GRADE_BY_PROFESSOR + ((int) marks)
                     + " where student_id = " + studentId + " and course_id = " + courseId;
             statement = connection.prepareStatement(sqlQuery);
-            statement.executeUpdate();
-            return true;
+            int count = statement.executeUpdate();
+            if (count > 0)
+                return true;
+            return false;
         } catch (Exception ex) {
             logger.error("Error while adding grades: " + ex.getMessage());
         } finally {
