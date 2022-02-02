@@ -97,6 +97,7 @@ public class AdminService implements AdminServiceInterface {
         boolean valid = AdminValidator.isValidDropCourse(student.getStudentId(), courseCatalog.getCourseCatalogue().getCourseList());
         if(valid)
         	adminDaoInterface.approveStudent(student);
+        else logger.error("student with student id"+ student.getStudentId()+" doesn't exists or is already approved");
     }
 
     /**
