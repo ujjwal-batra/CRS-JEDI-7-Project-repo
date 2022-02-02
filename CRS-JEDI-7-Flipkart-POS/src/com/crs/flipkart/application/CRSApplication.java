@@ -26,7 +26,7 @@ public class CRSApplication {
         Connection connection = (Connection) DBUtils.getConnection();
         Scanner sc = new Scanner(System.in);
         System.out.println("================================================================================");
-        System.out.println("********************\033[1mWELCOME to Course Registration System!!!\033[0m********************");
+        System.out.println("********************WELCOME to Course Registration System!!!********************");
         System.out.println("================================================================================");
 
         printMenu();
@@ -51,13 +51,13 @@ public class CRSApplication {
             printMenu();
             Input = sc.nextInt();
         }
-        System.out.println("*******************************\033[1mThank you for using our Application.\033[0m*********************************");
+        System.out.println("*******************************Thank you for using our Application.*********************************");
         sc.close();
     }
 
     public static void printMenu() {
         System.out.println("\n\n----------------------------------------------------------------------------------------");
-        System.out.println("------------------------------------\033[1mMAIN MENU\033[0m-----------------------------------");
+        System.out.println("------------------------------------MAIN MENU-----------------------------------");
         System.out.println("-----------------------------------------------------------------------------------------\n");
 
         System.out.println("1. Student Signup");
@@ -206,9 +206,9 @@ public class CRSApplication {
 		
     	//System.out.println("------------------------------------------");
     	System.out.println("\n++++++++++++++++++++++++++++++++++++++++++");
-    	System.out.println("\033[1mWelcome "+ name);
+    	System.out.println("Welcome "+ name);
     	System.out.println("Time of Login :- "+ localTime + "on " + localDate);
-    	System.out.println("\033[0m++++++++++++++++++++++++++++++++++++++++++");
+    	System.out.println("++++++++++++++++++++++++++++++++++++++++++");
     	//System.out.println("------------------------------------------");
     }
     private static void updatePassword() {

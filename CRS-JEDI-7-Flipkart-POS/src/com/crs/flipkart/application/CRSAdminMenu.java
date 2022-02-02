@@ -29,7 +29,7 @@ public class CRSAdminMenu {
         int in = 0;
         while (in != 6) {
             System.out.println("\n\n----------------------------------------------------------------------------------------");
-            System.out.println("---------------------------------------------\033[1mADMIN MENU\033[0m---------------------------------------");
+            System.out.println("---------------------------------------------ADMIN MENU---------------------------------------");
             System.out.println("---------------------------------------------------------------------------------------------\n");
 
             System.out.println("1. Show Course Catalogue");
@@ -95,7 +95,7 @@ public class CRSAdminMenu {
      */
     private void addCourse() {
         System.out.println("\n\n----------------------------------------------------------------------------------------");
-        System.out.println("---------------------------------------\033[1mADD COURSE TO CATALOG\033[0m--------------------------------");
+        System.out.println("---------------------------------------ADD COURSE TO CATALOG--------------------------------");
         System.out.println("---------------------------------------------------------------------------------------------\n");
 
         System.out.println("Enter Course Code:");
@@ -124,7 +124,7 @@ public class CRSAdminMenu {
      */
     private void deleteCourse() {
         System.out.println("\n\n----------------------------------------------------------------------------------------");
-        System.out.println("-----------------------------------\033[1mDELETE COURSE FROM CATALOG\033[0m--------------------------------");
+        System.out.println("-----------------------------------DELETE COURSE FROM CATALOG--------------------------------");
         System.out.println("---------------------------------------------------------------------------------------------\n");
 
         System.out.println("Enter Course Code:");
@@ -152,7 +152,7 @@ public class CRSAdminMenu {
      */
     private boolean approveStudent() {
         System.out.println("\n\n----------------------------------------------------------------------------------------");
-        System.out.println("---------------------------------------\033[1mAPPROVE STUDENT\033[0m--------------------------------------");
+        System.out.println("---------------------------------------APPROVE STUDENT--------------------------------------");
         System.out.println("---------------------------------------------------------------------------------------------\n");
 
         System.out.println("Enter Student's ID:");
@@ -180,7 +180,7 @@ public class CRSAdminMenu {
      */
     private void addProfessor() {
         System.out.println("\n\n----------------------------------------------------------------------------------------");
-        System.out.println("---------------------------------------\033[1mADD PROFESOR\033[0m----------------------------------------");
+        System.out.println("---------------------------------------ADD PROFESOR----------------------------------------");
         System.out.println("---------------------------------------------------------------------------------------------\n");
 
         Professor professor = new Professor();
@@ -245,7 +245,7 @@ public class CRSAdminMenu {
         AdminServiceInterface adminServiceInterface = new AdminService();
         boolean isAdded = adminServiceInterface.addProfessor(professor);
         if (isAdded)
-            System.out.println("\033[1mProfessor added successfully\033[0m");
+            System.out.println("Professor added successfully");
         else
             System.out.println("error while adding. Try again");
         System.out.println("---------------------------------------------------------------------------------------------\n");
@@ -258,7 +258,7 @@ public class CRSAdminMenu {
      */
     private void generateReport() {
         System.out.println("\n\n----------------------------------------------------------------------------------------");
-        System.out.println("---------------------------------------\033[1mGENERATE Report Card\033[0m----------------------------------------");
+        System.out.println("---------------------------------------GENERATE Report Card----------------------------------------");
         System.out.println("---------------------------------------------------------------------------------------------\n");
 
         System.out.println("Enter student Id:");

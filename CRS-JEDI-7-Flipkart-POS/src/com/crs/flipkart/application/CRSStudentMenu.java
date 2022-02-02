@@ -34,7 +34,7 @@ public class CRSStudentMenu {
 
         while (is_registered) {
             System.out.println("\n\n----------------------------------------------------------------------------------------");
-            System.out.println("--------------------------------------------\033[1mSTUDENT MENU\033[0m--------------------------------");
+            System.out.println("--------------------------------------------STUDENT MENU--------------------------------");
             System.out.println("----------------------------------------------------------------------------------------\n");
 
             System.out.println("1. Semester Registration");
@@ -100,7 +100,7 @@ public class CRSStudentMenu {
         if (is_registered) {
             List<String> courseNames = new StudentService().viewRegisteredCourse(studentId);
             if (courseNames.size() == 0) {
-                System.out.println("\033[1mKindly complete the course registration process before add or drop\033[10m");
+                System.out.println("Kindly complete the course registration process before add or drop");
                 return;
             }
 
@@ -128,7 +128,7 @@ public class CRSStudentMenu {
      */
     private void semesterRegistraion(int studentId) {
         System.out.println("\n\n----------------------------------------------------------------------------------------");
-        System.out.println("----------------------------------------------\033[1mSEMESTER REGISTERATION\033[0m-------------------------");
+        System.out.println("----------------------------------------------SEMESTER REGISTERATION-------------------------");
         System.out.println("-----------------------------------------------------------------------------------------\n");
         System.out.println("Enter Semester : ");
         semester = sc.nextInt();
@@ -214,7 +214,7 @@ public class CRSStudentMenu {
 
             int status = studentServiceInterface.addCourse(studentId, courseId);
             if (status == 1) {
-                System.out.println("\033[1mAdd Successful\033[0m");
+                System.out.println("Add Successful");
             } else if (status == -1) {
                 System.out.println("Course Already registered, please select another course.\n");
                 addCourse(studentId);
@@ -273,7 +273,7 @@ public class CRSStudentMenu {
 
 
             System.out.println("------------------------------------------");
-            System.out.println("              \033[1mPayment Option\033[0m");
+            System.out.println("--------------Payment Option--------------");
             System.out.println("------------------------------------------");
             System.out.println("1. Online");
             System.out.println("2. Offline");
