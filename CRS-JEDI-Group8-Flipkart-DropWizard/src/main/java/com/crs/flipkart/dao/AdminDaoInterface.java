@@ -10,14 +10,14 @@ public interface AdminDaoInterface {
 	 * @param courseName
 	 * @return boolean
 	 */
-    public boolean addCourse(int courseId, String courseName);
+    public int addCourse(int courseId, String courseName);
     
     /**
 	 * Method to delete course by the admin
 	 * @param courseId
 	 * @return boolean
 	 */
-    public boolean deleteCourse(int courseId);
+    public int deleteCourse(int courseId);
     
     /**
 	 * Method to check credentials of admin

@@ -25,13 +25,11 @@ public class AdminDao implements AdminDaoInterface {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
-        	System.out.println(email);
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
             String sqlQuery = Constants.SELECT_ADMIN_BY_EMAIL + email + "' and password = '" + password + "'";
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
-            System.out.println(resultSet);
             if (!resultSet.next()) {
                 return -1;
             } else {
@@ -88,14 +86,22 @@ public class AdminDao implements AdminDaoInterface {
      * @return boolean
      */
     @Override
-    public boolean addCourse(int courseId, String courseName) {
+    public int addCourse(int courseId, String courseName) {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
             System.out.println("Generating course");
-            String sqlQuery = Constants.ADD_NEW_COURSE;
+            
+            String sqlQuery = "select * from course where course_id = " + courseId;
+            statement = connection.prepareStatement(sqlQuery);
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            
+            if(resultSet.next())
+            	return -1;
+            
+            sqlQuery = Constants.ADD_NEW_COURSE;
             statement = connection.prepareStatement(sqlQuery);
             statement.setInt(1, courseId);
             statement.setString(2, courseName);
@@ -103,7 +109,7 @@ public class AdminDao implements AdminDaoInterface {
 
             logger.info("In instance of Admin DAO, adding course with course id: " + courseId + " and course name: " + courseName);
             statement.executeUpdate();
-            return true;
+            return 1;
         } catch (Exception ex) {
             logger.error("Error while persisting course in db: " + ex.getMessage());
         } finally {
@@ -114,7 +120,7 @@ public class AdminDao implements AdminDaoInterface {
                 logger.error("Error: " + ex.getMessage());
             }
         }
-        return false;
+        return 1;
     }
 
     /**
@@ -124,18 +130,25 @@ public class AdminDao implements AdminDaoInterface {
      * @return boolean
      */
     @Override
-    public boolean deleteCourse(int courseId) {
+    public int deleteCourse(int courseId) {
         Connection connection = null;
         Statement statement = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
             System.out.println("removing course...");
-
-            String sqlQuery = Constants.DELETE_COURSE + courseId;
+            
+            String sqlQuery = "select * from course where course_id =" + courseId;
             statement = connection.createStatement();
-            return statement.executeUpdate(sqlQuery) == 1;
-
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            
+            if(!resultSet.next())
+            	return -1;
+            
+            sqlQuery = Constants.DELETE_COURSE + courseId;
+            statement = connection.createStatement();
+            statement.executeUpdate(sqlQuery);
+            return 1;
         } catch (Exception ex) {
             logger.error("Error: " + ex.getMessage());
         } finally {
@@ -146,7 +159,7 @@ public class AdminDao implements AdminDaoInterface {
                 logger.error("Error: " + ex.getMessage());
             }
         }
-        return false;
+        return 1;
     }
 
     /**

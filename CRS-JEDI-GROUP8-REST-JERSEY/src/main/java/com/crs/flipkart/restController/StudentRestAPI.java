@@ -12,6 +12,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -20,7 +21,10 @@ import org.apache.log4j.Logger;
 
 import com.crs.flipkart.bean.CourseSelection;
 import com.crs.flipkart.bean.EnrolledCourse;
+import com.crs.flipkart.bean.Payment;
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.business.PaymentService;
+import com.crs.flipkart.business.PaymentServiceInterface;
 import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.business.StudentServiceInterface;
 import com.crs.flipkart.exceptions.CourseAlreadyRegisteredException;
@@ -136,6 +140,21 @@ public class StudentRestAPI {
 			list = studentServiceInterface.courseRegistration(courseSelection.getStudentId(), courseSelection.getPrimary(), courseSelection.getSecondary());
 			return Response.status(201).entity("successfully registered : "+ list.toString()).build();
 		} catch (CourseRegistrationAlreadyDone ex) {
+			return Response.status(201).entity(ex.getMessage()).build();
+		}
+	}
+	
+	@POST
+	@Path("/makePayment/{studentId}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response makePayment(Payment payment, @QueryParam("studentId") int studentId) {
+		try {
+			PaymentServiceInterface paymentServiceInterface = new PaymentService();
+			paymentServiceInterface.makePayment(payment.getPaymentId(), payment.getInvoiceId(), studentId, payment.getAmount() , "paid", payment.getMode());
+			
+			return Response.status(201).entity("successfully payment").build();
+		} catch (Exception ex) {
 			return Response.status(201).entity(ex.getMessage()).build();
 		}
 	}

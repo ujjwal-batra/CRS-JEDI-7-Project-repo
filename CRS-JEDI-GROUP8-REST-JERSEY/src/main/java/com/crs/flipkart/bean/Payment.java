@@ -10,15 +10,17 @@ package com.crs.flipkart.bean;
 public class Payment {
 
     private int paymentId;
-    private String invoiceId;
+    private int invoiceId;
     private boolean paymentStatus;
-    private long amount;
+    private int amount;
+    private String mode;
 
-    public Payment(int paymentId, String invoiceId, boolean paymentStatus, long amount) {
+    public Payment(int paymentId, int invoiceId, boolean paymentStatus, int amount, String mode) {
         this.paymentId = paymentId;
         this.invoiceId = invoiceId;
         this.paymentStatus = paymentStatus;
         this.amount = amount;
+        this.mode = mode;
     }
 
     public int getPaymentId() {
@@ -29,11 +31,11 @@ public class Payment {
         this.paymentId = paymentId;
     }
 
-    public String getInvoiceId() {
+    public int getInvoiceId() {
         return invoiceId;
     }
 
-    public void setInvoiceId(String invoiceId) {
+    public void setInvoiceId(int invoiceId) {
         this.invoiceId = invoiceId;
     }
 
@@ -45,11 +47,25 @@ public class Payment {
         this.paymentStatus = paymentStatus;
     }
 
-    public long getAmount() {
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(long amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
+
+	/**
+	 * @return the mode
+	 */
+	public String getMode() {
+		return mode;
+	}
+
+	/**
+	 * @param mode the mode to set
+	 */
+	public void setMode(String mode) {
+		this.mode = mode;
+	}
 }
