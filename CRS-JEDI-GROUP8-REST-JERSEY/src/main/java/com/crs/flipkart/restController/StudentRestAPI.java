@@ -85,7 +85,7 @@ public class StudentRestAPI {
 		
 		Student isSaved = studentServiceInterface.saveStudent(student);
 		if(isSaved != null) {
-			return Response.status(201).entity("Student Registration complete. Email -> " + isSaved.getStudentId()).build();
+			return Response.status(201).entity("Student Registration complete. Email -> " + isSaved.getEmailId()).build();
 		}
 		return Response.status(201).entity("Student can't be saved. Try again!!").build();
 	}

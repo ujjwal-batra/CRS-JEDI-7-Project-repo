@@ -4,6 +4,7 @@ import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.exceptions.CourseAlreadyRegisteredException;
 import com.crs.flipkart.exceptions.CourseNotEnrolledException;
 import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.CourseRegistrationAlreadyDone;
 import com.crs.flipkart.exceptions.InvalidCredentialsException;
 import com.crs.flipkart.exceptions.StudentAlreadyRegisteredForSemester;
 import com.crs.flipkart.exceptions.UserNotApprovedExecption;
@@ -29,8 +30,9 @@ public interface StudentServiceInterface {
 	 * @param primary
 	 * @param secondary
 	 * @return ArrayList of Integer (courseId)
+     * @throws CourseRegistrationAlreadyDone 
 	 */
-    ArrayList<Integer> courseRegistration(int studentId, int[] primary, int[] secondary);
+    ArrayList<Integer> courseRegistration(int studentId, int[] primary, int[] secondary) throws CourseRegistrationAlreadyDone;
     
     /**
 	 * Method to remove a course

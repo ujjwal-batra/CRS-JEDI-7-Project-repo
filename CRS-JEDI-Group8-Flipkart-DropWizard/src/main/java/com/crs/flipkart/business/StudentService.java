@@ -8,6 +8,7 @@ import com.crs.flipkart.dao.StudentDaoInterface;
 import com.crs.flipkart.exceptions.CourseAlreadyRegisteredException;
 import com.crs.flipkart.exceptions.CourseNotEnrolledException;
 import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.CourseRegistrationAlreadyDone;
 import com.crs.flipkart.exceptions.InvalidCredentialsException;
 import com.crs.flipkart.exceptions.StudentAlreadyRegisteredForSemester;
 import com.crs.flipkart.exceptions.StudentNotRegisteredException;
@@ -57,9 +58,15 @@ public class StudentService implements StudentServiceInterface {
      */
 
     @Override
-    public ArrayList<Integer> courseRegistration(int studentId, int[] primary, int[] secondary) {
+    public ArrayList<Integer> courseRegistration(int studentId, int[] primary, int[] secondary) throws CourseRegistrationAlreadyDone {
         int secondaryIndex = 0;
         ArrayList<Integer> registeredCourse = new ArrayList<>();
+        StudentDaoInterface studentDaoInterface = new StudentDao();
+        List<Integer> enrolledCourses = studentDaoInterface.viewEnrolledCourse(studentId);
+        System.out.println(enrolledCourses);
+        if(!enrolledCourses.isEmpty()) {
+        	throw new CourseRegistrationAlreadyDone(studentId);
+        }
         for (int courseId : primary) {
             if (courseCatalogueDAO.getStudentCount(courseId) >= 10) {
                 logger.info("Course id: " + courseId + " already contains 10 students, hence going with secondary course id: " + secondary[secondaryIndex]);

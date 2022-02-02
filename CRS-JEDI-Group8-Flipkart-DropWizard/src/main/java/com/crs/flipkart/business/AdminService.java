@@ -65,6 +65,7 @@ public class AdminService implements AdminServiceInterface {
     public int checkCredentials(String email, String password) {
         if (email == "")
             return -1;
+//        System.out.println(email);
         AdminDaoInterface adminDaoInterface = new AdminDao();
         return adminDaoInterface.checkCredentials(email, password);
     }

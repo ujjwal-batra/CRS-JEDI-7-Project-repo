@@ -25,11 +25,13 @@ public class AdminDao implements AdminDaoInterface {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
+        	System.out.println(email);
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
             String sqlQuery = Constants.SELECT_ADMIN_BY_EMAIL + email + "' and password = '" + password + "'";
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
+            System.out.println(resultSet);
             if (!resultSet.next()) {
                 return -1;
             } else {

@@ -170,6 +170,16 @@ public class StudentService implements StudentServiceInterface {
      */
     @Override
     public Student saveStudent(Student student) {
+    	System.out.println(student.getName());
+    	logger.info(student.getName());
+    	getLastId(student);
+        int sid = student.getStudentId();
+        sid++;
+        student.setStudentId(sid);
+        String email = String.valueOf(sid) + "@gm.com";
+        student.setStudentId(sid);
+        student.setEmailId(email);
+        logger.info("saving student with email Id :" + student.getEmailId());
         return new StudentDao().saveStudent(student);
     }
 
