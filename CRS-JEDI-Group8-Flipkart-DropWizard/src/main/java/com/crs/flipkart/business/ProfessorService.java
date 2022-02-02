@@ -8,6 +8,9 @@ import com.crs.flipkart.dao.ProfessorDAO;
 import com.crs.flipkart.dao.ProfessorDaoInterface;
 import com.crs.flipkart.dao.StudentDao;
 import com.crs.flipkart.exceptions.*;
+import com.crs.flipkart.validator.AdminValidator;
+import com.crs.flipkart.validator.ProfessorValidator;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -30,12 +33,26 @@ public class ProfessorService implements ProfessorInterface {
         logger.info("Professor adding grade for student id: " + studentId + ", course id: " + courseId + ", marks" + marks);
 
         ProfessorDaoInterface professorDaoInterface = new ProfessorDAO();
-        Course course = new CourseOperationDAO().getCourseById(courseId);
-        Student student = new StudentDao().getStudentById(studentId);
-        if (course == null)
-            throw new CourseNotFoundException(courseId);
-        if (student == null)
-            throw new UserNotFoundException(studentId);
+//        Course course = new CourseOperationDAO().getCourseById(courseId);
+//        Student student = new StudentDao().getStudentById(studentId);
+//        if (course == null)
+//            throw new CourseNotFoundException(courseId);
+//        if (student == null)
+//            throw new UserNotFoundException(studentId);
+        try {
+	    	CourseOperationService courseCatalog = new CourseOperationService();
+	        boolean validCourse = ProfessorValidator.isValidCourse(courseCatalog.getCourseCatalogue().getCourseList(),courseId);
+	        if(!validCourse) throw new CourseNotFoundException(courseId);
+	        
+	        boolean validStudent = ProfessorValidator.isValidStudent(new RegisteredStudentsService().getStudentListByCourseId(courseId),studentId);
+	        if(!validStudent) throw new Exception();
+        }
+        catch (CourseNotFoundException ex) {
+        	logger.error("The requested course was not found");
+        }
+        catch(Exception ex) {
+        	logger.error("Student is not  registered for the course");
+        }
 
         boolean added = professorDaoInterface.addGrade(studentId, courseId, marks);
         if (!added) throw new GradeNotAddedException(studentId);
@@ -65,8 +82,18 @@ public class ProfessorService implements ProfessorInterface {
      * @return List of Integer (studentId)
      */
     public List<Integer> getStudentList(int courseId) {
-        logger.info("Retrieving StudentList for courseId: " + courseId);
-        return new RegisteredStudentsService().getStudentListByCourseId(courseId);
+    	try {
+	    	CourseOperationService courseCatalog = new CourseOperationService();
+	        boolean valid = ProfessorValidator.isValidCourse(courseCatalog.getCourseCatalogue().getCourseList(),courseId);
+	        if(!valid) throw new CourseNotFoundException(courseId);
+	        logger.info("Retrieving StudentList for courseId: " + courseId);
+	        return new RegisteredStudentsService().getStudentListByCourseId(courseId);
+    	}
+    	catch(CourseNotFoundException ex) {
+    		logger.error("The requested courseId doesn't exists");
+    		return new RegisteredStudentsService().getStudentListByCourseId(courseId);
+    	}
+        
     }
 
     /**

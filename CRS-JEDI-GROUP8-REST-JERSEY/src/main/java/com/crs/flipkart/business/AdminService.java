@@ -10,6 +10,7 @@ import com.crs.flipkart.exceptions.CourseAlreadyInCatalogException;
 import com.crs.flipkart.exceptions.CourseNotEnrolledException;
 import com.crs.flipkart.exceptions.CourseNotFoundException;
 import com.crs.flipkart.exceptions.InvalidCredentialsException;
+import com.crs.flipkart.validator.AdminValidator;
 
 import org.apache.log4j.Logger;
 
@@ -32,10 +33,10 @@ public class AdminService implements AdminServiceInterface {
                 return false;
             AdminDaoInterface adminDaoInterface = new AdminDao();
             logger.info("In instance of AdminService, adding course with course id: " + courseId + " and course name: " + courseName);
-
+            CourseOperationService courseCatalog = new CourseOperationService();
+            boolean valid = AdminValidator.isValidNewCourse(courseId, courseCatalog.getCourseCatalogue().getCourseList());
+            if(!valid) throw new CourseAlreadyInCatalogException(courseId);
             int isAdded = adminDaoInterface.addCourse(courseId, courseName);
-            if(isAdded == -1)
-            	throw new CourseAlreadyInCatalogException(courseId);
             return true;
         } catch (Exception ex) {
             throw new AddCourseException(courseId);
@@ -54,10 +55,12 @@ public class AdminService implements AdminServiceInterface {
             return false;
         try {
             AdminDaoInterface adminDaoInterface = new AdminDao();
+            CourseOperationService courseCatalog = new CourseOperationService();
+            boolean valid = AdminValidator.isValidDropCourse(courseId, courseCatalog.getCourseCatalogue().getCourseList());
+            if(!valid) throw  new CourseNotFoundException(courseId);
             logger.info("In instance of AdminService, delete course with course id: " + courseId);
             int isDeleted = adminDaoInterface.deleteCourse(courseId);
-            if(isDeleted == -1)
-            	throw  new CourseNotFoundException(courseId);
+            
             return true;
         }catch (Exception ex){
             throw ex;
@@ -91,7 +94,11 @@ public class AdminService implements AdminServiceInterface {
     @Override
     public void approveStudent(Student student) {
         AdminDaoInterface adminDaoInterface = new AdminDao();
-        adminDaoInterface.approveStudent(student);
+        CourseOperationService courseCatalog = new CourseOperationService();
+        boolean valid = AdminValidator.isValidDropCourse(student.getStudentId(), courseCatalog.getCourseCatalogue().getCourseList());
+        if(valid)
+        	adminDaoInterface.approveStudent(student);
+        else logger.error("student with student id"+ student.getStudentId()+" doesn't exists or is already approved");
     }
 
     /**

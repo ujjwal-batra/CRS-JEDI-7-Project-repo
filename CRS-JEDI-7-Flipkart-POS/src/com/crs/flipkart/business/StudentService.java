@@ -6,6 +6,9 @@ import com.crs.flipkart.dao.ProfessorDAO;
 import com.crs.flipkart.dao.StudentDao;
 import com.crs.flipkart.dao.StudentDaoInterface;
 import com.crs.flipkart.exceptions.CourseAlreadyRegisteredException;
+import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.validator.StudentValidator;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -82,6 +85,14 @@ public class StudentService implements StudentServiceInterface {
 
     @Override
     public int addCourse(int studentId, int courseId) {
+    	try {
+	    	CourseOperationService courseCatalog = new CourseOperationService();
+	        boolean validCourse = StudentValidator.isValidCourseCode(courseId,courseCatalog.getCourseCatalogue().getCourseList());
+	        if(!validCourse) throw new CourseNotFoundException(String.valueOf(courseId));
+    	}
+    	catch(CourseNotFoundException ex) {
+    		logger.error("The course with courseId "+courseId+" is not found");
+    	}
         List<Integer> enrolledCourses = studentDao.viewEnrolledCourse(studentId);
         if (enrolledCourses.size() == 4) {
             return -2;

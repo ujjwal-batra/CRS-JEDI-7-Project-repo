@@ -6,6 +6,9 @@ import com.crs.flipkart.dao.CourseOperationDAO;
 import com.crs.flipkart.dao.ProfessorDAO;
 import com.crs.flipkart.dao.ProfessorDaoInterface;
 import com.crs.flipkart.dao.StudentDao;
+import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.validator.ProfessorValidator;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -26,6 +29,20 @@ public class ProfessorService implements ProfessorInterface {
      */
     public boolean addGrade(int courseId, int studentId, double marks) {
         ProfessorDaoInterface professorDaoInterface = new ProfessorDAO();
+        try {
+	    	CourseOperationService courseCatalog = new CourseOperationService();
+	        boolean validCourse = ProfessorValidator.isValidCourse(courseCatalog.getCourseCatalogue().getCourseList(),courseId);
+	        if(!validCourse) throw new CourseNotFoundException(String.valueOf(courseId));
+	        
+	        boolean validStudent = ProfessorValidator.isValidStudent(new RegisteredStudentsService().getStudentListByCourseId(courseId),studentId);
+	        if(!validStudent) throw new Exception();
+        }
+        catch (CourseNotFoundException ex) {
+        	logger.error("The requested course was not found");
+        }
+        catch(Exception ex) {
+        	logger.error("Student is not  registered for the course");
+        }
         logger.info("Professor adding grade for student id: " + studentId + ", course id: " + courseId + ", marks" + marks);
         return professorDaoInterface.addGrade(studentId, courseId, marks);
     }
@@ -51,7 +68,17 @@ public class ProfessorService implements ProfessorInterface {
      * @return List of Integer (studentId)
      */
     public List<Integer> getStudentList(int courseId) {
-        return new RegisteredStudentsService().getStudentListByCourseId(courseId);
+    	try {
+	    	CourseOperationService courseCatalog = new CourseOperationService();
+	        boolean valid = ProfessorValidator.isValidCourse(courseCatalog.getCourseCatalogue().getCourseList(),courseId);
+	        if(!valid) throw new CourseNotFoundException(String.valueOf(courseId));
+	        logger.info("Retrieving StudentList for courseId: " + courseId);
+	        return new RegisteredStudentsService().getStudentListByCourseId(courseId);
+    	}
+    	catch(CourseNotFoundException ex) {
+    		logger.error("The requested courseId doesn't exists");
+    		return new RegisteredStudentsService().getStudentListByCourseId(courseId);
+    	}
     }
 
     /**

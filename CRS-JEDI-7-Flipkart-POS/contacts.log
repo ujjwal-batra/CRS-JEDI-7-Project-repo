@@ -156,3 +156,11 @@
 11:46:54,827  INFO PaymentNotificationService,main:38 - Sending payment notification to student id: 113, payment id: 7615
 11:47:44,012 DEBUG PaymentService,main:195 - In instance of Professor service updating credentials
 11:48:13,186 DEBUG PaymentService,main:195 - In instance of Professor service updating credentials
+21:12:37,754  INFO AdminDao,main:36 - Admin logged in. admin_id -> 1
+21:13:19,810  INFO AdminDao,main:68 - student Approved successfully
+21:16:24,438  INFO AdminDao,main:36 - Admin logged in. admin_id -> 1
+21:16:30,329  INFO AdminDao,main:68 - student Approved successfully
+21:18:27,081  INFO AdminDao,main:36 - Admin logged in. admin_id -> 1
+21:18:42,224  INFO AdminDao,main:68 - student Approved successfully
+21:20:52,730  INFO AdminDao,main:36 - Admin logged in. admin_id -> 1
+21:21:37,386  INFO AdminDao,main:68 - student Approved successfully

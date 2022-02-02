@@ -16,5 +16,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Silent_Solitude/Desktop/drive-download-20220125T043233Z-001/log4j-1.2.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Silent_Solitude/Desktop/drive-download-20220125T043233Z-001/mysql-connector-java-5.1.7-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

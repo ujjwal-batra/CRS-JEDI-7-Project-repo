@@ -14,6 +14,7 @@ import com.crs.flipkart.exceptions.StudentAlreadyRegisteredForSemester;
 import com.crs.flipkart.exceptions.StudentNotRegisteredException;
 import com.crs.flipkart.exceptions.UserNotApprovedExecption;
 import com.crs.flipkart.exceptions.UserNotFoundException;
+import com.crs.flipkart.validator.StudentValidator;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -110,6 +111,14 @@ public class StudentService implements StudentServiceInterface {
 
     @Override
     public int addCourse(int studentId, int courseId) throws CourseAlreadyRegisteredException, CourseNotFoundException {
+    	try {
+	    	CourseOperationService courseCatalog = new CourseOperationService();
+	        boolean validCourse = StudentValidator.isValidCourseCode(courseId,courseCatalog.getCourseCatalogue().getCourseList());
+	        if(!validCourse) throw new CourseNotFoundException(courseId);
+    	}
+    	catch(CourseNotFoundException ex) {
+    		logger.error("The course with courseId "+courseId+" is not found");
+    	}
         List<Integer> enrolledCourses = studentDao.viewEnrolledCourse(studentId);
         if (enrolledCourses.size() == 4) {
             return -2;

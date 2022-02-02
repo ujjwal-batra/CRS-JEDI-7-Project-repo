@@ -6,7 +6,11 @@ import com.crs.flipkart.dao.AdminDao;
 import com.crs.flipkart.dao.AdminDaoInterface;
 import com.crs.flipkart.dao.ProfessorDAO;
 import com.crs.flipkart.exceptions.AddCourseException;
+import com.crs.flipkart.exceptions.CourseAlreadyInCatalogException;
 import com.crs.flipkart.exceptions.CourseNotDeletedException;
+import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.validator.AdminValidator;
+
 import org.apache.log4j.Logger;
 
 
@@ -28,7 +32,9 @@ public class AdminService implements AdminServiceInterface {
                 return false;
             AdminDaoInterface adminDaoInterface = new AdminDao();
             logger.info("In instance of AdminService, adding course with course id: " + courseId + " and course name: " + courseName);
-
+            CourseOperationService courseCatalog = new CourseOperationService();
+            boolean valid = AdminValidator.isValidNewCourse(courseId, courseCatalog.getCourseCatalogue().getCourseList());
+            if(!valid) throw new AddCourseException(courseId);
             return adminDaoInterface.addCourse(courseId, courseName);
         } catch (Exception ex) {
             throw new AddCourseException(courseId);
@@ -47,6 +53,9 @@ public class AdminService implements AdminServiceInterface {
             return false;
         try {
             AdminDaoInterface adminDaoInterface = new AdminDao();
+            CourseOperationService courseCatalog = new CourseOperationService();
+            boolean valid = AdminValidator.isValidDropCourse(courseId, courseCatalog.getCourseCatalogue().getCourseList());
+            if(!valid) throw  new CourseNotDeletedException(courseId);
             logger.info("In instance of AdminService, delete course with course id: " + courseId);
             return adminDaoInterface.deleteCourse(courseId);
         }catch (Exception ex){
@@ -78,7 +87,11 @@ public class AdminService implements AdminServiceInterface {
     @Override
     public void approveStudent(Student student) {
         AdminDaoInterface adminDaoInterface = new AdminDao();
-        adminDaoInterface.approveStudent(student);
+        CourseOperationService courseCatalog = new CourseOperationService();
+        boolean valid = AdminValidator.isValidDropCourse(student.getStudentId(), courseCatalog.getCourseCatalogue().getCourseList());
+        if(valid)
+        	adminDaoInterface.approveStudent(student);
+        else logger.error("student with student id"+ student.getStudentId()+" doesn't exists or is already approved");
     }
 
     /**
