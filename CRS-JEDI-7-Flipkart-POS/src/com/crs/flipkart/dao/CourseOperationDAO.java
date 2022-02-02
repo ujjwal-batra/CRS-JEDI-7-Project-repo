@@ -2,7 +2,7 @@ package com.crs.flipkart.dao;
 
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.CourseCatalogue;
-import com.crs.flipkart.constants.Constants;
+import com.crs.flipkart.constants.SQLQueryConstants;
 import com.crs.flipkart.utils.DBUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -42,7 +42,7 @@ public class CourseOperationDAO implements CourseOperationDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = Constants.SELECT_ALL_COURSES;
+            String sqlQuery = SQLQueryConstants.SELECT_ALL_COURSES;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             while (resultSet.next()) {
@@ -79,7 +79,7 @@ public class CourseOperationDAO implements CourseOperationDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = Constants.SELECT_COURSE_BY_ID + courseId;
+            String sqlQuery = SQLQueryConstants.SELECT_COURSE_BY_ID + courseId;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             Course course = null;
@@ -117,7 +117,7 @@ public class CourseOperationDAO implements CourseOperationDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = Constants.ASSIGN_PROFESSOR_TO_COURSE +
+            String sqlQuery = SQLQueryConstants.ASSIGN_PROFESSOR_TO_COURSE +
                     course.getProfessorId() + " where course_id = " + course.getCourseId();
             statement = connection.prepareStatement(sqlQuery);
             statement.executeUpdate();
@@ -147,7 +147,7 @@ public class CourseOperationDAO implements CourseOperationDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = Constants.GET_ENROLLED_STUDENT_COUNT + courseId;
+            String sqlQuery = SQLQueryConstants.GET_ENROLLED_STUDENT_COUNT + courseId;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             int studentCount = 0;
@@ -182,7 +182,7 @@ public class CourseOperationDAO implements CourseOperationDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = Constants.GET_STUDENT_LIST_BY_COURSE_ID + courseId;
+            String sqlQuery = SQLQueryConstants.GET_STUDENT_LIST_BY_COURSE_ID + courseId;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             while (resultSet.next()) {
@@ -216,7 +216,7 @@ public class CourseOperationDAO implements CourseOperationDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = Constants.VIEW_ENROLLED_COURSES + studentId;
+            String sqlQuery = SQLQueryConstants.VIEW_ENROLLED_COURSES + studentId;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             while (resultSet.next()) {

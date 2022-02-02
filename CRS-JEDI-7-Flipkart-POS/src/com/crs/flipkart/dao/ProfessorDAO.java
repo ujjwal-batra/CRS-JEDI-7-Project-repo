@@ -2,7 +2,7 @@ package com.crs.flipkart.dao;
 
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
-import com.crs.flipkart.constants.Constants;
+import com.crs.flipkart.constants.SQLQueryConstants;
 import com.crs.flipkart.utils.DBUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -31,7 +31,7 @@ public class ProfessorDAO implements ProfessorDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = Constants.ADD_PROFESSOR;
+            String sqlQuery = SQLQueryConstants.ADD_PROFESSOR;
             statement = connection.prepareStatement(sqlQuery);
             statement.setInt(1, professor.getProfessorId());
             statement.setString(2, professor.getName());
@@ -69,7 +69,7 @@ public class ProfessorDAO implements ProfessorDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = Constants.SELECT_PROFESSOR_BY_ID + professorId;
+            String sqlQuery = SQLQueryConstants.SELECT_PROFESSOR_BY_ID + professorId;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             Professor professor = null;
@@ -133,7 +133,7 @@ public class ProfessorDAO implements ProfessorDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = Constants.CHECK_CREDENTIALS_PROFESSOR + email + "' and password = '" + password + "'";
+            String sqlQuery = SQLQueryConstants.CHECK_CREDENTIALS_PROFESSOR + email + "' and password = '" + password + "'";
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             if (!resultSet.next()) {
@@ -173,7 +173,7 @@ public class ProfessorDAO implements ProfessorDaoInterface {
             if (!resultSet.next()) {
                 return false;
             }
-            sqlQuery = Constants.UPDATE_PROFESSOR_PASSWORD + "'" +password+ "'"+ " where email = '" + email + "'";
+            sqlQuery = SQLQueryConstants.UPDATE_PROFESSOR_PASSWORD + "'" +password+ "'"+ " where email = '" + email + "'";
             statement.executeUpdate(sqlQuery);
             return true;
         } catch (Exception ex) {
@@ -204,7 +204,7 @@ public class ProfessorDAO implements ProfessorDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = Constants.ADD_GRADE_BY_PROFESSOR + ((int) marks)
+            String sqlQuery = SQLQueryConstants.ADD_GRADE_BY_PROFESSOR + ((int) marks)
                     + " where student_id = " + studentId + " and course_id = " + courseId;
             statement = connection.prepareStatement(sqlQuery);
             statement.executeUpdate();

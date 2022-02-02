@@ -1,6 +1,6 @@
 package com.crs.flipkart.constants;
 
-public class Constants {
+public class SQLQueryConstants {
 
     /**
      * Admin Constants

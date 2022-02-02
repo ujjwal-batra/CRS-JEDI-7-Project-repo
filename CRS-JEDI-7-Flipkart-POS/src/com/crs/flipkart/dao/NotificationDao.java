@@ -1,7 +1,7 @@
 package com.crs.flipkart.dao;
 
 import com.crs.flipkart.bean.Notification;
-import com.crs.flipkart.constants.Constants;
+import com.crs.flipkart.constants.SQLQueryConstants;
 import com.crs.flipkart.utils.DBUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -23,7 +23,7 @@ public class NotificationDao implements NotificationDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = Constants.ADD_NOTIFICATION;
+            String sqlQuery = SQLQueryConstants.ADD_NOTIFICATION;
             statement = connection.prepareStatement(sqlQuery);
             statement.setInt(1, notification.getNotificationId());
             statement.setInt(2, notification.getStudentId());
@@ -51,7 +51,7 @@ public class NotificationDao implements NotificationDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = Constants.SELECT_ALL_NOTIFICATION;
+            String sqlQuery = SQLQueryConstants.SELECT_ALL_NOTIFICATION;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             while (resultSet.next()) {
@@ -79,7 +79,7 @@ public class NotificationDao implements NotificationDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = Constants.SELECT_ALL_NOTIFICATION_BY_ID + studentId;
+            String sqlQuery = SQLQueryConstants.SELECT_ALL_NOTIFICATION_BY_ID + studentId;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             List<String> messageList = new ArrayList<String>();

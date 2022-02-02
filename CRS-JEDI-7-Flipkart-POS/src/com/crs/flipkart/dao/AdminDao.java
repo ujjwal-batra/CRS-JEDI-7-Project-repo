@@ -2,9 +2,7 @@ package com.crs.flipkart.dao;
 
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
-import com.crs.flipkart.constants.Constants;
-import com.crs.flipkart.exceptions.ProfessorNotAddedException;
-import com.crs.flipkart.exceptions.UserAlreadyExistException;
+import com.crs.flipkart.constants.SQLQueryConstants;
 import com.crs.flipkart.utils.DBUtils;
 import org.apache.log4j.Logger;
 
@@ -29,7 +27,7 @@ public class AdminDao implements AdminDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = Constants.SELECT_ADMIN_BY_EMAIL + email + "' and password = '" + password + "'";
+            String sqlQuery = SQLQueryConstants.SELECT_ADMIN_BY_EMAIL + email + "' and password = '" + password + "'";
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             if (!resultSet.next()) {
@@ -64,7 +62,7 @@ public class AdminDao implements AdminDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = Constants.APPROVE_STUDENT + student.getStudentId();
+            String sqlQuery = SQLQueryConstants.APPROVE_STUDENT + student.getStudentId();
             statement = connection.createStatement();
             statement.executeUpdate(sqlQuery);
             logger.info("student Approved successfully");
@@ -95,7 +93,7 @@ public class AdminDao implements AdminDaoInterface {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
             System.out.println("Generating course");
-            String sqlQuery = Constants.ADD_NEW_COURSE;
+            String sqlQuery = SQLQueryConstants.ADD_NEW_COURSE;
             statement = connection.prepareStatement(sqlQuery);
             statement.setInt(1, courseId);
             statement.setString(2, courseName);
@@ -132,7 +130,7 @@ public class AdminDao implements AdminDaoInterface {
             connection = DBUtils.getConnection();
             System.out.println("removing course...");
 
-            String sqlQuery = Constants.DELETE_COURSE + courseId;
+            String sqlQuery = SQLQueryConstants.DELETE_COURSE + courseId;
             statement = connection.createStatement();
             return statement.executeUpdate(sqlQuery) == 1;
 
@@ -163,7 +161,7 @@ public class AdminDao implements AdminDaoInterface {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
             System.out.println("Adding professor...");
-            String sqlQuery = Constants.ADD_PROFESSOR;
+            String sqlQuery = SQLQueryConstants.ADD_PROFESSOR;
             statement = connection.prepareStatement(sqlQuery);
             statement.setInt(1, professor.getProfessorId());
             statement.setString(2, professor.getName());
@@ -201,7 +199,7 @@ public class AdminDao implements AdminDaoInterface {
             if (!resultSet.next()) {
                 return;
             }
-            sqlQuery = Constants.UPDATE_ADMIN_PASSWORD + "'" +password+ "'"+ " where email = '" + email + "'";
+            sqlQuery = SQLQueryConstants.UPDATE_ADMIN_PASSWORD + "'" +password+ "'"+ " where email = '" + email + "'";
             statement.executeUpdate(sqlQuery);
             return;
         } catch (Exception ex) {

@@ -1,8 +1,7 @@
 package com.crs.flipkart.dao;
 
-import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Student;
-import com.crs.flipkart.constants.Constants;
+import com.crs.flipkart.constants.SQLQueryConstants;
 import com.crs.flipkart.utils.DBUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -27,7 +26,7 @@ public class StudentDao implements StudentDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = Constants.SELECT_ALL_STUDENTS;
+            String sqlQuery = SQLQueryConstants.SELECT_ALL_STUDENTS;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             while (resultSet.next()) {
@@ -59,7 +58,7 @@ public class StudentDao implements StudentDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = Constants.ADD_STUDENT;
+            String sqlQuery = SQLQueryConstants.ADD_STUDENT;
             statement = connection.prepareStatement(sqlQuery);
             statement.setInt(1, student.getStudentId());
             statement.setString(2, student.getName());
@@ -100,7 +99,7 @@ public class StudentDao implements StudentDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = Constants.SELECT_STUDENT_BY_ID + studentId;
+            String sqlQuery = SQLQueryConstants.SELECT_STUDENT_BY_ID + studentId;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             while (resultSet.next()) {
@@ -145,7 +144,7 @@ public class StudentDao implements StudentDaoInterface {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
 
-            String sqlQuery = Constants.CHECK_CREDENTIALS_STUDENT + email + "' and password = '" + password + "'";
+            String sqlQuery = SQLQueryConstants.CHECK_CREDENTIALS_STUDENT + email + "' and password = '" + password + "'";
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             if (!resultSet.next()) {
@@ -179,13 +178,13 @@ public class StudentDao implements StudentDaoInterface {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
 
-            String sqlQuery = Constants.SELECT_STUDENT_BY_ID + studentId;
+            String sqlQuery = SQLQueryConstants.SELECT_STUDENT_BY_ID + studentId;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             if (!resultSet.next()) {
                 return false;
             }
-            sqlQuery = Constants.SET_STUDENT_SEMESTER + semester + " where student_id = " + studentId;
+            sqlQuery = SQLQueryConstants.SET_STUDENT_SEMESTER + semester + " where student_id = " + studentId;
             statement = connection.prepareStatement(sqlQuery);
             statement.executeUpdate();
             return true;
@@ -215,7 +214,7 @@ public class StudentDao implements StudentDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = Constants.STUDENT_ENROLL_COURSE;
+            String sqlQuery = SQLQueryConstants.STUDENT_ENROLL_COURSE;
             statement = connection.prepareStatement(sqlQuery);
             statement.setInt(1, courseId);
             statement.setInt(2, studentId);
@@ -249,7 +248,7 @@ public class StudentDao implements StudentDaoInterface {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
             statement = connection.createStatement();
-            String sqlQuery = Constants.STUDENT_DROP_COURSE + studentId
+            String sqlQuery = SQLQueryConstants.STUDENT_DROP_COURSE + studentId
                     + " and course_id = " + courseId;
             statement.executeUpdate(sqlQuery);
             return true;
@@ -279,7 +278,7 @@ public class StudentDao implements StudentDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = Constants.VIEW_ENROLLED_COURSES + studentId;
+            String sqlQuery = SQLQueryConstants.VIEW_ENROLLED_COURSES + studentId;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             while (resultSet.next()) {
@@ -306,7 +305,7 @@ public class StudentDao implements StudentDaoInterface {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DBUtils.getConnection();
-            String sqlQuery = Constants.CHECK_IF_COURSE_REGISTERED + studentId + " and course_id="+courseId;
+            String sqlQuery = SQLQueryConstants.CHECK_IF_COURSE_REGISTERED + studentId + " and course_id="+courseId;
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             if (resultSet.next()) {
@@ -339,7 +338,7 @@ public class StudentDao implements StudentDaoInterface {
             if (!resultSet.next()) {
                 return;
             }
-            sqlQuery = Constants.UPDATE_STUDENT_PASSWORD + "'" +password+ "'"+ " where email = '" + email + "'";
+            sqlQuery = SQLQueryConstants.UPDATE_STUDENT_PASSWORD + "'" +password+ "'"+ " where email = '" + email + "'";
             int isUpdated = statement.executeUpdate(sqlQuery);
             return;
         } catch (Exception ex) {
