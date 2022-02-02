@@ -242,7 +242,7 @@ public class CRSApplication {
 
             ProfessorInterface professorInterface = new ProfessorService();
             professorInterface.updateCredentials(email, new_password);
-            System.out.println("\033[1mPassword Updated Successfully!!!\033[0m");
+            System.out.println("Password Updated Successfully!!!");
 
         } else if (studentId != -1){
             System.out.println("Enter new password:");
@@ -250,7 +250,7 @@ public class CRSApplication {
 
             StudentServiceInterface studentServiceInterface =  new StudentService();
             studentServiceInterface.updateCredentials(email, new_password);
-            System.out.println("\033[1mPassword Updated Successfully!!!\033[0m");
+            System.out.println("Password Updated Successfully!!!");
 
         } else if(adminId != -1){
             System.out.println("Enter new password:");
@@ -258,7 +258,7 @@ public class CRSApplication {
 
             AdminServiceInterface adminServiceInterface = new AdminService();
             adminServiceInterface.updateCredentials(email, new_password);
-            System.out.println("\033[1mPassword Updated Successfully!!!\033[0m");
+            System.out.println("Password Updated Successfully!!!");
 
         } else {
             System.out.println("Invalid!!");
