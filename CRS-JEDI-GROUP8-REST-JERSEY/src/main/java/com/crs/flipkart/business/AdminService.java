@@ -6,7 +6,11 @@ import com.crs.flipkart.dao.AdminDao;
 import com.crs.flipkart.dao.AdminDaoInterface;
 import com.crs.flipkart.dao.ProfessorDAO;
 import com.crs.flipkart.exceptions.AddCourseException;
+import com.crs.flipkart.exceptions.CourseAlreadyInCatalogException;
 import com.crs.flipkart.exceptions.CourseNotEnrolledException;
+import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.InvalidCredentialsException;
+
 import org.apache.log4j.Logger;
 
 
@@ -22,14 +26,17 @@ public class AdminService implements AdminServiceInterface {
      * @return boolean
      */
     @Override
-    public boolean addCourse(int courseId, String courseName) throws AddCourseException{
+    public boolean addCourse(int courseId, String courseName) throws AddCourseException, CourseAlreadyInCatalogException {
         try {
             if (courseId < 0)
                 return false;
             AdminDaoInterface adminDaoInterface = new AdminDao();
             logger.info("In instance of AdminService, adding course with course id: " + courseId + " and course name: " + courseName);
 
-            return adminDaoInterface.addCourse(courseId, courseName);
+            int isAdded = adminDaoInterface.addCourse(courseId, courseName);
+            if(isAdded == -1)
+            	throw new CourseAlreadyInCatalogException(courseId);
+            return true;
         } catch (Exception ex) {
             throw new AddCourseException(courseId);
         }
@@ -42,15 +49,18 @@ public class AdminService implements AdminServiceInterface {
      * @return boolean
      */
     @Override
-    public boolean deleteCourse(int courseId) throws CourseNotEnrolledException {
+    public boolean deleteCourse(int courseId) throws CourseNotFoundException {
         if (courseId < 0)
             return false;
         try {
             AdminDaoInterface adminDaoInterface = new AdminDao();
             logger.info("In instance of AdminService, delete course with course id: " + courseId);
-            return adminDaoInterface.deleteCourse(courseId);
+            int isDeleted = adminDaoInterface.deleteCourse(courseId);
+            if(isDeleted == -1)
+            	throw  new CourseNotFoundException(courseId);
+            return true;
         }catch (Exception ex){
-            throw new CourseNotEnrolledException(courseId);
+            throw ex;
         }
     }
 
@@ -62,11 +72,14 @@ public class AdminService implements AdminServiceInterface {
      * @return int
      */
     @Override
-    public int checkCredentials(String email, String password) {
+    public int checkCredentials(String email, String password) throws InvalidCredentialsException {
         if (email == "")
             return -1;
         AdminDaoInterface adminDaoInterface = new AdminDao();
-        return adminDaoInterface.checkCredentials(email, password);
+        int isLogged = adminDaoInterface.checkCredentials(email, password);
+        if(isLogged == -1)
+        	throw new InvalidCredentialsException();
+        return isLogged;
     }
 
     /**

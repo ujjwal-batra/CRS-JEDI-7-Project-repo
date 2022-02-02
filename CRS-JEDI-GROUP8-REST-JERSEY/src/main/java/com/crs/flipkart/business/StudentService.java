@@ -246,6 +246,7 @@ public class StudentService implements StudentServiceInterface {
         logger.debug("In instance of Professor service updating credentials");
         StudentDaoInterface studentDaoInterface = new StudentDao();
         int isApproved = studentDaoInterface.isApproved(studentId);
+        System.out.println(studentId);
         if(isApproved == 0) throw new UserNotApprovedExecption(studentId);
         return 1;
         

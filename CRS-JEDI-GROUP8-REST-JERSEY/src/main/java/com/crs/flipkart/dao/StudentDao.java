@@ -148,6 +148,7 @@ public class StudentDao implements StudentDaoInterface {
             String sqlQuery = Constants.CHECK_CREDENTIALS_STUDENT + email + "' and password = '" + password + "'";
             statement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = statement.executeQuery(sqlQuery);
+            System.out.println(resultSet.getFetchSize());
             if (!resultSet.next()) {
                 return -1;
             } else

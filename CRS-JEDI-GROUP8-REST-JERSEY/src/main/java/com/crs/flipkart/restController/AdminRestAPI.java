@@ -34,7 +34,9 @@ import com.crs.flipkart.business.ProfessorService;
 import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.business.StudentServiceInterface;
 import com.crs.flipkart.exceptions.AddCourseException;
+import com.crs.flipkart.exceptions.CourseAlreadyInCatalogException;
 import com.crs.flipkart.exceptions.CourseNotEnrolledException;
+import com.crs.flipkart.exceptions.CourseNotFoundException;
 import com.crs.flipkart.exceptions.InvalidCredentialsException;
 
 
@@ -58,17 +60,14 @@ public class AdminRestAPI {
 	@Consumes(MediaType.APPLICATION_JSON)
     public Response adminLogin(Admin admin) {
         AdminServiceInterface adminObj = new AdminService();
-        
-    	int response = adminObj.checkCredentials(admin.getEmailId(), admin.getPassword());
-    	if(response!=-1) {
-    		logger.info("Login successful");
-        	return Response.status(200).entity("Success").build();
-    	}
-        
-    	else {
-        	logger.error("Login unsuccessful");
-        	return Response.status(200).entity("Invalid credentials").build();
-        }
+    	int response;
+		try {
+			response = adminObj.checkCredentials(admin.getEmailId(), admin.getPassword());
+			return Response.status(200).entity("Success").build();
+		} catch (InvalidCredentialsException ex) {
+			return Response.status(200).entity(ex.getMessage()).build();
+		}
+    	
     }
 	
 	/**
@@ -90,7 +89,7 @@ public class AdminRestAPI {
 		 return Response.status(201).entity("Course with courseID: " + courseId + " added to catalog").build();
 		 
 		}
-		catch(AddCourseException ex) {
+		catch(AddCourseException | CourseAlreadyInCatalogException ex) {
         	logger.error("Course adding operation Unsuccessful");
 			return Response.status(409).entity(ex.getMessage()).build();
 		}
@@ -116,7 +115,7 @@ public class AdminRestAPI {
 	        });
 		 logger.info("Course catalouge shown!");
 
-	        return Response.status(200).entity(result).build();
+	     return Response.status(200).entity(result).build();
 		 
 	}
 	
@@ -136,19 +135,12 @@ public class AdminRestAPI {
             boolean isDeleted;
 			try {
 				isDeleted = adminServiceInterface.deleteCourse(courseCode);
-			} catch (CourseNotEnrolledException e) {
-            	return Response.status(201).entity("Exception occoured: " + e.getMessage()).build();
-
+				logger.info("Course successfully deleted");
+	        	return Response.status(201).entity("Course with courseCode: " + courseCode + " deleted from catalog").build();
+			} catch (CourseNotFoundException ex) {
+            	return Response.status(201).entity("Exception occoured: " + ex.getMessage()).build();
 			}
-            if (isDeleted) {
-            	logger.info("Course successfully deleted");
-            	return Response.status(201).entity("Course with courseCode: " + courseCode + " deleted from catalog").build();
-            }
-            else {
-            	logger.error("Course not deleted");
-            	return Response.status(406).entity("Error while removing course " ).build();
-            }
-          
+        	
 	}
 	
 	/**

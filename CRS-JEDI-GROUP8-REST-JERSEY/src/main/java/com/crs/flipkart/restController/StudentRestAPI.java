@@ -82,7 +82,8 @@ public class StudentRestAPI {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response saveStudent(Student student) {
-		
+		System.out.println(student.toString());
+		System.out.println("ujjwal");
 		Student isSaved = studentServiceInterface.saveStudent(student);
 		if(isSaved != null) {
 			return Response.status(201).entity("Student Registration complete. Email -> " + isSaved.getEmailId()).build();
