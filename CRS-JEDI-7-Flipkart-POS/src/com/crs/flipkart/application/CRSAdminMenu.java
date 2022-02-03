@@ -108,7 +108,7 @@ public class CRSAdminMenu {
             AdminServiceInterface adminServiceInterface = new AdminService();
             boolean isAdded = adminServiceInterface.addCourse(courseCode, courseName);
             if (isAdded)
-                System.out.println("\033[1mCourse added successfully\033[0m");
+                System.out.println("Course added successfully");
             else
                 System.out.println("Error while adding course " + addCourseException.getMessage());
         } catch (AddCourseException e) {
